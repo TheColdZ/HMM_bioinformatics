@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Main {
 
@@ -34,9 +35,6 @@ public class Main {
                 psi[i][j+1]=-1;
                 //System.out.println("input:"+j);
                 //System.out.println("state:"+i);
-                if(j % 10000 == 0){
-                    System.out.println("I'm alive, don't kill me yet!");
-                }
 
                 double maxTrans = Double.NEGATIVE_INFINITY;
                 for (int k = 0; k <states ; k++) {
@@ -48,6 +46,9 @@ public class Main {
                 }
                 delta[i][j+1]= maxTrans+log(emissionProbability(i,gene.charAt(j)));
                 //System.out.println(delta[i][j]);
+                if(j % 10000 == 0 && i ==0){
+                    System.out.println("I'm alive, don't kill me yet!: "+ j);
+                }
             }
         }
         int [] qstar = new int[inputs];
@@ -62,20 +63,28 @@ public class Main {
         }
 
         //Printing below
+        System.out.println("Done John, starting print");
+        try{
+            FileWriter fw=new FileWriter("output.txt");
 
-        String builder = "";
-        String builder2 = "";
+        //String builder2 = "";
         for (int j = 0; j <states ; j++) {  // looper omvendt med j og i fordi pretty print TODO
+            StringBuilder sb1 = new StringBuilder();
+
             for (int i = 0; i <inputs  ; i++) {
-                builder += "  "+delta[j][i];
-                builder2 += "  "+psi[j][i];
+                sb1.append(" "+ (int) delta[j][i]);
+                //builder2 += "  "+psi[j][i];
             }
-            builder += "\n";
-            builder2 += "\n";
+             fw.write("J"+j+" "+sb1.toString());
+            fw.write("\n");
+            //System.out.println(j+sb1.toString());
+            //sb1.append("\n");
+            //builder2 += "\n";
 
         }
-        System.out.println(builder);
-        System.out.println(builder2);
+        }
+        catch (Exception e){}
+        //System.out.println(builder2);
         qstar[inputs-1] = possibleIndex;
         for (int j = inputs-2; j >0 ; j--) {
             qstar[j] = psi[qstar[j+1]][j];
@@ -151,6 +160,10 @@ public class Main {
        return transitionMatrix;
     }
 
+    /**
+     * https://www.geeksforgeeks.org/different-ways-reading-text-file-java/
+     * @return
+     */
 
     public  static String reader() {
         File file = new File("C:\\Users\\thoma\\Bachelor\\genome1.txt");
@@ -159,8 +172,7 @@ public class Main {
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             String st;
-
-            while ((st = br.readLine()) != null){
+            while ((st = br.readLine()) != null ){
                 System.out.println(st);
                 sb1.append(st);
             }
