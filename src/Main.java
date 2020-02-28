@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -89,10 +91,23 @@ public class Main {
         for (int j = inputs-2; j >0 ; j--) {
             qstar[j] = psi[qstar[j+1]][j];
         }
-
-        for (int j = 0; j < inputs; j++) {
-            System.out.print(qstar[j]+" ");
+        StringBuilder stateStringBuilder = new StringBuilder();    //Stringuilder
+        Map<Integer,Integer> counter = new HashMap<>();
+        for (int i = 0; i < 7; i++) {
+            counter.put(i,0);
         }
+        for (int j = 0; j < inputs; j++) {
+            //System.out.print(qstar[j]+" ");
+            counter.put(qstar[j],counter.get(qstar[j])+1);
+            stateStringBuilder.append(qstar[j]);
+        }
+        System.out.println();
+        System.out.println(counter);
+        try {
+            FileWriter fw = new FileWriter("states1.txt");      //Writing states to a file
+            fw.write(stateStringBuilder.toString());
+        }
+        catch(Exception e){}
 
 
         return 0.1;
@@ -116,13 +131,13 @@ public class Main {
     }
 
     public static double[][] emission(){
-        double[][] emissionProbabilities = {{0.3,0.25,0.25,0.2},
-                                            {0.2,0.35,0.15,0.3},
-                                            {0.4,0.15,0.2,0.25},
+        double[][] emissionProbabilities = {{0.3 ,0.25,0.25,0.2},
+                                            {0.2 ,0.35,0.15,0.3},
+                                            {0.4 ,0.15,0.2 ,0.25},
                                             {0.25,0.25,0.25,0.25},
-                                            {0.2,0.4,0.3,0.1},
-                                            {0.3,0.2,0.3,0.20},
-                                            {0.15,0.3,0.2,0.35}};
+                                            {0.2 ,0.4 ,0.3 ,0.1},
+                                            {0.3 ,0.2 ,0.3 ,0.20},
+                                            {0.15,0.3 ,0.2 ,0.35}};
 
         return emissionProbabilities;
     }
@@ -150,13 +165,13 @@ public class Main {
         return startingState;
     }
     public static double[][] transitions(){
-         double[][] transitionMatrix = {{0,0,0.9,0.1,0,0,0},
-                                        {1,0,0,0,0,0,0},
-                                        {0,1,0,0,0,0,0},
+         double[][] transitionMatrix = {{0,0,0.9 ,0.1,0   ,0,0},
+                                        {1,0,0   ,0  ,0   ,0,0},
+                                        {0,1,0   ,0  ,0   ,0,0},
                                         {0,0,0.05,0.9,0.05,0,0},
-                                        {0,0,0,0,0,1,0},
-                                        {0,0,0,0,0,0,1},
-                                        {0,0,0,0.1,0.9,0,0} };
+                                        {0,0,0   ,0  ,0   ,1,0},
+                                        {0,0,0   ,0  ,0   ,0,1},
+                                        {0,0,0   ,0.1,0.9 ,0,0} };
        return transitionMatrix;
     }
 
@@ -166,7 +181,7 @@ public class Main {
      */
 
     public  static String reader() {
-        File file = new File("C:\\Users\\thoma\\Bachelor\\genome1.txt");
+        File file = new File("C:\\Users\\thoma\\Bachelor\\genome2.txt");
         StringBuilder sb1 = new StringBuilder();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
