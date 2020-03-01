@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         for (int i = 1; i < 6; i++) {
-            viterbi(transitions(),emission(),start(),i);
+            viterbi(transitions(),emission(),start(),i,decodeMap());
         }
     }
 
@@ -22,7 +22,7 @@ public class Main {
      * @return
      */
 
-    public static double viterbi( double[][] transition, double[][] emission, double[] start, int iteration ){
+    public static double viterbi( double[][] transition, double[][] emission, double[] start, int iteration, Map decodeMap ){
         int states = transition.length;
         String gene = reader(iteration);
         int inputLength = gene.length(); //length of input
@@ -102,7 +102,7 @@ public class Main {
             //System.out.print(qstar[j]+" ");
             stateCounter.put(qstar[j],stateCounter.get(qstar[j])+1);
             stateStringBuilder.append(qstar[j]);
-            decodeStringBuilder.append(decodeState7states(qstar[j]));
+            decodeStringBuilder.append(decodeMap.get(qstar[j]));
         }
         System.out.println();
         System.out.println(stateCounter);
@@ -119,30 +119,19 @@ public class Main {
     }
 
     /**
-     * This method decodes the state to a coding, non-coding and reverse coding denoted as C, N R
-     * @param i the state to translate to "coding"
-     * @return  what the given state did.
+     * Used to lookup the coding ability for the various states.
+     * @return Map to lookup coding for states.
      */
-    private static String decodeState7states(int i) {
-        String decode = "";
-        switch(i){
-            case 0: decode = "C";
-                break;
-            case 1: decode = "C";
-                break;
-            case 2: decode = "C";
-                break;
-            case 3: decode = "N";
-                break;
-            case 4: decode = "R";
-                break;
-            case 5: decode = "R";
-                break;
-            case 6: decode = "R";
-                break;
-            default: ;
-        }
-        return decode;
+    private static Map<Integer, String> decodeMap(){
+        Map<Integer,String> map = new HashMap();
+        map.put(0,"C");
+        map.put(1,"C");
+        map.put(2,"C");
+        map.put(3,"N");
+        map.put(4,"R");
+        map.put(5,"R");
+        map.put(6,"R");
+        return map;
     }
 
     /**
