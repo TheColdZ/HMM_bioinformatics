@@ -35,7 +35,7 @@ public class Main {
         }
         for (int j = 0; j < inputLength-1 ; j++) {
             for (int i = 0; i <states ; i++) {
-                psi[i][j+1]=-1;
+                psi[i][j]=-1;
                 //System.out.println("input:"+j);
                 //System.out.println("state:"+i);
 
@@ -43,7 +43,7 @@ public class Main {
                 for (int k = 0; k <states ; k++) {
                     double transitionProb = log(transition[k][i])+delta[k][j];
                     if(maxTransProb < transitionProb){
-                        psi[i][j+1] = k;
+                        psi[i][j] = k;
                         maxTransProb = transitionProb;
                     }
                 }
@@ -67,29 +67,29 @@ public class Main {
 
         //Printing below
         System.out.println("Done John, starting print");
+        //System.out.println(builder2);
         try{
             FileWriter outputFileWriter = new FileWriter("output"+iteration+".txt");
 
-        //String builder2 = "";
-        for (int j = 0; j <states ; j++) {  // looper omvendt med j og i fordi pretty print TODO
-            StringBuilder sb1 = new StringBuilder();
+            //String builder2 = "";
+            for (int j = 0; j <states ; j++) {  // looper omvendt med j og i fordi pretty print TODO
+                StringBuilder sb1 = new StringBuilder();
 
-            for (int i = 0; i <inputLength  ; i++) {
-                sb1.append(" "+ (int) delta[j][i]);
-                //builder2 += "  "+psi[j][i];
+                for (int i = 0; i <inputLength  ; i++) {
+                    sb1.append(" "+ (int) delta[j][i]);
+                    //builder2 += "  "+psi[j][i];
+                }
+                outputFileWriter.write("J"+j+" "+sb1.toString());
+                outputFileWriter.write("\n");
+                //System.out.println(j+sb1.toString());
+                //sb1.append("\n");
+                //builder2 += "\n";
+
             }
-             outputFileWriter.write("J"+j+" "+sb1.toString());
-            outputFileWriter.write("\n");
-            //System.out.println(j+sb1.toString());
-            //sb1.append("\n");
-            //builder2 += "\n";
-
-        }
         }
         catch (Exception e){}
-        //System.out.println(builder2);
         qstar[inputLength-1] = possibleIndex;
-        for (int j = inputLength-2; j >0 ; j--) {       //Backtracking through the most likely path.
+        for (int j = inputLength-2; j >-1 ; j--) {       //Backtracking through the most likely path. Remember to visit 0...
             qstar[j] = psi[qstar[j+1]][j];
         }
         StringBuilder stateStringBuilder = new StringBuilder();    //Stringuilder
@@ -158,12 +158,12 @@ public class Main {
 
     public static double[][] emission(){
         double[][] emissionProbabilities = {{0.3 ,0.25,0.25,0.2},
-                                            {0.2 ,0.35,0.15,0.3},
-                                            {0.4 ,0.15,0.2 ,0.25},
-                                            {0.25,0.25,0.25,0.25},
-                                            {0.2 ,0.4 ,0.3 ,0.1},
-                                            {0.3 ,0.2 ,0.3 ,0.20},
-                                            {0.15,0.3 ,0.2 ,0.35}};
+                {0.2 ,0.35,0.15,0.3},
+                {0.4 ,0.15,0.2 ,0.25},
+                {0.25,0.25,0.25,0.25},
+                {0.2 ,0.4 ,0.3 ,0.1},
+                {0.3 ,0.2 ,0.3 ,0.20},
+                {0.15,0.3 ,0.2 ,0.35}};
 
         return emissionProbabilities;
     }
@@ -191,14 +191,14 @@ public class Main {
         return startingState;
     }
     public static double[][] transitions(){
-         double[][] transitionMatrix = {{0,0,0.9 ,0.1,0   ,0,0},
-                                        {1,0,0   ,0  ,0   ,0,0},
-                                        {0,1,0   ,0  ,0   ,0,0},
-                                        {0,0,0.05,0.9,0.05,0,0},
-                                        {0,0,0   ,0  ,0   ,1,0},
-                                        {0,0,0   ,0  ,0   ,0,1},
-                                        {0,0,0   ,0.1,0.9 ,0,0} };
-       return transitionMatrix;
+        double[][] transitionMatrix = {{0,0,0.9 ,0.1,0   ,0,0},
+                {1,0,0   ,0  ,0   ,0,0},
+                {0,1,0   ,0  ,0   ,0,0},
+                {0,0,0.05,0.9,0.05,0,0},
+                {0,0,0   ,0  ,0   ,1,0},
+                {0,0,0   ,0  ,0   ,0,1},
+                {0,0,0   ,0.1,0.9 ,0,0} };
+        return transitionMatrix;
     }
 
     /**
@@ -215,7 +215,7 @@ public class Main {
 
             String st;
             while ((st = br.readLine()) != null ){
-                System.out.println(st);
+                //System.out.println(st);
                 sb1.append(st);
             }
         }
