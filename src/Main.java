@@ -209,6 +209,7 @@ public class Main {
 
     public  static String reader(int iteration) {
         File file = new File("C:\\Users\\thoma\\Bachelor\\genome"+iteration+".txt");
+        //File file = new File("E:\\Uni\\Dat\\HMM_bioinformatics\\genome1.txt");
         StringBuilder sb1 = new StringBuilder();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
