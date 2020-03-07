@@ -9,8 +9,11 @@ public class Main {
 
     public static void main(String[] args) {
         for (int i = 1; i < 6; i++) {
+            System.out.println("Doing nr:"+i);
             viterbi(transitions(),emission(),start(),i,decodeMap());
         }
+        //viterbi(exampleTransitions(),exampleEmission(),exampleStart(),1,decodeMap());
+
     }
 
     /**
@@ -25,30 +28,28 @@ public class Main {
     public static double viterbi( double[][] transition, double[][] emission, double[] start, int iteration, Map decodeMap ){
         int states = transition.length;
         String gene = reader(iteration);
+        //String gene = "CCCCA";
         int inputLength = gene.length(); //length of input
         double [][] delta = new double[states][inputLength];
         int [][] psi = new int[states][inputLength];
-        for (int i = 0; i <states ; i++) {
+        for (int i = 0; i <states ; i++) {                      //Init step
             delta[i][0] = log(start[i]) + log(emission[i][1]);
             //System.out.println(delta[i][0]);
 
         }
-        for (int j = 0; j < inputLength-1 ; j++) {
+        for (int j = 1; j < inputLength ; j++) {
             for (int i = 0; i <states ; i++) {
                 psi[i][j]=-1;
-                //System.out.println("input:"+j);
-                //System.out.println("state:"+i);
-
                 double maxTransProb = Double.NEGATIVE_INFINITY;
                 for (int k = 0; k <states ; k++) {
-                    double transitionProb = log(transition[k][i])+delta[k][j];
+                    double transitionProb = log(transition[k][i])+delta[k][j-1];
                     if(maxTransProb < transitionProb){
                         psi[i][j] = k;
                         maxTransProb = transitionProb;
                     }
                 }
-                delta[i][j+1]= maxTransProb+log(emissionProbability(i,gene.charAt(j)));
-                //System.out.println(delta[i][j]);
+                delta[i][j]= maxTransProb+log(emissionProbability(i,gene.charAt(j)));
+
                 if(j % 10000 == 0 && i ==0){
                     System.out.println("I'm alive, don't kill me yet!: "+ j);
                 }
@@ -56,18 +57,17 @@ public class Main {
         }
         int [] qstar = new int[inputLength];
         double possibleMaxLikelihood = delta[0][inputLength-1];
-        int possibleIndex =0;
+        int possibleIndex = 0;
         for (int i = 0; i <states ; i++) {
 
-            if(possibleMaxLikelihood<delta[i][inputLength-1]){
+            if(possibleMaxLikelihood <= delta[i][inputLength-1]){
                 possibleMaxLikelihood = delta[i][inputLength-1];
                 possibleIndex = i;
             }
+
         }
 
         //Printing below
-        System.out.println("Done John, starting print");
-        //System.out.println(builder2);
         try{
             FileWriter outputFileWriter = new FileWriter("output"+iteration+".txt");
 
@@ -76,23 +76,31 @@ public class Main {
                 StringBuilder sb1 = new StringBuilder();
 
                 for (int i = 0; i <inputLength  ; i++) {
-                    sb1.append(" "+ (int) delta[j][i]);
+                    sb1.append(" "+  delta[j][i]);
                     //builder2 += "  "+psi[j][i];
                 }
-                outputFileWriter.write("J"+j+" "+sb1.toString());
+                outputFileWriter.write(sb1.toString());
                 outputFileWriter.write("\n");
                 //System.out.println(j+sb1.toString());
                 //sb1.append("\n");
                 //builder2 += "\n";
 
             }
+            //System.out.println(builder2);
+            outputFileWriter.close();
         }
         catch (Exception e){}
+
         qstar[inputLength-1] = possibleIndex;
+
+        //System.out.println("possible: "+possibleIndex);
         for (int j = inputLength-2; j >-1 ; j--) {       //Backtracking through the most likely path. Remember to visit 0...
-            qstar[j] = psi[qstar[j+1]][j];
+            qstar[j] = psi[qstar[j+1]][j+1];
         }
-        StringBuilder stateStringBuilder = new StringBuilder();    //Stringuilder
+
+
+        //System.out.println("Q star: "+q);
+        StringBuilder stateStringBuilder = new StringBuilder();    //Stringbuilder
         StringBuilder decodeStringBuilder = new StringBuilder();
         Map<Integer,Integer> stateCounter = new HashMap<>();
         for (int i = 0; i < 7; i++) {
@@ -104,13 +112,15 @@ public class Main {
             stateStringBuilder.append(qstar[j]);
             decodeStringBuilder.append(decodeMap.get(qstar[j]));
         }
-        System.out.println();
+        //System.out.println();
         System.out.println(stateCounter);
         try {
             FileWriter fw = new FileWriter("states"+iteration+".txt");      //Writing states to a file
             fw.write(stateStringBuilder.toString());
             FileWriter fw2 = new FileWriter("decoding"+iteration+".txt");   //Writing decoded states to file
             fw2.write(decodeStringBuilder.toString());
+            fw.close();
+            fw2.close();
         }
         catch(Exception e){}
 
@@ -182,9 +192,28 @@ public class Main {
             default:
 
         }
-        double[][] emissionProbabilities = emission();
+        double[][] emissionProbabilities = emission();   //TODO change back to emission
         return emissionProbabilities[state][index];
     }
+
+    public static double[][] exampleTransitions(){
+        double[][] transitionMatrix = {{0.9 , 0.1},     // H -> H   H ->L
+                                        {0.2, 0.8}};    // L-> H    L -> L
+        return transitionMatrix;
+    }
+
+    public static double[] exampleStart(){
+        double[] startingState = {0.5, 0.5};
+        return startingState;
+    }
+
+    public static double[][] exampleEmission(){
+        double[][] emissionProbabilities = {{0.9, 0.1},         // x = sun|H    x= rain|H
+                                            {0.3, 0.7}};        // x = sun|L   x= rain|L
+
+        return emissionProbabilities;
+    }
+
 
     public static double[] start(){
         double[] startingState = {0,0,0,1,0,0,0};
