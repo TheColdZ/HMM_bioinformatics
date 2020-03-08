@@ -10,7 +10,7 @@ public class Backward {
     public Backward(String observed, double[] pi, double[][] transition, double[][] emission){
         this.N = transition[0].length;
         this.T = transition.length;
-        this.beta = new double[T][N];
+        this.beta = new double[N][T];
         this.pi = pi;
         this.transition = transition;
         this.emission = emission;

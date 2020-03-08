@@ -10,7 +10,7 @@ public class Forward {
     public Forward(String observed, double[] pi, double[][] transition, double[][] emission){
         this.N = transition[0].length;
         this.T = transition.length;
-        this.alpha = new double[T][N];
+        this.alpha = new double[N][T];
         this.pi = pi;
         this.transition = transition;
         this.emission = emission;
@@ -20,15 +20,15 @@ public class Forward {
     public double[][] calculateAlpha(){
         char firstObserved = observed.charAt(0);
         for (int i = 0; i < N; i++) {
-            alpha[1][i] = pi[i]*emissionProbability(i,firstObserved);
+            alpha[i][1] = pi[i]*emissionProbability(i,firstObserved);
         }
         for (int t = 0; t < T-2; t++) {
             for (int j = 0; j < N; j++) {
                 double sum = 0;
                 for (int i = 0; i < N; i++) {
-                    sum += alpha[t][i] * transition[i][j];
+                    sum += alpha[i][t] * transition[i][j];
                 }
-                alpha[t+1][j] = sum*emissionProbability(j,observed.charAt(t+1));
+                alpha[j][t+1] = sum*emissionProbability(j,observed.charAt(t+1));
             }
         }
         return alpha;
