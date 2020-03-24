@@ -18,13 +18,12 @@ public class Main {
 
     /**
      *
-     * @param transition   a quadratic transistion matrix
-     * @param emission  an emission probability matrix, |states| x |emission alphabet|
+     * @param transition a quadratic transition matrix
+     * @param emission an emission probability matrix, |states| x |emission alphabet|
      * @param start vector of starting probabilities.
      * @param iteration to name the files according to iteration
      * @return
      */
-
     public static double viterbi( double[][] transition, double[][] emission, double[] start, int iteration, Map decodeMap ){
         int states = transition.length;
         String gene = reader(iteration);
