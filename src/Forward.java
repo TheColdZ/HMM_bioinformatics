@@ -17,18 +17,22 @@ public class Forward {
         this.observed = observed;
     }
 
+    /**
+     * Forward algorithm, that returns the alpha values as a T x N matrix
+     * @return alpha
+     */
     public double[][] calculateAlpha(){
         char firstObserved = observed.charAt(0);
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++) { //initialization
             alpha[i][1] = pi[i]*emissionProbability(i,firstObserved);
         }
-        for (int t = 0; t < T-2; t++) {
+        for (int t = 1; t < T-1; t++) {
             for (int j = 0; j < N; j++) {
                 double sum = 0;
                 for (int i = 0; i < N; i++) {
-                    sum += alpha[i][t] * transition[i][j];
+                    sum += alpha[i][t-1] * transition[i][j];
                 }
-                alpha[j][t+1] = sum*emissionProbability(j,observed.charAt(t+1));
+                alpha[j][t] = sum*emissionProbability(j,observed.charAt(t));
             }
         }
         return alpha;
@@ -47,7 +51,6 @@ public class Forward {
             case "T": index = 3;
                 break;
             default:
-
         }
         return emission[state][index];
     }
