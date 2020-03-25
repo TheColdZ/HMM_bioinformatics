@@ -24,7 +24,7 @@ public class Main {
      * @param iteration to name the files according to iteration
      * @return
      */
-    public static double viterbi( double[][] transition, double[][] emission, double[] start, int iteration, Map decodeMap ){
+    public static void viterbi( double[][] transition, double[][] emission, double[] start, int iteration, Map decodeMap ){
         int states = transition.length;
         String gene = reader(iteration);
         //String gene = "CCCCA";
@@ -124,7 +124,7 @@ public class Main {
         catch(Exception e){}
 
 
-        return 0.1;
+        //return 42;
     }
 
     /**

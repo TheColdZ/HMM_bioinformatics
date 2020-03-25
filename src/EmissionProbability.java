@@ -7,6 +7,7 @@ public class EmissionProbability {
     public EmissionProbability(double[][] emission){
         this.emission = emission;
     }
+
     public double lookup(int state, char letter){
         String match = String.valueOf(letter);
         int index = -1;

@@ -1,3 +1,6 @@
+/**
+ * Class to handle the alpha and beta algorithms of the forward backward procedure.
+ */
 public class ForwardBackward {
     private double[][] alpha;
     private double[][] beta;
@@ -25,12 +28,15 @@ public class ForwardBackward {
      */
     public double[][] calculateAlpha(){
         char firstObserved = observed.charAt(0);
+        // alpha_1 =
         for (int i = 0; i < N; i++) { //initialization
             alpha[i][0] = pi[i]*E.lookup(i,firstObserved);
         }
+        // alpha_t =
         for (int t = 1; t < T; t++) {
             for (int j = 0; j < N; j++) {
                 double sum = 0;
+                System.out.println("alphacalc: params t "+t+", j "+j);
                 for (int i = 0; i < N; i++) {
                     sum += alpha[i][t-1] * P[i][j];
                 }
@@ -50,7 +56,7 @@ public class ForwardBackward {
             beta[i][T-1] = 1;
         }
         //beta_t (i) = sum_j^N P[i,j] E[j,x_{t+1}] beta_{t+1} (j)
-        for (int t = T-2; t > 0; t--) {
+        for (int t = T-2; t >= 0; t--) {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     beta[i][t] += P[i][j] * E.lookup(j,observed.charAt(t+1)) * beta[j][t+1];
