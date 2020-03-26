@@ -1,0 +1,3 @@
+;Some info to keep consistent.
+>Example:
+CCCCA
