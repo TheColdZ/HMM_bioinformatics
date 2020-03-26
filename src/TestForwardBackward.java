@@ -26,8 +26,8 @@ public class TestForwardBackward {
      */
     private boolean compareFactor(double n1, double n2, double factor){
         double standardDeviation = n2*factor;
-        return n2-standardDeviation <= n1 || n1 <= n2+standardDeviation;        //TODO burde det ikke være &&?
-    }
+        return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;        //TODO burde det ikke være &&?
+}
 
 
     @Test
