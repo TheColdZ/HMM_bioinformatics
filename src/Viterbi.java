@@ -38,22 +38,27 @@ public class Viterbi {
             delta[i][0] = log(pi[i]) + log(E.lookup(i,firstObserved));
             psi[i][0] = 0;
         }
-
-
         //Recursion
         for (int k = 1; k < inputLength ; k++) {
-            for (int i = 0; i <states ; i++) {    //1<=i<=N
+            for (int i = 0; i < states ; i++) {    //1<=i<=N
                 psi[i][k]=-1;
                 double maxTransitionProbability = Double.NEGATIVE_INFINITY;
 
                 for (int j = 0; j <states ; j++) {
-                    double transitionProbability = log(P[j][i])+delta[j][k-1];
+                    double transitionProbability = log(P[i][j])+delta[j][k-1];
                     if(maxTransitionProbability < transitionProbability){
                         maxTransitionProbability = transitionProbability;
                         psi[i][k] = j;
                     }
+                    System.out.println("k,i,j =      "+k+","+i+","+j);
+                    System.out.println(" P =         "+P[i][j]);
+                    System.out.println(" delta =     "+Math.exp(delta[j][k-1]));
+                    System.out.println(" prod =      "+Math.exp(transitionProbability));
+                    System.out.println(" E[i,k] =    "+E.lookup(i,observed.charAt(k)));
+                    System.out.println(" next =      "+Math.exp(transitionProbability) * E.lookup(i,observed.charAt(k)));
                 }
-
+                System.out.println("Delta["+i+","+k+"] = "+Math.exp(maxTransitionProbability)*E.lookup(i,observed.charAt(k)));
+                System.out.println();
                 delta[i][k]= maxTransitionProbability + log(E.lookup(i,observed.charAt(k)));
 
                 if(k % 10000 == 0 && i ==0){    //TODO debugging/progress tracker, delete at some point.
@@ -116,11 +121,6 @@ public class Viterbi {
     public int[] getSk(){
         return sk;
     }
-
-
-
-
-
 
 
 }
