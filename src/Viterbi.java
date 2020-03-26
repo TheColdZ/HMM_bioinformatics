@@ -42,8 +42,8 @@ public class Viterbi {
         for (int k = 1; k < inputLength ; k++) {
             for (int i = 0; i < states ; i++) {    //1<=i<=N
                 psi[i][k]=-1;
-                double maxTransitionProbability = Double.NEGATIVE_INFINITY;
 
+                double maxTransitionProbability = Double.NEGATIVE_INFINITY;
                 for (int j = 0; j <states ; j++) {
                     double transitionProbability = log(P[i][j])+delta[j][k-1];
                     if(maxTransitionProbability < transitionProbability){

@@ -83,22 +83,22 @@ public class ViterbiTest {
 
         EmissionProbability E = new EmissionProbability(emissionMatr);
         this.viterbi = new Viterbi(transition,E,start);
-        //FileReader fr = new FileReader();
-        //String observed = fr.readFile("BachelorRainExample");
-        String observed = "CCCCA";
+        FileReader fr = new FileReader();
+        String observed = fr.readFile("BachelorRainExample");
+        //String observed = "CCCCA";
         viterbi.calculate(observed);
         double[][] delta = viterbi.getDelta();
-        double[][] preCalculatedDelta = newPreCalculatedDelta();
+        double[][] preCalculatedDelta = preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator();
         boolean debug = false;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
-                boolean cmp = compareFactor(Math.exp(delta[i][j]),preCalculatedDelta[i][j],0.00001);
+                boolean cmp = compareFactor(Math.exp(delta[i][j]),preCalculatedDelta[i][j],0.001);
                 if(!cmp) {
                     System.out.println("delta:        " + Math.exp(delta[i][j]));
                     System.out.println("preCalcDelta: " + preCalculatedDelta[i][j]);
                 }
                 //assert(cmp);
-                //assert(compareFactor(delta[i][j],preCalculatedDelta[i][j],0.01));
+                assert(compareFactor(delta[i][j],preCalculatedDelta[i][j],0.0000001));
             }
         }
         FileWriter fw = new FileWriter();
@@ -108,18 +108,18 @@ public class ViterbiTest {
         fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
     }
 
-    private double[][] preCalculatedDelta(){
+    private double[][] preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator(){
         double[][] preCalculatedDelta = new double[2][5];
-        preCalculatedDelta[0][0] = 0.05;
-        preCalculatedDelta[1][0] = 0.35;
-        preCalculatedDelta[0][1] = 0.007;
-        preCalculatedDelta[1][1] = 0.196;
-        preCalculatedDelta[0][2] = 0.0039;
-        preCalculatedDelta[1][2] = 0.1098;
-        preCalculatedDelta[0][3] = 0.0022;
-        preCalculatedDelta[1][3] = 0.0615;
-        preCalculatedDelta[0][4] = 0.0012;
-        preCalculatedDelta[1][4] = 0.0148;
+        preCalculatedDelta[0][0] = Math.log(0.05);
+        preCalculatedDelta[1][0] = Math.log(0.35);
+        preCalculatedDelta[0][1] = Math.log(0.0045);
+        preCalculatedDelta[1][1] = Math.log(0.196);
+        preCalculatedDelta[0][2] = Math.log(0.00196);
+        preCalculatedDelta[1][2] = Math.log(0.10976);
+        preCalculatedDelta[0][3] = Math.log(0.0010976);
+        preCalculatedDelta[1][3] = Math.log(0.0614656);
+        preCalculatedDelta[0][4] = Math.log(0.005531904);
+        preCalculatedDelta[1][4] = Math.log(0.014751744);
         return preCalculatedDelta;
     }
     private double[][] newPreCalculatedDelta(){
