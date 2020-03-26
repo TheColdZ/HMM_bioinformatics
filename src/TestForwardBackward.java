@@ -10,7 +10,7 @@ public class TestForwardBackward {
                         {0.2, 0.8}};    // L-> H    L -> L
         double[] pi = {0.5, 0.5};
         double[][] Ematr = {{0.9, 0.1},         // x = sun|H    x= rain|H
-                            {0.3, 0.7}};        // x = sun|L   x= rain|L
+                            {0.3, 0.7}};        // x = sun|L    x= rain|L
         EmissionProbability E = new EmissionProbability(Ematr);
         String obs = "CCCCA";
         FB = new ForwardBackward(obs,pi,P,E);
@@ -26,7 +26,7 @@ public class TestForwardBackward {
      */
     private boolean compareFactor(double n1, double n2, double factor){
         double standardDeviation = n2*factor;
-        return n2-standardDeviation <= n1 || n1 <= n2+standardDeviation;        //TODO burde det ikke være &&?
+        return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;
     }
 
 
@@ -34,11 +34,18 @@ public class TestForwardBackward {
     public void TestAlpha(){
         double[][] preCalculatedAlpha = PreCalculatedAlpha();
         double[][] alpha = FB.calculateAlpha();
+        boolean err = false;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
-                assert(compareFactor(alpha[i][j],preCalculatedAlpha[i][j],0.001));
+                boolean cmp = compareFactor(alpha[i][j],preCalculatedAlpha[i][j],0.001);
+                if(!cmp){
+                    System.out.println("Expected: "+preCalculatedAlpha[i][j]+" but got: "+alpha[i][j]+" at alpha["+i+","+j+"]");
+                    err = true;
+                }
+                //assert(cmp);
             }
         }
+        assert(!err);
     }
 
     @Test
@@ -62,8 +69,8 @@ public class TestForwardBackward {
         preCalculatedAlpha[1][2] = 0.112525;
         preCalculatedAlpha[0][3] = 0.00270275;
         preCalculatedAlpha[1][3] = 0.0633658;
-        preCalculatedAlpha[0][4] = 0.00151056;
-        preCalculatedAlpha[1][4] = 0.035674;
+        preCalculatedAlpha[0][4] = 0.0135950715;
+        preCalculatedAlpha[1][4] = 0.015288745;
         return preCalculatedAlpha;
     }
     private double[][] PreCalculatedBeta(){

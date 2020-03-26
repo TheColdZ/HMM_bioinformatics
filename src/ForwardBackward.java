@@ -36,11 +36,23 @@ public class ForwardBackward {
         for (int t = 1; t < T; t++) {
             for (int j = 0; j < N; j++) {
                 double sum = 0;
-                System.out.println("alphacalc: params t "+t+", j "+j);
                 for (int i = 0; i < N; i++) {
-                    sum += alpha[i][t-1] * P[i][j];
+                    sum += alpha[i][t-1] * P[i][j];/*
+                    if(t == 4){
+                        System.out.println("alpha["+i+",4]="+alpha[i][t-1]);
+                        System.out.println("P["+i+","+j+"]="+P[i][j]);
+                        System.out.println("sum="+sum);
+                    }
+                    */
                 }
                 alpha[j][t] = sum * E.lookup(j,observed.charAt(t));
+                /*
+                if(t == 4) {
+                    System.out.println("E[" + j + "," + observed.charAt(t) + "]=" + E.lookup(j, observed.charAt(t)));
+                    System.out.println("Done alpha[j][t]="+alpha[j][t]);
+                    System.out.println();
+                }
+                */
             }
         }
         return alpha;
