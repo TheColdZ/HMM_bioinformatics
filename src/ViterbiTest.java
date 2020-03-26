@@ -9,31 +9,7 @@ public class ViterbiTest {
 
     @Before
     public void setup(){
-        double[][] transition = {{0,0,0.9 ,0.1,0   ,0,0},
-                    {1,0,0   ,0  ,0   ,0,0},
-                    {0,1,0   ,0  ,0   ,0,0},
-                    {0,0,0.05,0.9,0.05,0,0},
-                    {0,0,0   ,0  ,0   ,1,0},
-                    {0,0,0   ,0  ,0   ,0,1},
-                    {0,0,0   ,0.1,0.9 ,0,0} };
-        double[][] emission ={{0.3 ,0.25,0.25,0.2},
-                    {0.2 ,0.35,0.15,0.3},
-                    {0.4 ,0.15,0.2 ,0.25},
-                    {0.25,0.25,0.25,0.25},
-                    {0.2 ,0.4 ,0.3 ,0.1},
-                    {0.3 ,0.2 ,0.3 ,0.20},
-                    {0.15,0.3 ,0.2 ,0.35}};
 
-        double[] start =  {0,0,0,1,0,0,0};
-
-        Map decodeMap =  new HashMap<Integer, String>(){{ put(0,"C");
-                put(1,"C");
-                put(2,"C");
-                put(3,"N");
-                put(4,"R");
-                put(5,"R");
-                put(6,"R");}};
-        this.viterbi = new Viterbi(transition,emission,start,decodeMap);
     }
 
     /**
@@ -51,7 +27,43 @@ public class ViterbiTest {
 
     @Test
     public void viterbiTestFirstFile(){
-        viterbi.viterbi("genome1");
+        double[][] transition = {{0,0,0.9 ,0.1,0   ,0,0},
+                {1,0,0   ,0  ,0   ,0,0},
+                {0,1,0   ,0  ,0   ,0,0},
+                {0,0,0.05,0.9,0.05,0,0},
+                {0,0,0   ,0  ,0   ,1,0},
+                {0,0,0   ,0  ,0   ,0,1},
+                {0,0,0   ,0.1,0.9 ,0,0} };
+        double[][] emissionMatr ={{0.3 ,0.25,0.25,0.2},
+                {0.2 ,0.35,0.15,0.3},
+                {0.4 ,0.15,0.2 ,0.25},
+                {0.25,0.25,0.25,0.25},
+                {0.2 ,0.4 ,0.3 ,0.1},
+                {0.3 ,0.2 ,0.3 ,0.20},
+                {0.15,0.3 ,0.2 ,0.35}};
+
+        double[] start =  {0,0,0,1,0,0,0};
+
+        Map decodeMap =  new HashMap<Integer, String>(){{ put(0,"C");
+            put(1,"C");
+            put(2,"C");
+            put(3,"N");
+            put(4,"R");
+            put(5,"R");
+            put(6,"R");}};
+
+        EmissionProbability E = new EmissionProbability(emissionMatr);
+        this.viterbi = new Viterbi(transition,E,start);
+        FileReader fr = new FileReader();
+        String observed = fr.readFile("genome1");
+        viterbi.calculate(observed);
+        double[][] delta = viterbi.getDelta();
+        FileWriter fw = new FileWriter();
+        int[] sk = viterbi.getSk();
+        fw.writeDetltaToFile("BachelorRainExample",delta);
+        fw.writeStatesToFile("BachelorRainExample",sk);
+        fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
+
     }
 
 
@@ -61,7 +73,7 @@ public class ViterbiTest {
         double[][] transition = {{0.9 , 0.1},     // H -> H   H ->L
                                 {0.2, 0.8}};    // L-> H    L -> L
         double[] start = {0.5, 0.5};
-        double[][] emission = {{0.9, 0.1},         // x = sun|H    x= rain|H
+        double[][] emissionMatr = {{0.9, 0.1},         // x = sun|H    x= rain|H
                                 {0.3, 0.7}};        // x = sun|L   x= rain|L
 
 
@@ -69,8 +81,11 @@ public class ViterbiTest {
             put(1,"C");
            }};
 
-        this.viterbi = new Viterbi(transition,emission,start,decodeMap);
-        viterbi.viterbi("BachelorRainExample");
+        EmissionProbability E = new EmissionProbability(emissionMatr);
+        this.viterbi = new Viterbi(transition,E,start);
+        FileReader fr = new FileReader();
+        String observed = fr.readFile("BachelorRainExample");
+        viterbi.calculate(observed);
         double[][] delta = viterbi.getDelta();
         double[][] preCalculatedDelta = preCalculatedDelta();
         for (int i = 0; i < 2; i++) {
@@ -81,6 +96,11 @@ public class ViterbiTest {
                 assert(compareFactor(delta[i][j],preCalculatedDelta[i][j],0.01));
             }
         }
+        FileWriter fw = new FileWriter();
+        int[] sk = viterbi.getSk();
+        fw.writeDetltaToFile("BachelorRainExample",delta);
+        fw.writeStatesToFile("BachelorRainExample",sk);
+        fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
 
 
     }
