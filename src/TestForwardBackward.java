@@ -9,11 +9,14 @@ public class TestForwardBackward {
         double[][] P = {{0.9, 0.1},     // H -> H   H ->L
                         {0.2, 0.8}};    // L-> H    L -> L
         double[] pi = {0.5, 0.5};
-        double[][] Ematr = {{0.9, 0.1},         // x = sun|H    x= rain|H
+        double[][] E = {{0.9, 0.1},         // x = sun|H    x= rain|H
                             {0.3, 0.7}};        // x = sun|L    x= rain|L
-        EmissionProbability E = new EmissionProbability(Ematr);
         String obs = "CCCCA";
-        FB = new ForwardBackward(obs,pi,P,E);
+        String[] obs_arr = new String[1];
+        obs_arr[0] = obs;
+        Conversion conv = new DNA_conversion();
+        int[] obs_int_arr = conv.observables(obs_arr).get(0);
+        FB = new ForwardBackward(obs_int_arr,pi,P,E);
     }
 
 

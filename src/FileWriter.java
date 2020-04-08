@@ -3,14 +3,10 @@ import java.util.Map;
 public class FileWriter {
 
 
-    public void writeStatesToFile(String filename, int[] sk) {
-        StringBuilder stateStringBuilder = new StringBuilder();    //Stringbuilder
-        for (int j = 0; j < sk.length; j++) {
-            stateStringBuilder.append(sk[j]);
-        }
+    public void writeStatesToFile(String filename, String sk) {
         try {
             java.io.FileWriter fw = new java.io.FileWriter("states_"+filename+".txt");      //Writing states to a file
-            fw.write(stateStringBuilder.toString());
+            fw.write(sk);
             fw.close();
         }
         catch(Exception e){}

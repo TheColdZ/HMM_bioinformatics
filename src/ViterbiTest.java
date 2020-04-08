@@ -1,11 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ViterbiTest {
-    public Viterbi viterbi;
+    private Viterbi viterbi;
 
     @Before
     public void setup(){
@@ -34,13 +35,15 @@ public class ViterbiTest {
                 {0,0,0   ,0  ,0   ,1,0},
                 {0,0,0   ,0  ,0   ,0,1},
                 {0,0,0   ,0.1,0.9 ,0,0} };
-        double[][] emissionMatr ={{0.3 ,0.25,0.25,0.2},
-                                {0.2 ,0.35,0.15,0.3},
-                                {0.4 ,0.15,0.2 ,0.25},
-                                {0.25,0.25,0.25,0.25},
-                                {0.2 ,0.4 ,0.3 ,0.1},
-                                {0.3 ,0.2 ,0.3 ,0.20},
-                                {0.15,0.3 ,0.2 ,0.35}};
+
+        double[][] E ={{0.3 ,0.25,0.25,0.2},
+                {0.2 ,0.35,0.15,0.3},
+                {0.4 ,0.15,0.2 ,0.25},
+                {0.25,0.25,0.25,0.25},
+                {0.2 ,0.4 ,0.3 ,0.1},
+                {0.3 ,0.2 ,0.3 ,0.20},
+                {0.15,0.3 ,0.2 ,0.35}};
+
 
         double[] start =  {0,0,0,1,0,0,0};
 
@@ -52,16 +55,21 @@ public class ViterbiTest {
             put(5,"R");
             put(6,"R");}};
 
-        EmissionProbability E = new EmissionProbability(emissionMatr);
         this.viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
         String observed = fr.readFile("genome1");
-        viterbi.calculate(observed);
+        String[] obs = new String[1];
+        obs[0] = observed;
+        Conversion conv = new DNA_conversion();
+        viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
         FileWriter fw = new FileWriter();
         int[] sk = viterbi.getSk();
+        ArrayList<int[]> temp = new ArrayList<>();
+        temp.add(sk);
+        String[] sk_string = conv.states(temp);
         fw.writeDetltaToFile("BachelorRainExample",delta);
-        fw.writeStatesToFile("BachelorRainExample",sk);
+        fw.writeStatesToFile("BachelorRainExample",sk_string[0]);
         fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
 
     }
@@ -73,20 +81,22 @@ public class ViterbiTest {
         double[][] transition = {{0.9, 0.1},     // H -> H   H ->L
                                  {0.2, 0.8}};    // L-> H    L -> L
         double[] start = {0.5, 0.5};
-        double[][] emissionMatr = {{0.9, 0.1},         // x = sun|H    x= rain|H
-                                   {0.3, 0.7}};        // x = sun|L   x= rain|L
+        double[][] E = {{0.9, 0.1},         // x = sun|H    x= rain|H
+                        {0.3, 0.7}};        // x = sun|L   x= rain|L
 
 
         Map decodeMap =  new HashMap<Integer, String>(){{ put(0,"C");
             put(1,"C");
            }};
 
-        EmissionProbability E = new EmissionProbability(emissionMatr);
         this.viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
-        String observed = fr.readFile("BachelorRainExample");
-        //String observed = "CCCCA";
-        viterbi.calculate(observed);
+        //String observed = fr.readFile("BachelorRainExample");
+        String observed = "RRRRS";
+        String[] obs = new String[1];
+        obs[0] = observed;
+        Conversion conv = new weather_conversion();
+        viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
         double[][] preCalculatedDelta = preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator();
         boolean debug = false;
@@ -97,46 +107,44 @@ public class ViterbiTest {
                     System.out.println("delta:        " + Math.exp(delta[i][j]));
                     System.out.println("preCalcDelta: " + preCalculatedDelta[i][j]);
                 }
-                //assert(cmp);
-                assert(compareFactor(delta[i][j],preCalculatedDelta[i][j],0.0000001));
+                assert(cmp);
             }
         }
         FileWriter fw = new FileWriter();
         int[] sk = viterbi.getSk();
+        ArrayList<int[]> temp = new ArrayList<>();
+        temp.add(sk);
+        String[] sk_string = conv.states(temp);
         fw.writeDetltaToFile("BachelorRainExample",delta);
-        fw.writeStatesToFile("BachelorRainExample",sk);
+        fw.writeStatesToFile("BachelorRainExample",sk_string[0]);
         fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
     }
 
 
     private double[][] preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator(){
         double[][] preCalculatedDelta = new double[2][5];
-        preCalculatedDelta[0][0] = Math.log(0.05);
-        preCalculatedDelta[1][0] = Math.log(0.35);
-        preCalculatedDelta[0][1] = Math.log(0.0045);
-        preCalculatedDelta[1][1] = Math.log(0.196);
-        preCalculatedDelta[0][2] = Math.log(0.00196);
-        preCalculatedDelta[1][2] = Math.log(0.10976);
-        preCalculatedDelta[0][3] = Math.log(0.0010976);
-        preCalculatedDelta[1][3] = Math.log(0.0614656);
-        preCalculatedDelta[0][4] = Math.log(0.005531904);
-        preCalculatedDelta[1][4] = Math.log(0.014751744);
-        return preCalculatedDelta;
-    }
-    private double[][] newPreCalculatedDelta(){
-        double[][] preCalculatedDelta = new double[2][5];
         preCalculatedDelta[0][0] = 0.05;
         preCalculatedDelta[1][0] = 0.35;
         preCalculatedDelta[0][1] = 0.0045;
-        preCalculatedDelta[1][1] = 0.189;
-        preCalculatedDelta[0][2] = 0.00189;
-        preCalculatedDelta[1][2] = 0.10584;
-        preCalculatedDelta[0][3] = 0.0010584;
-        preCalculatedDelta[1][3] = 0.0592704;
-        preCalculatedDelta[0][4] = 0.00623434;
-        preCalculatedDelta[1][4] = 0.0166249;
+        preCalculatedDelta[1][1] = 0.196;
+        preCalculatedDelta[0][2] = 0.00196;
+        preCalculatedDelta[1][2] = 0.10976;
+        preCalculatedDelta[0][3] = 0.0010976;
+        preCalculatedDelta[1][3] = 0.0614656;
+        preCalculatedDelta[0][4] = 0.005531904;
+        preCalculatedDelta[1][4] = 0.014751744;
         return preCalculatedDelta;
     }
 
-
 }
+/*
+        TODO map print for debugging, delete at some point
+        Map<Integer,Integer> stateCounter = new HashMap<>();
+        for (int i = 0; i < states; i++) {
+            stateCounter.put(i,0);
+        }
+        for (int j = 0; j < inputLength; j++) {
+            stateCounter.put(sk[j],stateCounter.get(sk[j])+1);
+        }
+        System.out.println(stateCounter);
+ */
