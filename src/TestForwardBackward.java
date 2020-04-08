@@ -14,8 +14,8 @@ public class TestForwardBackward {
         String obs = "CCCCA";
         String[] obs_arr = new String[1];
         obs_arr[0] = obs;
-        Conversion conv = new DNA_conversion(obs_arr);
-        int[] obs_int_arr = conv.getObservables().get(0);
+        Conversion conv = new DNA_conversion();
+        int[] obs_int_arr = conv.observables(obs_arr).get(0);
         FB = new ForwardBackward(obs_int_arr,pi,P,E);
     }
 

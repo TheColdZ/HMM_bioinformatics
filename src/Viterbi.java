@@ -1,6 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Viterbi {
     private double[][] P;
     private double[][] E;
@@ -52,19 +49,7 @@ public class Viterbi {
                         maxTransitionProbability = transitionProbability;
                         psi[i][k] = j;
                     }
-                    /*
-                    System.out.println("k,i,j =      "+k+","+i+","+j);
-                    System.out.println(" P =         "+P[i][j]);
-                    System.out.println(" delta =     "+Math.exp(delta[j][k-1]));
-                    System.out.println(" prod =      "+Math.exp(transitionProbability));
-                    System.out.println(" E[i,k] =    "+E[i][observed[k]]);
-                    System.out.println(" next =      "+Math.exp(transitionProbability) * E[i][observed[k]]);
-                    */
                 }
-                /*
-                System.out.println("Delta["+i+","+k+"] = "+Math.exp(maxTransitionProbability)*E[i][observed[k]]);
-                System.out.println();
-                */
                 delta[i][k]= maxTransitionProbability + log(E[i][observed[k]]);
 
                 if(k % 10000 == 0 && i ==0){    //TODO debugging/progress tracker, delete at some point.
@@ -94,15 +79,6 @@ public class Viterbi {
         this.delta = delta; //used for testing
         this.sk = sk;
 
-        //TODO map print for debugging, delete at some point
-        Map<Integer,Integer> stateCounter = new HashMap<>();
-        for (int i = 0; i < states; i++) {
-            stateCounter.put(i,0);
-        }
-        for (int j = 0; j < inputLength; j++) {
-            stateCounter.put(sk[j],stateCounter.get(sk[j])+1);
-        }
-        System.out.println(stateCounter);
         return sk;
     }
 

@@ -14,9 +14,9 @@ public class CountTrainingTest {
         String[] states = new String[2];
         states[0] = "NNNCC";
         states[1] = "CCNNC";
-        Conversion conversion = new DNA_conversion(observed,states);
-        ArrayList<int[]> observed_converted = conversion.getObservables();
-        ArrayList<int[]> states_converted = conversion.getStates();
+        Conversion conversion = new DNA_conversion();
+        ArrayList<int[]> observed_converted = conversion.observables(observed);
+        ArrayList<int[]> states_converted = conversion.states(states);
         ct = new CountTraining(observed_converted,states_converted,2,2);
     }
 

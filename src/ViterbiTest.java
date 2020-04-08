@@ -57,8 +57,8 @@ public class ViterbiTest {
         String observed = fr.readFile("genome1");
         String[] obs = new String[1];
         obs[0] = observed;
-        Conversion conv = new DNA_conversion(obs);
-        viterbi.calculate(conv.getObservables().get(0));
+        Conversion conv = new DNA_conversion();
+        viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
         FileWriter fw = new FileWriter();
         int[] sk = viterbi.getSk();
@@ -89,8 +89,8 @@ public class ViterbiTest {
         String observed = "CCCCA";
         String[] obs = new String[1];
         obs[0] = observed;
-        Conversion conv = new DNA_conversion(obs);
-        viterbi.calculate(conv.getObservables().get(0));
+        Conversion conv = new DNA_conversion();
+        viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
         double[][] preCalculatedDelta = preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator();
         boolean debug = false;
@@ -127,3 +127,14 @@ public class ViterbiTest {
     }
 
 }
+/*
+        TODO map print for debugging, delete at some point
+        Map<Integer,Integer> stateCounter = new HashMap<>();
+        for (int i = 0; i < states; i++) {
+            stateCounter.put(i,0);
+        }
+        for (int j = 0; j < inputLength; j++) {
+            stateCounter.put(sk[j],stateCounter.get(sk[j])+1);
+        }
+        System.out.println(stateCounter);
+ */

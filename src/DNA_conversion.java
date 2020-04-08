@@ -2,45 +2,11 @@ import java.util.ArrayList;
 
 public class DNA_conversion implements Conversion{
 
-    private ArrayList<int[]> observables;
-    private ArrayList<int[]> states;
-
-    public DNA_conversion(String[] observables, String[] states){
-        int L = observables.length;
-        int K = observables[0].length();
-        this.observables = new ArrayList<>();
-        this.states = new ArrayList<>();
-        for (int i = 0; i < L; i++) {
-            this.observables.add(new int[K]);
-            this.states.add(new int[K]);
-        }
-        for (int l = 0; l < L; l++) {
-            String obs = observables[l];
-            String state = states[l];
-            for (int k = 0; k < K; k++) {
-                this.observables.get(l)[k] = emission_conversion(obs.charAt(k));
-                this.states.get(l)[k] = state_conversion(state.charAt(k));
-            }
-        }
-    }
-    public DNA_conversion(String[] observables){
-        int L = observables.length;
-        int K = observables[0].length();
-        this.observables = new ArrayList<>();
-        this.states = new ArrayList<>();
-        for (int i = 0; i < L; i++) {
-            this.observables.add(new int[K]);
-        }
-        for (int l = 0; l < L; l++) {
-            String obs = observables[l];
-            for (int k = 0; k < K; k++) {
-                this.observables.get(l)[k] = emission_conversion(obs.charAt(k));
-            }
-        }
+    public DNA_conversion(){
     }
 
-    private int emission_conversion(Character c){
-        int res = -1;
+    private int emission_conversion_char_to_int(Character c){
+        int res;
         switch(c){
             case 'A': res = 0;
                 break;
@@ -50,12 +16,12 @@ public class DNA_conversion implements Conversion{
                 break;
             case 'T': res = 3;
                 break;
-            default:
+            default: throw new RuntimeException("conversion error, observable char to int");
         }
         return res;
     }
-    private int state_conversion(Character c){
-        int res = -1;
+    private int state_conversion_char_to_int(Character c){
+        int res;
         switch(c){
             case 'C': res = 0;
                 break;
@@ -63,18 +29,97 @@ public class DNA_conversion implements Conversion{
                 break;
             case 'R': res = 2;
                 break;
-            default:
+            default: throw new RuntimeException("conversion error, state char to int");
+        }
+        return res;
+    }
+    private ArrayList<int[]> convert_str_to_int(String[] strings, boolean observables){
+        int L = strings.length;
+        int K = strings[0].length();
+        ArrayList<int[]> strings_int = new ArrayList<>();
+        for (int i = 0; i < L; i++) {
+            strings_int.add(new int[K]);
+        }
+        for (int l = 0; l < L; l++) {
+            String obs = strings[l];
+            for (int k = 0; k < K; k++) {
+                if(observables) {
+                    strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
+                } else {
+                    strings_int.get(l)[k] = state_conversion_char_to_int(obs.charAt(k));
+                }
+            }
+        }
+        return strings_int;
+    }
+
+
+    @Override
+    public ArrayList<int[]> observables(String[] observables) {
+        return convert_str_to_int(observables,true);
+    }
+
+    @Override
+    public ArrayList<int[]> states(String[] states) {
+        return convert_str_to_int(states,false);
+    }
+
+    private String[] convert_int_to_str(ArrayList<int[]> ints, boolean observables){
+        int L = ints.size();
+        int K = ints.get(0).length;
+        String[] strings = new String[L];
+        for (int l = 0; l < L; l++) {
+            int[] int_row = ints.get(l);
+            StringBuilder sb = new StringBuilder();
+            for (int k = 0; k < K; k++) {
+                if(observables) {
+                    sb.append(emission_conversion_int_to_str(int_row[k]));
+                } else {
+                    sb.append(state_conversion_int_to_str(int_row[k]));
+                }
+            }
+            strings[l] = sb.toString();
+        }
+        return strings;
+    }
+
+    private String emission_conversion_int_to_str(int i) {
+        String res;
+        switch(i){
+            case 0: res = "A";
+                break;
+            case 1: res = "C";
+                break;
+            case 2: res = "G";
+                break;
+            case 3: res = "T";
+                break;
+            default: throw new RuntimeException("conversion error, observable int to str");
+        }
+        return res;
+    }
+
+    private String state_conversion_int_to_str(int i) {
+        String res;
+        switch(i){
+            case 0: res = "C";
+                break;
+            case 1: res = "N";
+                break;
+            case 2: res = "R";
+                break;
+            default: throw new RuntimeException("conversion error, state int to str");
         }
         return res;
     }
 
     @Override
-    public ArrayList<int[]> getObservables() {
-        return observables;
+    public String[] observables(ArrayList<int[]> observables) {
+        return convert_int_to_str(observables,true);
     }
 
     @Override
-    public ArrayList<int[]> getStates() {
-        return states;
+    public String[] states(ArrayList<int[]> states) {
+        return convert_int_to_str(states,false);
     }
 }
