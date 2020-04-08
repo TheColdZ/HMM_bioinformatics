@@ -4,16 +4,16 @@
 public class ForwardBackward {
     private double[][] alpha;
     private double[][] beta;
-    private EmissionProbability E;
+    private double[][] E;
     private double[][] P;
     private double[] pi;
-    private String observed;
+    private int[] observed;
     private int N; //nr of states
     private int K; //nr of observations
 
-    public ForwardBackward(String observed, double[] pi, double[][] P, EmissionProbability E){
+    public ForwardBackward(int[] observed, double[] pi, double[][] P, double[][] E){
         this.N = P.length; //nr of states
-        this.K = observed.length();
+        this.K = observed.length;
         this.alpha = new double[N][K];
         this.beta = new double[N][K];
         this.pi = pi;
@@ -27,10 +27,10 @@ public class ForwardBackward {
      * @return alpha
      */
     public double[][] calculateAlpha(){
-        char firstObserved = observed.charAt(0);
+        int firstObserved = observed[0];
         // alpha_1 =
         for (int i = 0; i < N; i++) { //initialization
-            alpha[i][0] = pi[i]*E.lookup(i,firstObserved);
+            alpha[i][0] = pi[i]*E[i][firstObserved];
         }
         // alpha_t =
         for (int t = 1; t < K; t++) {
@@ -45,7 +45,7 @@ public class ForwardBackward {
                     }
                     */
                 }
-                alpha[j][t] = sum * E.lookup(j,observed.charAt(t));
+                alpha[j][t] = sum * E[j][observed[t]];
                 /*
                 if(t == 4) {
                     System.out.println("E[" + j + "," + observed.charAt(t) + "]=" + E.lookup(j, observed.charAt(t)));
@@ -71,7 +71,7 @@ public class ForwardBackward {
         for (int t = K -2; t >= 0; t--) {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    beta[i][t] += P[i][j] * E.lookup(j,observed.charAt(t+1)) * beta[j][t+1];
+                    beta[i][t] += P[i][j] * E[j][observed[t+1]] * beta[j][t+1];
                 }
             }
         }

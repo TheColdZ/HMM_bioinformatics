@@ -34,7 +34,7 @@ public class ViterbiTest {
                 {0,0,0   ,0  ,0   ,1,0},
                 {0,0,0   ,0  ,0   ,0,1},
                 {0,0,0   ,0.1,0.9 ,0,0} };
-        double[][] emissionMatr ={{0.3 ,0.25,0.25,0.2},
+        double[][] E ={{0.3 ,0.25,0.25,0.2},
                 {0.2 ,0.35,0.15,0.3},
                 {0.4 ,0.15,0.2 ,0.25},
                 {0.25,0.25,0.25,0.25},
@@ -52,11 +52,13 @@ public class ViterbiTest {
             put(5,"R");
             put(6,"R");}};
 
-        EmissionProbability E = new EmissionProbability(emissionMatr);
         this.viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
         String observed = fr.readFile("genome1");
-        viterbi.calculate(observed);
+        String[] obs = new String[1];
+        obs[0] = observed;
+        Conversion conv = new DNA_conversion(obs);
+        viterbi.calculate(conv.getObservables().get(0));
         double[][] delta = viterbi.getDelta();
         FileWriter fw = new FileWriter();
         int[] sk = viterbi.getSk();
@@ -73,7 +75,7 @@ public class ViterbiTest {
         double[][] transition = {{0.9, 0.1},     // H -> H   H ->L
                                  {0.2, 0.8}};    // L-> H    L -> L
         double[] start = {0.5, 0.5};
-        double[][] emissionMatr = {{0.9, 0.1},         // x = sun|H    x= rain|H
+        double[][] E = {{0.9, 0.1},         // x = sun|H    x= rain|H
                                    {0.3, 0.7}};        // x = sun|L   x= rain|L
 
 
@@ -81,12 +83,14 @@ public class ViterbiTest {
             put(1,"C");
            }};
 
-        EmissionProbability E = new EmissionProbability(emissionMatr);
         this.viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
         //String observed = fr.readFile("BachelorRainExample");
         String observed = "CCCCA";
-        viterbi.calculate(observed);
+        String[] obs = new String[1];
+        obs[0] = observed;
+        Conversion conv = new DNA_conversion(obs);
+        viterbi.calculate(conv.getObservables().get(0));
         double[][] delta = viterbi.getDelta();
         double[][] preCalculatedDelta = preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator();
         boolean debug = false;

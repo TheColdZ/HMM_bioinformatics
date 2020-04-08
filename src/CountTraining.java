@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Class to handle the training by counting algorithm
  */
@@ -9,11 +11,11 @@ public class CountTraining {
     private int L; //nr of sequences
     private int M;
 
-    public CountTraining(String[] observables,String[] states, int N, int M){
-        this.L = observables.length;
+    public CountTraining(ArrayList<int[]> observables, ArrayList<int[]> states, int N, int M){
+        this.L = observables.size();
         this.N = N; //Could read these from the data
         this.M = M;
-        this.P = new double[N][N];
+        this.P = new double[N][M];
         this.E = new double[N][M];
         this.pi = new double[N];
         calculate(observables,states);
@@ -32,24 +34,23 @@ public class CountTraining {
      * Calculates the training by counting steps.
      *
      * @param observables
-     * @param states
      */
-    private void calculate(String[] observables, String[] states){
+    private void calculate(ArrayList<int[]> observables,ArrayList<int[]> states){
         int[] state_counts = new int[N]; //denominator 2.32
         int[] emission_counts = new int[N]; //denominator 2.34
         for (int l = 0; l < L; l++) {
-            String observable = observables[l];
-            String state = states[l];
-            pi[state_conversion(observable.charAt(0))] +=1;
-            for (int i = 0; i < observable.length(); i++) {
-                int start_state = state_conversion(state.charAt(i));
-                if(i+1<observable.length()) {
-                    int end_state = state_conversion(state.charAt(i + 1));
+            int[] observable = observables.get(l);
+            int[] state = states.get(l);
+            pi[state[0]] +=1;
+            for (int k = 0; k < observable.length; k++) {
+                int start_state = state[k];
+                if(k+1 < observable.length) {
+                    int end_state = state[k+1];
                     P[start_state][end_state] += 1;
                     state_counts[start_state] += 1;
                 }
 
-                int emitted = emission_conversion(observable.charAt(i));
+                int emitted = observable[k];
                 E[start_state][emitted] += 1;
                 emission_counts[start_state] += 1;
             }
@@ -63,34 +64,5 @@ public class CountTraining {
                 E[i][a] = E[i][a] / emission_counts[i];
             }
         }
-    }
-
-    private int emission_conversion(Character c){
-        int res = -1;
-        switch(c){
-            case 'A': res = 0;
-                break;
-            case 'C': res = 1;
-                break;
-            case 'G': res = 2;
-                break;
-            case 'T': res = 3;
-                break;
-            default:
-        }
-        return res;
-    }
-    private int state_conversion(Character c){
-        int res = -1;
-        switch(c){
-            case 'C': res = 0;
-                break;
-            case 'N': res = 1;
-                break;
-            case 'R': res = 2;
-                break;
-            default:
-        }
-        return res;
     }
 }
