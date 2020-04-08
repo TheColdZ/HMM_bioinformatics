@@ -35,12 +35,12 @@ public class ViterbiTest {
                 {0,0,0   ,0  ,0   ,0,1},
                 {0,0,0   ,0.1,0.9 ,0,0} };
         double[][] emissionMatr ={{0.3 ,0.25,0.25,0.2},
-                {0.2 ,0.35,0.15,0.3},
-                {0.4 ,0.15,0.2 ,0.25},
-                {0.25,0.25,0.25,0.25},
-                {0.2 ,0.4 ,0.3 ,0.1},
-                {0.3 ,0.2 ,0.3 ,0.20},
-                {0.15,0.3 ,0.2 ,0.35}};
+                                {0.2 ,0.35,0.15,0.3},
+                                {0.4 ,0.15,0.2 ,0.25},
+                                {0.25,0.25,0.25,0.25},
+                                {0.2 ,0.4 ,0.3 ,0.1},
+                                {0.3 ,0.2 ,0.3 ,0.20},
+                                {0.15,0.3 ,0.2 ,0.35}};
 
         double[] start =  {0,0,0,1,0,0,0};
 
@@ -107,6 +107,7 @@ public class ViterbiTest {
         fw.writeStatesToFile("BachelorRainExample",sk);
         fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
     }
+
 
     private double[][] preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator(){
         double[][] preCalculatedDelta = new double[2][5];

@@ -50,15 +50,15 @@ public class Viterbi {
                         maxTransitionProbability = transitionProbability;
                         psi[i][k] = j;
                     }
-                    System.out.println("k,i,j =      "+k+","+i+","+j);
+                    /**System.out.println("k,i,j =      "+k+","+i+","+j);
                     System.out.println(" P =         "+P[i][j]);
                     System.out.println(" delta =     "+Math.exp(delta[j][k-1]));
                     System.out.println(" prod =      "+Math.exp(transitionProbability));
                     System.out.println(" E[i,k] =    "+E.lookup(i,observed.charAt(k)));
-                    System.out.println(" next =      "+Math.exp(transitionProbability) * E.lookup(i,observed.charAt(k)));
+                    System.out.println(" next =      "+Math.exp(transitionProbability) * E.lookup(i,observed.charAt(k))); */
                 }
-                System.out.println("Delta["+i+","+k+"] = "+Math.exp(maxTransitionProbability)*E.lookup(i,observed.charAt(k)));
-                System.out.println();
+                //System.out.println("Delta["+i+","+k+"] = "+Math.exp(maxTransitionProbability)*E.lookup(i,observed.charAt(k)));
+                //System.out.println();
                 delta[i][k]= maxTransitionProbability + log(E.lookup(i,observed.charAt(k)));
 
                 if(k % 10000 == 0 && i ==0){    //TODO debugging/progress tracker, delete at some point.
