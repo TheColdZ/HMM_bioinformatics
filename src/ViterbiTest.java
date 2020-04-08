@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,8 +63,11 @@ public class ViterbiTest {
         double[][] delta = viterbi.getDelta();
         FileWriter fw = new FileWriter();
         int[] sk = viterbi.getSk();
+        ArrayList<int[]> temp = new ArrayList<>();
+        temp.add(sk);
+        String[] sk_string = conv.states(temp);
         fw.writeDetltaToFile("BachelorRainExample",delta);
-        fw.writeStatesToFile("BachelorRainExample",sk);
+        fw.writeStatesToFile("BachelorRainExample",sk_string[0]);
         fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
 
     }
@@ -76,7 +80,7 @@ public class ViterbiTest {
                                  {0.2, 0.8}};    // L-> H    L -> L
         double[] start = {0.5, 0.5};
         double[][] E = {{0.9, 0.1},         // x = sun|H    x= rain|H
-                                   {0.3, 0.7}};        // x = sun|L   x= rain|L
+                        {0.3, 0.7}};        // x = sun|L   x= rain|L
 
 
         Map decodeMap =  new HashMap<Integer, String>(){{ put(0,"C");
@@ -86,10 +90,10 @@ public class ViterbiTest {
         this.viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
         //String observed = fr.readFile("BachelorRainExample");
-        String observed = "CCCCA";
+        String observed = "RRRRS";
         String[] obs = new String[1];
         obs[0] = observed;
-        Conversion conv = new DNA_conversion();
+        Conversion conv = new weather_conversion();
         viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
         double[][] preCalculatedDelta = preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator();
@@ -106,8 +110,11 @@ public class ViterbiTest {
         }
         FileWriter fw = new FileWriter();
         int[] sk = viterbi.getSk();
+        ArrayList<int[]> temp = new ArrayList<>();
+        temp.add(sk);
+        String[] sk_string = conv.states(temp);
         fw.writeDetltaToFile("BachelorRainExample",delta);
-        fw.writeStatesToFile("BachelorRainExample",sk);
+        fw.writeStatesToFile("BachelorRainExample",sk_string[0]);
         fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
     }
 

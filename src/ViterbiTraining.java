@@ -21,7 +21,9 @@ public class ViterbiTraining {
         this.pi = initial_pi;
         this.states = new ArrayList<>();
         for (int i = 0; i < L; i++) {
-            states.add(new int[0]);
+            int[] disposeable = new int[1];
+            disposeable[0] = -1;
+            states.add(disposeable);
         }
         calculate(observables);
     }
@@ -39,8 +41,7 @@ public class ViterbiTraining {
             P = ct.getP();
             E = ct.getE();
             pi = ct.getPi();
-
-        } while( states.containsAll(old_states) && old_states.containsAll(states) ); //does this test pointers or nested elements?
+        } while(!compareStates(states,old_states) ); //does this test pointers or nested elements?
     }
 
     public double[][] getP() {
@@ -57,5 +58,30 @@ public class ViterbiTraining {
 
     public ArrayList<int[]> getStates() {
         return states;
+    }
+
+    private void print_matr(ArrayList<int[]> input, String name){
+        System.out.println(name);
+        for (int[] ints : input) {
+            for (int anInt : ints) {
+                System.out.print(anInt);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+
+    private boolean compareStates(ArrayList<int[]> list1 ,ArrayList<int[]> list2 ){
+        for (int l = 0; l < list1.size(); l++) {
+            int[] sequence1 = list1.get(l);
+            int[] sequence2 = list2.get(l);
+            int K = Math.min(sequence1.length,sequence2.length);
+            for (int k = 0; k < K; k++) {
+                if (sequence1[k] != sequence2[k]){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

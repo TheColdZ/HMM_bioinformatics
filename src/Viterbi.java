@@ -31,7 +31,7 @@ public class Viterbi {
         delta = new double[states][inputLength];
         psi = new int[states][inputLength];
 
-        //Initilization step
+        //Initialization step
         int firstObserved = observed[0];
         for (int i = 0; i < states ; i++) {
             delta[i][0] = log(pi[i]) + log(E[i][firstObserved]);
@@ -76,7 +76,6 @@ public class Viterbi {
             sk[k] = psi[sk[k+1]][k+1];
         }
 
-        this.delta = delta; //used for testing
         this.sk = sk;
 
         return sk;

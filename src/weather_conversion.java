@@ -1,20 +1,12 @@
 import java.util.ArrayList;
 
-public class DNA_conversion implements Conversion{
-
-    public DNA_conversion(){
-    }
-
+public class weather_conversion implements Conversion {
     private int emission_conversion_char_to_int(Character c){
         int res;
         switch(c){
-            case 'A': res = 0;
+            case 'S': res = 0;
                 break;
-            case 'C': res = 1;
-                break;
-            case 'G': res = 2;
-                break;
-            case 'T': res = 3;
+            case 'R': res = 1;
                 break;
             default: throw new RuntimeException("conversion error, observable char to int");
         }
@@ -23,11 +15,9 @@ public class DNA_conversion implements Conversion{
     private int state_conversion_char_to_int(Character c){
         int res;
         switch(c){
-            case 'C': res = 0;
+            case 'H': res = 0;
                 break;
-            case 'N': res = 1;
-                break;
-            case 'R': res = 2;
+            case 'L': res = 1;
                 break;
             default: throw new RuntimeException("conversion error, state char to int");
         }
@@ -66,7 +56,6 @@ public class DNA_conversion implements Conversion{
 
     private String[] convert_int_to_str(ArrayList<int[]> ints, boolean observables){
         int L = ints.size();
-        int K = ints.get(0).length;
         String[] strings = new String[L];
         for (int l = 0; l < L; l++) {
             int[] int_row = ints.get(l);
@@ -86,13 +75,9 @@ public class DNA_conversion implements Conversion{
     private String emission_conversion_int_to_str(int i) {
         String res;
         switch(i){
-            case 0: res = "A";
+            case 0: res = "S";
                 break;
-            case 1: res = "C";
-                break;
-            case 2: res = "G";
-                break;
-            case 3: res = "T";
+            case 1: res = "R";
                 break;
             default: throw new RuntimeException("conversion error, observable int to str");
         }
@@ -102,11 +87,9 @@ public class DNA_conversion implements Conversion{
     private String state_conversion_int_to_str(int i) {
         String res;
         switch(i){
-            case 0: res = "C";
+            case 0: res = "H";
                 break;
-            case 1: res = "N";
-                break;
-            case 2: res = "R";
+            case 1: res = "L";
                 break;
             default: throw new RuntimeException("conversion error, state int to str");
         }
