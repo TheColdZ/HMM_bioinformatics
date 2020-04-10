@@ -41,6 +41,7 @@ public class ViterbiTraining {
             P = ct.getP();
             E = ct.getE();
             pi = ct.getPi();
+            print_matr(states,"calc");
         } while(!compareStates(states,old_states) ); //does this test pointers or nested elements?
     }
 

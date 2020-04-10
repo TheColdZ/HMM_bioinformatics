@@ -37,22 +37,9 @@ public class ForwardBackward {
             for (int j = 0; j < N; j++) {
                 double sum = 0;
                 for (int i = 0; i < N; i++) {
-                    sum += alpha[i][t-1] * P[i][j];/*
-                    if(t == 4){
-                        System.out.println("alpha["+i+",4]="+alpha[i][t-1]);
-                        System.out.println("P["+i+","+j+"]="+P[i][j]);
-                        System.out.println("sum="+sum);
-                    }
-                    */
+                    sum += alpha[i][t-1] * P[i][j];
                 }
                 alpha[j][t] = sum * E[j][observed[t]];
-                /*
-                if(t == 4) {
-                    System.out.println("E[" + j + "," + observed.charAt(t) + "]=" + E.lookup(j, observed.charAt(t)));
-                    System.out.println("Done alpha[j][t]="+alpha[j][t]);
-                    System.out.println();
-                }
-                */
             }
         }
         return alpha;

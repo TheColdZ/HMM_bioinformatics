@@ -9,12 +9,12 @@ public class CountTrainingTest {
     @Before
     public void setUp() {
         String[] observed = new String[2];
-        observed[0] = "CCCCA";
-        observed[1] = "ACCAC";
+        observed[0] = "RRRRS";
+        observed[1] = "SRRSR";
         String[] states = new String[2];
-        states[0] = "NNNCC";
-        states[1] = "CCNNC";
-        Conversion conversion = new DNA_conversion();
+        states[0] = "LLLHH";
+        states[1] = "HHLLH";
+        Conversion conversion = new weather_conversion();
         ArrayList<int[]> observed_converted = conversion.observables(observed);
         ArrayList<int[]> states_converted = conversion.states(states);
         ct = new CountTraining(observed_converted,states_converted,2,2);
