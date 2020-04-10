@@ -8,15 +8,15 @@ public class ViterbiTrainingTest {
 
     @Before
     public void setup(){
-        setup2();
+        setup1();
     }
 
     private void setup1(){
         double[][] P = {{0.9, 0.1},     // H -> H   H -> L
-                {0.2, 0.8}};    // L -> H   L -> L
+                        {0.2, 0.8}};    // L -> H   L -> L
         double[] pi = {0.5, 0.5};
         double[][] E = {{0.9, 0.1},         // x = sun|H   x = rain|H
-                {0.3, 0.7}};        // x = sun|L   x = rain|L
+                        {0.3, 0.7}};        // x = sun|L   x = rain|L
         String[] observed = new String[4];
         observed[0] = "RRRRRSSRSRSRSRSR";
         observed[1] = "RSRRSRSRSRSRSRSRRR";
