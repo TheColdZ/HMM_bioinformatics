@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +48,8 @@ public class ViterbiTest {
 
         double[] start =  {0,0,0,1,0,0,0};
 
-        Map decodeMap =  new HashMap<Integer, String>(){{ put(0,"C");
+        Map decodeMap =  new HashMap<Integer, String>(){{
+            put(0,"C");
             put(1,"C");
             put(2,"C");
             put(3,"N");
@@ -61,15 +63,15 @@ public class ViterbiTest {
         String[] obs = new String[1];
         obs[0] = observed;
         Conversion conv = new DNA_conversion();
-        viterbi.calculate(conv.observables(obs).get(0));
+        int[] sk = viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
         FileWriter fw = new FileWriter();
-        int[] sk = viterbi.getSk();
-        ArrayList<int[]> temp = new ArrayList<>();
-        temp.add(sk);
-        String[] sk_string = conv.states(temp);
+        //ArrayList<int[]> temp = new ArrayList<>();
+        //temp.add(sk);
+        //String[] sk_string = conv.states(temp);
+        //fw.writeStatesToFile("BachelorRainExample",sk_string[0]);
+        fw.writeStatesToFile("BachelorRainExample", Arrays.toString(sk));   //This line replaces the four above. If we want it to... TODO
         fw.writeDetltaToFile("BachelorRainExample",delta);
-        fw.writeStatesToFile("BachelorRainExample",sk_string[0]);
         fw.writeDecodingToFile("BachelorRainExample",sk,decodeMap);
 
     }
@@ -85,14 +87,15 @@ public class ViterbiTest {
                         {0.3, 0.7}};        // x = sun|L   x= rain|L
 
 
-        Map decodeMap =  new HashMap<Integer, String>(){{ put(0,"C");
+        Map decodeMap =  new HashMap<Integer, String>(){{
+            put(0,"C");
             put(1,"C");
            }};
 
         this.viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
-        //String observed = fr.readFile("BachelorRainExample");
-        String observed = "RRRRS";
+        String observed = fr.readFile("BachelorRainExample");
+        //String observed = "RRRRS";
         String[] obs = new String[1];
         obs[0] = observed;
         Conversion conv = new weather_conversion();

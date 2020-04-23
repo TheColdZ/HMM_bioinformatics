@@ -101,6 +101,7 @@ public class DNA_conversion implements Conversion{
 
     private String state_conversion_int_to_str(int i) {
         String res;
+        System.out.println("This is the fucker:"+i); //TODO
         switch(i){
             case 0: res = "C";
                 break;

@@ -20,8 +20,9 @@ public class Viterbi {
     }
 
     /**
-     * Calculates the delta matrix, psi matrix and outputs it into files... stuff... more stuff happens.
+     * Calculates the delta matrix and psi matrix.
      * @param observed obervations as string.
+     * @return an array of the most likely states to have produced the observed
      */
     public int[] calculate(int[] observed){
 
