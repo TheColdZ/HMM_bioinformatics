@@ -31,7 +31,7 @@ public class ViterbiTraining {
     private void calculate(ArrayList<int[]> observables) {
         ArrayList<int[]> old_states = new ArrayList<>();
         do{
-            old_states = (ArrayList<int[]>) states.clone(); //suspicious
+            old_states = (ArrayList<int[]>) states.clone(); //suspicious TODO
             Viterbi vit = new Viterbi(P,E,pi);
             for (int l = 0; l < L; l++) {
                 int[] state_as_int = vit.calculate(observables.get(l));
