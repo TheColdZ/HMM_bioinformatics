@@ -72,9 +72,9 @@ public class Comparison {
 
         double sensitivity = truePositive/(truePositive+falseNegative);
         double specificity = truePositive/(truePositive+falsePositive);
-        double ACP = 0.25*((truePositive/truePositive+falseNegative)+(truePositive/(truePositive+falsePositive))+(trueNegative/(trueNegative+falsePositive))+(trueNegative/(trueNegative+falseNegative)));
+        double ACP = 0.25*((truePositive/(truePositive+falseNegative)+(truePositive/(truePositive+falsePositive))+(trueNegative/(trueNegative+falsePositive))+(trueNegative/(trueNegative+falseNegative))));
         double AC = (ACP - 0.5)*2;
-        System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC);
+        System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+" ACP:"+ACP);
     }
 
 
