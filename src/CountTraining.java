@@ -11,6 +11,13 @@ public class CountTraining {
     private int L; //nr of sequences
     private int M;
 
+    /**
+     * This method calculates the training by counting
+     * @param observables   The observable X's
+     * @param states        The true annotated gene in states
+     * @param N             number of states
+     * @param M             size of observable alphabet
+     */
     public CountTraining(ArrayList<int[]> observables, ArrayList<int[]> states, int N, int M){
         this.L = observables.size();
         this.N = N; //Could read these from the data

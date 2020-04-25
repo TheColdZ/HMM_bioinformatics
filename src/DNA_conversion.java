@@ -101,7 +101,6 @@ public class DNA_conversion implements Conversion{
 
     private String state_conversion_int_to_str(int i) {
         String res;
-        System.out.println("This is the fucker:"+i); //TODO
         switch(i){
             case 0: res = "C";
                 break;
@@ -123,4 +122,88 @@ public class DNA_conversion implements Conversion{
     public String[] states(ArrayList<int[]> states) {
         return convert_int_to_str(states,false);
     }
+
+
+    /**
+     * This method converts a true annotated state from non-coding, coding and reverse-coding parts, to what states it would have been in.
+     * It does this for 7 states and returns an int array TODO maybe move this??
+     * @param trueAnnotation    The true annotation of a gene
+     * @return  The true states accoding to the 7 state model
+     */
+    public int[] convertAnnotationToState7States(String trueAnnotation){
+        int lengthOfString = trueAnnotation.length();
+        int[] states = new int[lengthOfString];
+        for (int i = 0; i <lengthOfString ; i++) {
+            char compareChar = trueAnnotation.charAt(i);
+            switch(compareChar){
+                case 'N': states[i] = 3;
+                    break;
+                case 'C': states[i] = codingState7States(states,i);
+                    break;
+                case 'R': states[i] = reverseCodingState7States(states,i);
+                    break;
+                default: throw new RuntimeException("Conversion error, the trueannotation contains unknown character");
+
+            }
+
+        }
+        return states;
+    }
+
+    private int reverseCodingState7States(int[] states, int i) {
+        int foundState = -1;
+        switch(states[i-1]){
+            case 3 : foundState = 4;
+                return foundState;
+            case 4 : foundState = 5;
+                return foundState;
+            case 5 : foundState = 6;
+                return foundState;
+            case 6 : foundState = 4;
+                return foundState;
+            default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
+        }
+    }
+
+    private int codingState7States(int[] states, int i) {
+        int foundState = -1;
+        switch(states[i-1]){
+            case 3 : foundState = 2;
+                return foundState;
+            case 2 : foundState = 1;
+                return foundState;
+            case 1 : foundState = 0;
+                return foundState;
+            case 0 : foundState = 2;
+                return foundState;
+            default: throw new RuntimeException("CodingState error, previous state not correct.");
+        }
+    }
+
+    /**
+     * This method converts a true annotated state from non-coding, coding and reverse-coding parts, to what states it would have been in.
+     * It does this for 7 states and returns an int array TODO maybe move this??
+     * @param trueAnnotation    The true annotation of a gene
+     * @return  The true states accoding to the 7 state model
+     */
+    public int[] convertAnnotationToState5States(String trueAnnotation){
+        int lengthOfString = trueAnnotation.length();
+        int[] states = new int[lengthOfString];
+        for (int i = 0; i <lengthOfString ; i++) {
+            char compareChar = trueAnnotation.charAt(i);
+            switch(compareChar){
+                case 'N': states[i] = 3;
+                    break;
+                case 'C': states[i] = codingState7States(states,i);
+                    break;
+                case 'R': states[i] = reverseCodingState7States(states,i);
+                    break;
+                default: throw new RuntimeException("Conversion error, the trueannotation contains unknown character");
+
+            }
+
+        }
+        return states;
+    }
+
 }
