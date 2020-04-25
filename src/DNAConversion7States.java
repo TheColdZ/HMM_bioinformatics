@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 
-public class DNA_conversion implements Conversion{
-
-
+public class DNAConversion7States implements Conversion{
     private int emission_conversion_char_to_int(Character c){
         int res;
         switch(c){
@@ -18,18 +16,64 @@ public class DNA_conversion implements Conversion{
         }
         return res;
     }
-    private int state_conversion_char_to_int(Character c){
-        int res;
-        switch(c){
-            case 'C': res = 0;
-                break;
-            case 'N': res = 1;
-                break;
-            case 'R': res = 2;
-                break;
-            default: throw new RuntimeException("conversion error, state char to int");
+
+    /**
+     * This method converts a true annotated state from non-coding, coding and reverse-coding parts, to what states it would have been in.
+     * It does this for 7 states and returns an int TODO
+     * @param previousState The state just before the state we are converting now
+     * @param trueAnnotationToConvert   The char that we would like to convert
+     * @return  the state that it corresponds to
+     */
+    public int convertAnnotationToState7States(int previousState, char trueAnnotationToConvert){
+            switch(trueAnnotationToConvert){
+                case 'N': return 3;
+
+                case 'C': return codingState7States(previousState);
+
+                case 'R': return reverseCodingState7States(previousState);
+
+                default: throw new RuntimeException("Conversion error");
+
+            }
+    }
+
+    /**
+     * Method that aids in finding the correct annotation of a true annotated genom, for the 7 states. It emulates a cycle
+     * @param state    The previous state
+     * @return  The next state
+     */
+    private int reverseCodingState7States(int state) {
+        int foundState = -1;
+        switch(state){
+            case 3 : foundState = 4;
+                return foundState;
+            case 4 : foundState = 5;
+                return foundState;
+            case 5 : foundState = 6;
+                return foundState;
+            case 6 : foundState = 4;
+                return foundState;
+            default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
         }
-        return res;
+    }
+    /**
+     * Method that aids in finding the correct annotation of a true annotated genom, for the 7 states. It emulates a cycle
+     * @param state    The previous state
+     * @return  The next state
+     */
+    private int codingState7States(int state) {
+        int foundState = -1;
+        switch(state){
+            case 3 : foundState = 2;
+                return foundState;
+            case 2 : foundState = 1;
+                return foundState;
+            case 1 : foundState = 0;
+                return foundState;
+            case 0 : foundState = 2;
+                return foundState;
+            default: throw new RuntimeException("CodingState error, previous state not correct.");
+        }
     }
     private ArrayList<int[]> convert_str_to_int(String[] strings, boolean observables){
         int L = strings.length;
@@ -44,7 +88,13 @@ public class DNA_conversion implements Conversion{
                 if(observables) {
                     strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
                 } else {
-                    strings_int.get(l)[k] = state_conversion_char_to_int(obs.charAt(k));
+                    if(k == 0) {
+                        strings_int.get(l)[k] = convertAnnotationToState7States(strings_int.get(l)[k], obs.charAt(k));
+                    }
+                    else{
+                        strings_int.get(l)[k] = convertAnnotationToState7States(strings_int.get(l)[k-1], obs.charAt(k));
+
+                    }
                 }
             }
         }
@@ -102,9 +152,17 @@ public class DNA_conversion implements Conversion{
         switch(i){
             case 0: res = "C";
                 break;
-            case 1: res = "N";
+            case 1: res = "C";
                 break;
-            case 2: res = "R";
+            case 2: res = "C";
+                break;
+            case 3: res = "N";
+                break;
+            case 4: res = "R";
+                break;
+            case 5: res = "R";
+                break;
+            case 6: res = "R";
                 break;
             default: throw new RuntimeException("conversion error, state int to str");
         }
@@ -121,62 +179,6 @@ public class DNA_conversion implements Conversion{
         return convert_int_to_str(states,false);
     }
 
-
-    /**
-     * This method converts a true annotated state from non-coding, coding and reverse-coding parts, to what states it would have been in.
-     * It does this for 7 states and returns an int array TODO maybe move this??
-     * @param trueAnnotation    The true annotation of a gene
-     * @return  The true states accoding to the 7 state model
-     */
-    public int[] convertAnnotationToState7States(String trueAnnotation){
-        int lengthOfString = trueAnnotation.length();
-        int[] states = new int[lengthOfString];
-        for (int i = 0; i <lengthOfString ; i++) {
-            char compareChar = trueAnnotation.charAt(i);
-            switch(compareChar){
-                case 'N': states[i] = 3;
-                    break;
-                case 'C': states[i] = codingState7States(states,i);
-                    break;
-                case 'R': states[i] = reverseCodingState7States(states,i);
-                    break;
-                default: throw new RuntimeException("Conversion error, the trueannotation contains unknown character");
-
-            }
-
-        }
-        return states;
-    }
-
-    private int reverseCodingState7States(int[] states, int i) {
-        int foundState = -1;
-        switch(states[i-1]){
-            case 3 : foundState = 4;
-                return foundState;
-            case 4 : foundState = 5;
-                return foundState;
-            case 5 : foundState = 6;
-                return foundState;
-            case 6 : foundState = 4;
-                return foundState;
-            default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
-        }
-    }
-
-    private int codingState7States(int[] states, int i) {
-        int foundState = -1;
-        switch(states[i-1]){
-            case 3 : foundState = 2;
-                return foundState;
-            case 2 : foundState = 1;
-                return foundState;
-            case 1 : foundState = 0;
-                return foundState;
-            case 0 : foundState = 2;
-                return foundState;
-            default: throw new RuntimeException("CodingState error, previous state not correct.");
-        }
-    }
 
 
 

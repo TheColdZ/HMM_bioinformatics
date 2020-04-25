@@ -37,13 +37,23 @@ public class ComparisonTest {
     }
 
     @Test
-    public void testToChar(){
+    public void testTwoChar(){
         comparison.compare(trueAnnotation,predictionAnnotation,'N','C','R');
         assert(compareFactor(0.166,comparison.getCorrelationCoefficient(),0.001));
         assert(compareFactor(0.583,comparison.getACP(),0.001));
         assert(compareFactor(0.166667,comparison.getAC(),0.001));
         assert(compareFactor(0.5,comparison.getSensitivity(),0.001));
         assert(compareFactor(0.5,comparison.getSpecificity(),0.001));
+    }
+
+    @Test
+    public void testOneInTwo(){
+        comparison.compare(trueAnnotation,predictionAnnotation,'N','_','C');
+        assert (compareFactor(0.149, comparison.getCorrelationCoefficient(), 0.001));
+        assert (compareFactor(0.575, comparison.getACP(), 0.001));
+        assert (compareFactor(0.150, comparison.getAC(), 0.001));
+        assert (compareFactor(0.333333, comparison.getSensitivity(), 0.001));
+        assert (compareFactor(0.5, comparison.getSpecificity(), 0.001));
     }
 
 

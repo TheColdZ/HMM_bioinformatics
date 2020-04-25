@@ -22,7 +22,7 @@ public class CountTraining {
         this.L = observables.size();
         this.N = N; //Could read these from the data
         this.M = M;
-        this.P = new double[N][M];
+        this.P = new double[N][N];
         this.E = new double[N][M];
         this.pi = new double[N];
         calculate(observables,states);
@@ -43,7 +43,7 @@ public class CountTraining {
      * @param observables
      */
     private void calculate(ArrayList<int[]> observables,ArrayList<int[]> states){
-        int[] state_counts = new int[N]; //denominator 2.32
+        int[] state_counts = new int[N]; //denominator 2.32 TODO are these right?
         int[] emission_counts = new int[N]; //denominator 2.34
         for (int l = 0; l < L; l++) {
             int[] observable = observables.get(l);
@@ -51,6 +51,7 @@ public class CountTraining {
             pi[state[0]] +=1;
             for (int k = 0; k < observable.length; k++) {
                 int start_state = state[k];
+
                 if(k+1 < observable.length) {
                     int end_state = state[k+1];
                     P[start_state][end_state] += 1;
@@ -66,6 +67,7 @@ public class CountTraining {
             pi[i] = pi[i]/L;
             for (int j = 0; j < N; j++) {
                 P[i][j] = P[i][j] / state_counts[i];
+
             }
             for (int a = 0; a < M; a++) {
                 E[i][a] = E[i][a] / emission_counts[i];

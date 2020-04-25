@@ -20,7 +20,7 @@ public class Comparison {
     }
 
     /**
-     * This method compares two strings, with only two kinds of encoding: Non-coding and coding/comparisonChar
+     * This method compares two strings, with only two kinds of encoding: Non-coding and coding/comparisonChar  TODO This could technically be killed and just call other with _
      * @param trueAnnotation    The true annotation
      * @param predictionAnnotation The predicted annotation
      * @param nonCodingChar         The char denoting non-coding

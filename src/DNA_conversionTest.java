@@ -96,4 +96,17 @@ public class DNA_conversionTest {
             assert(states[i]==preCalculated[i]);
         }
     }
+
+    @Test
+    public void convertStates7statemodel(){
+        String[] trueAnnotation = new String[1];
+        trueAnnotation[0] = "NNCCCCCCCCCNNRRR";
+        int[] preCalculated = new int[]{ 3, 3, 2, 1, 0, 2, 1, 0, 2, 1, 0, 3, 3, 4, 5, 6 };
+        DNAConversion7States conversion = new DNAConversion7States();
+        ArrayList<int[]> states = conversion.states(trueAnnotation);
+        int[] statesInt = states.get(0);
+        for (int i = 0; i < trueAnnotation[0].length(); i++) {
+            assert(statesInt[i]==preCalculated[i]);
+        }
+    }
 }
