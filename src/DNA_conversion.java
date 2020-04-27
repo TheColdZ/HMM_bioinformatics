@@ -124,7 +124,7 @@ public class DNA_conversion implements Conversion{
 
     /**
      * This method converts a true annotated state from non-coding, coding and reverse-coding parts, to what states it would have been in.
-     * It does this for 7 states and returns an int array TODO maybe move this??
+     * It does this for 7 states and returns an int array TODO probably move this.
      * @param trueAnnotation    The true annotation of a gene
      * @return  The true states accoding to the 7 state model
      */

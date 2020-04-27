@@ -53,7 +53,8 @@ public class DNAConversion7States implements Conversion{
                 return foundState;
             case 6 : foundState = 4;
                 return foundState;
-            default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
+            default: return 4;  //TODO this is bad
+            //default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
         }
     }
     /**
@@ -72,7 +73,8 @@ public class DNAConversion7States implements Conversion{
                 return foundState;
             case 0 : foundState = 2;
                 return foundState;
-            default: throw new RuntimeException("CodingState error, previous state not correct.");
+            default: return 4; //TODO This... is bad
+            //default: throw new RuntimeException("CodingState error, previous state not correct., state:"+state);
         }
     }
     private ArrayList<int[]> convert_str_to_int(String[] strings, boolean observables){
