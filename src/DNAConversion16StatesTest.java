@@ -170,6 +170,41 @@ public class DNAConversion16StatesTest {
         assert(statesConverted.get(0)[length-4]==13);
     }
 
+    @Test
+    public void printAndSeeAllStates(){
+        String[] genome1 = new String[1];
+        genome1[0] = getStringEnd1314150()+getStringEnd7890()+getStringEnd1011120();
+
+        String[] trueAnnotation1 = new String[1];
+        trueAnnotation1[0] = getTrueStringEndCCCN()+getTrueStringEndCCCN()+getTrueStringEndCCCN();//This is a file containing N's, C's and R's
+
+        converter = new DNAConversion16States();      //TODO here we choose model as well.
+        ArrayList<int[]> observedConverted = converter.observables(genome1);
+        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
+        CountTraining trainer = new CountTraining(observedConverted,statesConverted,16,4); //TODO We train and choose model
+        double[] pi = trainer.getPi();  //We retrieve the newly found parameters
+        double[][] E = trainer.getE();
+        double[][] P = trainer.getP();
+        System.out.println("All states should be visited");
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                System.out.print(P[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 4; j++) {
+                System.out.print(E[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+
+    }
+
+
 
     private String getStringEnd7890(){
         return "TATGACTGAAAATGAACAAATTTTTTGGAACAGGGTCTTGGAATTAGCTCAGAGTCAATTAAAACAGGCAACTTATGAATTTTTTGTTCATGATGCCCGTCTATTAAAGGTCGATAAGCATATTGCAACTATTTACTTAGATCAAATGAAAGAGCTCTTTTGGGAAAAAAATCTTAAAGATGTTATTCTTACTGCTGGTTTTGAAGTTTATAACGCTCAAATTTCTGTTGACTATGTTTTCGAAGAAGACCTAATGATTGAGCAAAATCAGACCAAAATCAACCAAAAACCTAAGCAGCAAGCCTTAAATTCTTTGCCTACTGTTACTTCAGATTTAAACTCGAAATATAGTTTTGAAAACTTTATTCAAGGAGATGAAAATCGTTGGGCTGTTGCTGCTTCAATAGCAGTAGCTAATACTCCTGGAACTACCTATAATCCTTTGTTTATTTGGGGTGGCCCTGGGCTTGGAAAAACCCATTTATTAAATGCTATTGGTAATTCTGTACTATTAGAAAATCCAAATGCTCGAATTAAATATATCACAGCTGAAAACTTTATTAATGAGTTTGTTATCCATATTCGCCTTGATACCATGGATGAATTGAAAGAAAAATTTCGTAATTTAGATTTACTCCTTATTGATGATATCCAATCTTTAGCTAAAAAAACGCTCTCTGGAACACAAGAAGAGTTCTTTAATACTTTTAATGCACTTCATAATAATAACAAACAAATTGTCCTAACAAGCGACCGTACACCAGATCATCTCAATGATTTAGAAGATCGATTAGTTACTCGTTTTAAATGGGGATTAACAGTCAATATCACACCTCCTGATTTTGAAACACGAGTGGCTATTTTGACAAATAAAATTCAAGAATATAACTTTATTTTTCCTCAAGATACCATTGAGTATTTGGCTGGTCAATTTGATTCTAATGTCAGAGATTTAGAAGGTGCCTTAAAAGATATTAGTCTGGTTGCTAATTTCAAACAAATTGACACGATTACTGTTGACATTGCTGCCGAAGCTATTCGCGCCAGAAAGCAAGATGGACCTAAAATGACAGTTATTCCCATCGAAGAAATTCAAGCGCAAGTTGGAAAATTTTACGGTGTTACCGTCAAAGAAATTAAAGCTACTAAACGAACACAAAATATTGTTTTAGCAAGACAAGTAGCTATGTTTTTAGCACGTGAAATGACAGATAACAGTCTTCCTAAAATTGGAAAAGAATTTGGTGGCAGAGACCATTCAACAGTACTCCATGCCTATAATAAAATCAAAAACATGATCAGCCAGGACGAAAGCCTTAGGATCGAAATTGAAACCATAAAAAACAAAATTAAATAAC";
