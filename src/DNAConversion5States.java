@@ -120,7 +120,7 @@ public class DNAConversion5States implements Conversion{
 
     private String state_conversion_int_to_str(int i) {
         if(i == 0) return "N";
-        else if (i <16) return "C";
+        else if (i <5) return "C";
         else return "N"; //TODO right now we do not look at R's, as this model does not represent it.
 
     }
