@@ -128,6 +128,23 @@ public class DNAConversion16StatesTest {
         assert(statesConverted.get(0)[length-2]==9);
         assert(statesConverted.get(0)[length-3]==8);
         assert(statesConverted.get(0)[length-4]==7);
+
+        assert(statesConverted.get(0)[0]==0);
+        assert(statesConverted.get(0)[1]==1);
+        assert(statesConverted.get(0)[2]==2);
+        assert(statesConverted.get(0)[3]==3);
+        for (int i = 0; i < length-4; i++) {
+            assert(! (statesConverted.get(0)[i]==7));     //assert false doesn't work?
+            assert(! (statesConverted.get(0)[i]==8));
+            assert(! (statesConverted.get(0)[i]==9));
+            assert(! (statesConverted.get(0)[i]==10));
+            assert(! (statesConverted.get(0)[i]==11));
+            assert(! (statesConverted.get(0)[i]==12));
+            assert(! (statesConverted.get(0)[i]==13));
+            assert(! (statesConverted.get(0)[i]==14));
+            assert(! (statesConverted.get(0)[i]==15));
+        }
+
     }
 
     @Test
@@ -148,6 +165,12 @@ public class DNAConversion16StatesTest {
         assert(statesConverted.get(0)[length-2]==12);
         assert(statesConverted.get(0)[length-3]==11);
         assert(statesConverted.get(0)[length-4]==10);
+
+        assert(statesConverted.get(0)[0]==0);
+        assert(statesConverted.get(0)[1]==1);
+        assert(statesConverted.get(0)[2]==2);
+        assert(statesConverted.get(0)[3]==3);
+
     }
 
     @Test
@@ -168,6 +191,11 @@ public class DNAConversion16StatesTest {
         assert(statesConverted.get(0)[length-2]==15);
         assert(statesConverted.get(0)[length-3]==14);
         assert(statesConverted.get(0)[length-4]==13);
+
+        assert(statesConverted.get(0)[0]==0);
+        assert(statesConverted.get(0)[1]==1);
+        assert(statesConverted.get(0)[2]==2);
+        assert(statesConverted.get(0)[3]==3);
     }
 
     @Test

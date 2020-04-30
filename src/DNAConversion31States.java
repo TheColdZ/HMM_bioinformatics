@@ -35,7 +35,7 @@ public class DNAConversion31States implements Conversion{
         return states;
     }
 
-    private int reverseCodingStates(String trueAnnotation,String observed, int[] states,int n) {   //TODO Code duplication, almost same as in 16 state
+    private int reverseCodingStates(String trueAnnotation,String observed, int[] states,int n) {
         if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'T' )return 16;
         else if(states[n-1] == 16)return 17;//Cheap
         else if(states[n-1] == 17)return 18;//Cheap
@@ -57,7 +57,7 @@ public class DNAConversion31States implements Conversion{
 
 
         else if(observed.charAt(n) == 'C' && states[n-1] == 27 && observed.charAt(n+1) == 'A'
-                && observed.charAt(n+2) == 'T'  ) return 28;
+                && observed.charAt(n+2) == 'T' && trueAnnotation.charAt(n+3)== 'N' ) return 28;
         else if(observed.charAt(n) == 'A' && states[n-1] == 28 && observed.charAt(n+1) == 'T') return 29;
         else if(observed.charAt(n) == 'T' && states[n-1] == 29) return 30;
 
@@ -78,7 +78,7 @@ public class DNAConversion31States implements Conversion{
         else if(states[n-1] == 5) return 6;
 
         else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'A'
-                && observed.charAt(n+2) == 'A'  ) return 7; //&& trueAnnotation.charAt(n+3)== 'N'
+                && observed.charAt(n+2) == 'A' ) return 7; //&& trueAnnotation.charAt(n+3)== 'N'
 
         else if(states[n-1] == 7 ) return 8;
         else if(states[n-1] == 8 ) return 9;
@@ -87,7 +87,7 @@ public class DNAConversion31States implements Conversion{
         else if(states[n-1] == 10 ) return 11;
         else if(states[n-1] == 11 ) return 12;
         else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'G'
-                && observed.charAt(n+2) == 'A'  ) return 13;
+                && observed.charAt(n+2) == 'A'   ) return 13;
         else if(states[n-1] == 13 ) return 14;
         else if(states[n-1] == 14 ) return 15;
         else if( n+4 < observed.length()) {
