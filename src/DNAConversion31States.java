@@ -36,18 +36,18 @@ public class DNAConversion31States implements Conversion{
     }
 
     private int reverseCodingStates(String trueAnnotation,String observed, int[] states,int n) {
-        if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'T' )return 16;
+        if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A')return 16;
         else if(states[n-1] == 16)return 17;//Cheap
         else if(states[n-1] == 17)return 18;//Cheap
         else if(states[n-1] == 18)return 25;
 
-        else if(observed.charAt(n) == 'C' && states[n-1] == 0 && observed.charAt(n+1) == 'T' )return 19;
+        else if(observed.charAt(n) == 'C' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A' )return 19;
 
         else if(states[n-1] == 19) return 20;//Cheap
         else if(states[n-1] == 20) return 21;//Cheap
         else if(states[n-1] == 21) return 25;
 
-        else if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'C' )return 22;
+        else if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'C' && observed.charAt(n+2)== 'A' )return 22;
         else if(states[n-1] == 22) return 23;//Cheap
         else if(states[n-1] == 23) return 24;//cheap
         else if(states[n-1] == 24) return 25;
