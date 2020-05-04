@@ -27,8 +27,9 @@ public class DNAConversion31States implements Conversion{
                     break;
                 case 'C': states[i] = codingStates(trueAnnotation,observed,states,i);
                     break;
-                default: states[i] = reverseCodingStates(trueAnnotation,observed,states,i) ;
-                    //default: throw new RuntimeException("Conversion error");
+                case 'R': states[i] = reverseCodingStates(trueAnnotation,observed,states,i) ;
+                    break;
+                default: throw new RuntimeException("Conversion error");
 
             }
         }
@@ -37,19 +38,19 @@ public class DNAConversion31States implements Conversion{
 
     private int reverseCodingStates(String trueAnnotation,String observed, int[] states,int n) {
         if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A')return 16;
-        else if(states[n-1] == 16)return 17;//Cheap
-        else if(states[n-1] == 17)return 18;//Cheap
+        else if(states[n-1] == 16)return 17;
+        else if(states[n-1] == 17)return 18;
         else if(states[n-1] == 18)return 25;
 
         else if(observed.charAt(n) == 'C' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A' )return 19;
 
-        else if(states[n-1] == 19) return 20;//Cheap
-        else if(states[n-1] == 20) return 21;//Cheap
+        else if(states[n-1] == 19) return 20;
+        else if(states[n-1] == 20) return 21;
         else if(states[n-1] == 21) return 25;
 
         else if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'C' && observed.charAt(n+2)== 'A' )return 22;
-        else if(states[n-1] == 22) return 23;//Cheap
-        else if(states[n-1] == 23) return 24;//cheap
+        else if(states[n-1] == 22) return 23;
+        else if(states[n-1] == 23) return 24;
         else if(states[n-1] == 24) return 25;
 
         else if(states[n-1] == 25) return 26;
@@ -125,13 +126,9 @@ public class DNAConversion31States implements Conversion{
         return convert_str_to_int(observables,observables,true);    //TODO this is not pretty... but it should work
     }
 
+
     @Override
-    public ArrayList<int[]> states(String[] states) {
-        return convert_str_to_int(states,states,false);
-    }
-
-
-    public ArrayList<int[]> statesFromTrueAnnotationAndObserved(String[] trueAnnotation, String[] observed) {
+    public ArrayList<int[]> states(String[] trueAnnotation, String[] observed) {
         return convert_str_to_int(trueAnnotation,observed,false);
     }
 
@@ -188,7 +185,13 @@ public class DNAConversion31States implements Conversion{
         return convert_int_to_str(states,false);
     }
 
+    @Override
+    public String getNameOfModel() {
+        return "DNAConversion31States";
+    }
 
-
-
+    @Override
+    public int getNumberOfstates() {
+        return 31;
+    }
 }

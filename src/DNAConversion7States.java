@@ -114,7 +114,7 @@ public class DNAConversion7States implements Conversion{
     }
 
     @Override
-    public ArrayList<int[]> states(String[] states) {
+    public ArrayList<int[]> states(String[] states,String[] observed) {
         return convert_str_to_int(states,false);
     }
 
@@ -185,7 +185,13 @@ public class DNAConversion7States implements Conversion{
         return convert_int_to_str(states,false);
     }
 
+    @Override
+    public String getNameOfModel() {
+        return "DNAConversion7States";
+    }
 
-
-
+    @Override
+    public int getNumberOfstates() {
+        return 7;
+    }
 }

@@ -51,7 +51,7 @@ public class DNA_conversionTest {
 
     @Test
     public void getStates_str_to_int() {
-        ArrayList<int[]> states_converted = conversion.states(states_str);
+        ArrayList<int[]> states_converted = conversion.states(states_str,states_str);
         for (int i = 0; i < states_converted.size(); i++) {
             for (int j = 0; j < states_converted.get(i).length; j++) {
                 assertThat(states_ints.get(i)[j],is(states_converted.get(i)[j]));
@@ -86,27 +86,5 @@ public class DNA_conversionTest {
     }
 
 
-    @Test
-    public void convertStates7States(){
-        String trueAnnotation = "NNCCCCCCCCCNNRRR";
-        int[] preCalculated = new int[]{ 3, 3, 2, 1, 0, 2, 1, 0, 2, 1, 0, 3, 3, 4, 5, 6 };
-        DNA_conversion conversion = new DNA_conversion();
-        int [] states = conversion.convertAnnotationToState7States(trueAnnotation);
-        for (int i = 0; i < trueAnnotation.length(); i++) {
-            assert(states[i]==preCalculated[i]);
-        }
-    }
 
-    @Test
-    public void convertStates7statemodel(){
-        String[] trueAnnotation = new String[1];
-        trueAnnotation[0] = "NNCCCCCCCCCNNRRR";
-        int[] preCalculated = new int[]{ 3, 3, 2, 1, 0, 2, 1, 0, 2, 1, 0, 3, 3, 4, 5, 6 };
-        DNAConversion7States conversion = new DNAConversion7States();
-        ArrayList<int[]> states = conversion.states(trueAnnotation);
-        int[] statesInt = states.get(0);
-        for (int i = 0; i < trueAnnotation[0].length(); i++) {
-            assert(statesInt[i]==preCalculated[i]);
-        }
-    }
 }

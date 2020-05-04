@@ -1,9 +1,16 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Trainning by counting, a try... \n");
+        TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
+        experiment.trainingByCounting(new DNAConversion5States());
+
+        experiment.trainingByCounting(new DNAConversion7States());
+
+        experiment.trainingByCounting(new DNAConversion7States());
+        experiment.trainingByCounting(new DNAConversion14States());
+        experiment.trainingByCounting(new DNAConversion16States());
+        experiment.trainingByCounting(new DNAConversion31States());
+
+        /*
         FileReader fr = new FileReader();
         String[] genome1 = new String[5];
         genome1[0] = fr.readFile("genome1");
@@ -14,8 +21,8 @@ public class Main {
         genome1[4] = fr.readFile("genome5");
         String[] trueAnnotation1 = new String[5];
         //trueAnnotation1[0] = getTrueString();
-        trueAnnotation1[0] = fr.readFile("trueann1");       //This is a file containing N's, C's and R's
-        trueAnnotation1[1] = fr.readFile("trueann2");
+        trueAnnotation1[0] = fr.readFile("true-ann1");       //This is a file containing N's, C's and R's
+        trueAnnotation1[1] = fr.readFile("true-ann2");
         trueAnnotation1[2] = fr.readFile("true-ann3");
         trueAnnotation1[3] = fr.readFile("true-ann4");
         trueAnnotation1[4] = fr.readFile("true-ann5");
@@ -44,14 +51,21 @@ public class Main {
             System.out.println();
         }
 
+        String[] genome6prediction = new String[1];
+        genome6prediction[0] = fr.readFile("genome6");
+        ArrayList<int[]> observedConvertedPredictionGenome6 = converter.observables(genome6prediction);
+
         Viterbi viterbi = new Viterbi(P,E,pi);  //We run viterbi with the new parameters.
-        int[] mostLikelySequence = viterbi.calculate(observedConverted.get(0)); //We get the sequence of most likely states to have produced the observed
-        fw.writeStatesToFile("MainMethod7states", Arrays.toString(mostLikelySequence));
+        int[] mostLikelySequence = viterbi.calculate(observedConvertedPredictionGenome6.get(0)); //We get the sequence of most likely states to have produced the observed
+        fw.writeStatesToFile("MainMethodgenom6", Arrays.toString(mostLikelySequence));
+
         ArrayList<int[]> mostlikely = new ArrayList<>();
         mostlikely.add(mostLikelySequence);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
         String[] convertedStatesFound = converter.states(mostlikely);
+        fw.writeStatesToFile("convertedGenome6",convertedStatesFound[0]);
+
         Comparison comparer = new Comparison();                     //We compare the true annotation, with the found annotation. This is kinda cheating...
-        comparer.compare(trueAnnotation1[0],convertedStatesFound[0],'N','C','R');
+        //comparer.compare(trueAnnotation1[0],convertedStatesFound[0],'N','C','R');
 
         double[][] transition = {{0,0,0.9 ,0.1,0   ,0,0},
                 {1,0,0   ,0  ,0   ,0,0},
@@ -73,12 +87,16 @@ public class Main {
         double[] start =  {0,0,0,1,0,0,0};
 
         Viterbi viterbi2 = new Viterbi(transition,emission,start);  //We run viterbi with the old paramters
-        int[] likelySequenceNoTraining = viterbi2.calculate(observedConverted.get(0)); //We get the sequence of most likely states to have produced the observed
+        //int[] likelySequenceNoTraining = viterbi2.calculate(observedConverted.get(0)); //We get the sequence of most likely states to have produced the observed
+        int[] likelySequenceNoTraining = viterbi2.calculate(observedConvertedPredictionGenome6.get(0)); //We get the sequence of most likely states to have produced the observed
+
         ArrayList<int[]> noTrainingLikely = new ArrayList<>();
         noTrainingLikely.add(likelySequenceNoTraining);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
-        String[] convertedStates = converter.states(noTrainingLikely);
-        comparer.compare(trueAnnotation1[0],convertedStates[0],'N','C','R');
-
+        Conversion converter7StateModel = new DNAConversion7States();
+        String[] convertedStates = converter7StateModel.states(noTrainingLikely);
+        fw.writeStatesToFile("convertedGenome6_7model",convertedStates[0]);
+        //comparer.compare(trueAnnotation1[0],convertedStates[0],'N','C','R');
+        */
 
 
     }

@@ -21,7 +21,7 @@ public class DNAConversion14StatesTest {
 
         converter = new DNAConversion14States();      //TODO here we choose model as well.
         ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
         //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
         CountTraining trainer = new CountTraining(observedConverted,statesConverted,14,4); //TODO We train and choose model
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
@@ -54,7 +54,7 @@ public class DNAConversion14StatesTest {
 
         converter = new DNAConversion14States();      //TODO here we choose model as well.
         ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
         //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
         CountTraining trainer = new CountTraining(observedConverted,statesConverted,14,4); //TODO We train and choose model
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
@@ -86,7 +86,7 @@ public class DNAConversion14StatesTest {
 
         converter = new DNAConversion14States();      //TODO here we choose model as well.
         ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
         //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
         CountTraining trainer = new CountTraining(observedConverted,statesConverted,14,4); //TODO We train and choose model
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
@@ -120,7 +120,7 @@ public class DNAConversion14StatesTest {
 
         converter = new DNAConversion14States();      //TODO here we choose model as well.
 
-        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
 
         assert(statesConverted.get(0).length == trueAnnotation1[0].length());
         int length = statesConverted.get(0).length;
@@ -157,7 +157,7 @@ public class DNAConversion14StatesTest {
 
         converter = new DNAConversion14States();      //TODO here we choose model as well.
 
-        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
 
         assert(statesConverted.get(0).length == trueAnnotation1[0].length());
         int length = statesConverted.get(0).length;
@@ -194,7 +194,7 @@ public class DNAConversion14StatesTest {
 
         converter = new DNAConversion14States();      //TODO here we choose model as well.
 
-        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
 
         assert(statesConverted.get(0).length == trueAnnotation1[0].length());
         int length = statesConverted.get(0).length;
@@ -230,7 +230,7 @@ public class DNAConversion14StatesTest {
 
         converter = new DNAConversion14States();      //TODO here we choose model as well.
         ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
         //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
         CountTraining trainer = new CountTraining(observedConverted,statesConverted,14,4); //TODO We train and choose model
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters

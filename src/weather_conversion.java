@@ -50,7 +50,7 @@ public class weather_conversion implements Conversion {
     }
 
     @Override
-    public ArrayList<int[]> states(String[] states) {
+    public ArrayList<int[]> states(String[] states, String[] observed) {
         return convert_str_to_int(states,false);
     }
 
@@ -104,5 +104,15 @@ public class weather_conversion implements Conversion {
     @Override
     public String[] states(ArrayList<int[]> states) {
         return convert_int_to_str(states,false);
+    }
+
+    @Override
+    public String getNameOfModel() {
+        return "Weather_conversion";
+    }
+
+    @Override
+    public int getNumberOfstates() {
+        return 2;
     }
 }

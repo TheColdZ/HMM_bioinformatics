@@ -90,13 +90,9 @@ public class DNAConversion14States implements Conversion{
         return convert_str_to_int(observables,observables,true);    //TODO this is not pretty... but it should work
     }
 
+
     @Override
-    public ArrayList<int[]> states(String[] states) {
-        return convert_str_to_int(states,states,false);
-    }
-
-
-    public ArrayList<int[]> statesFromTrueAnnotationAndObserved(String[] trueAnnotation, String[] observed) {
+    public ArrayList<int[]> states(String[] trueAnnotation, String[] observed) {
         return convert_str_to_int(trueAnnotation,observed,false);
     }
 
@@ -152,7 +148,13 @@ public class DNAConversion14States implements Conversion{
         return convert_int_to_str(states,false);
     }
 
+    @Override
+    public String getNameOfModel() {
+        return "DNAConversion14States";
+    }
 
-
-
+    @Override
+    public int getNumberOfstates() {
+        return 14;
+    }
 }

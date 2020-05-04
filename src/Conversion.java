@@ -5,7 +5,9 @@ import java.util.ArrayList;
  */
 public interface Conversion {
     ArrayList<int[]> observables(String[] observables);
-    ArrayList<int[]> states(String[] states);
+    ArrayList<int[]> states(String[] trueAnnotation,String[] observed);
     String[] observables(ArrayList<int[]> observables);
     String[] states(ArrayList<int[]> states);
+    String getNameOfModel();
+    int getNumberOfstates();
 }

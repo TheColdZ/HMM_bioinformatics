@@ -16,7 +16,7 @@ public class CountTrainingTest {
         states[1] = "HHLLH";
         Conversion conversion = new weather_conversion();
         ArrayList<int[]> observed_converted = conversion.observables(observed);
-        ArrayList<int[]> states_converted = conversion.states(states);
+        ArrayList<int[]> states_converted = conversion.states(states,observed);
         ct = new CountTraining(observed_converted,states_converted,2,2);
     }
 
