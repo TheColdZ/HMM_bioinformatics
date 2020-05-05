@@ -1,14 +1,22 @@
-package Main;
+package Main.Conversions.DNAConversion;
+
+import Main.Conversions.Conversion;
 
 import java.util.ArrayList;
 
-public class weather_conversion implements Conversion {
+public class DNA_conversion implements Conversion {
+
+
     private int emission_conversion_char_to_int(Character c){
         int res;
         switch(c){
-            case 'S': res = 0;
+            case 'A': res = 0;
                 break;
-            case 'R': res = 1;
+            case 'C': res = 1;
+                break;
+            case 'G': res = 2;
+                break;
+            case 'T': res = 3;
                 break;
             default: throw new RuntimeException("conversion error, observable char to int");
         }
@@ -17,9 +25,11 @@ public class weather_conversion implements Conversion {
     private int state_conversion_char_to_int(Character c){
         int res;
         switch(c){
-            case 'H': res = 0;
+            case 'C': res = 0;
                 break;
-            case 'L': res = 1;
+            case 'N': res = 1;
+                break;
+            case 'R': res = 2;
                 break;
             default: throw new RuntimeException("conversion error, state char to int");
         }
@@ -58,6 +68,7 @@ public class weather_conversion implements Conversion {
 
     private String[] convert_int_to_str(ArrayList<int[]> ints, boolean observables){
         int L = ints.size();
+        int K = ints.get(0).length;
         String[] strings = new String[L];
         for (int l = 0; l < L; l++) {
             int[] int_row = ints.get(l);
@@ -77,9 +88,13 @@ public class weather_conversion implements Conversion {
     private String emission_conversion_int_to_str(int i) {
         String res;
         switch(i){
-            case 0: res = "S";
+            case 0: res = "A";
                 break;
-            case 1: res = "R";
+            case 1: res = "C";
+                break;
+            case 2: res = "G";
+                break;
+            case 3: res = "T";
                 break;
             default: throw new RuntimeException("conversion error, observable int to str");
         }
@@ -89,9 +104,11 @@ public class weather_conversion implements Conversion {
     private String state_conversion_int_to_str(int i) {
         String res;
         switch(i){
-            case 0: res = "H";
+            case 0: res = "C";
                 break;
-            case 1: res = "L";
+            case 1: res = "N";
+                break;
+            case 2: res = "R";
                 break;
             default: throw new RuntimeException("conversion error, state int to str");
         }
@@ -109,12 +126,12 @@ public class weather_conversion implements Conversion {
     }
 
     @Override
-    public String getNameOfModel() {
-        return "Weather_conversion";
+    public int getNumberOfstates() {
+        return 3;
     }
 
     @Override
-    public int getNumberOfstates() {
-        return 2;
+    public String getNameOfModel() {
+        return "Main.Conversions.DNAConversion.DNA_conversion";
     }
 }

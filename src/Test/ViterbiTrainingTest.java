@@ -1,6 +1,8 @@
 package Test;
 
-import Main.*;
+import Main.Algorithms.ViterbiTraining;
+import Main.Conversions.Conversion;
+import Main.Conversions.weather_conversion;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,6 @@
-package Main;
+package Main.Algorithms;
+
+import Main.Main;
 
 /**
  * Class to handle the alpha and beta algorithms of the forward backward procedure.

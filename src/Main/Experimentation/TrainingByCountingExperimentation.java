@@ -1,4 +1,10 @@
-package Main;
+package Main.Experimentation;
+
+import Main.Algorithms.CountTraining;
+import Main.Algorithms.Viterbi;
+import Main.Conversions.Conversion;
+import Main.FileInteraction.FileReader;
+import Main.FileInteraction.FileWriter;
 
 import java.util.ArrayList;
 

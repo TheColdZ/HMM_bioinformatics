@@ -1,7 +1,7 @@
 package Test;
 
-import Main.Conversion;
-import Main.DNAConversion.DNA_conversion;
+import Main.Conversions.Conversion;
+import Main.Conversions.DNAConversion.DNA_conversion;
 import org.junit.Before;
 import org.junit.Test;
 

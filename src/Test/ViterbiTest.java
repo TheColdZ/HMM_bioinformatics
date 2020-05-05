@@ -1,7 +1,11 @@
 package Test;
 
-import Main.*;
-import Main.DNAConversion.DNA_conversion;
+import Main.Algorithms.Viterbi;
+import Main.Conversions.Conversion;
+import Main.Conversions.DNAConversion.DNA_conversion;
+import Main.Conversions.weather_conversion;
+import Main.FileInteraction.FileReader;
+import Main.FileInteraction.FileWriter;
 import org.junit.Before;
 import org.junit.Test;
 

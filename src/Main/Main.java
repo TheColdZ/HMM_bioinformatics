@@ -1,6 +1,7 @@
 package Main;
 
-import Main.DNAConversion.*;
+import Main.Conversions.DNAConversion.*;
+import Main.Experimentation.TrainingByCountingExperimentation;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +16,7 @@ public class Main {
         experiment.trainingByCounting(new DNAConversion31States());
 
         /*
-        Main.FileReader fr = new Main.FileReader();
+        Main.FileInteraction.FileReader fr = new Main.FileInteraction.FileReader();
         String[] genome1 = new String[5];
         genome1[0] = fr.readFile("genome1");
         //genome1[0] = getStringObserved();
@@ -30,13 +31,13 @@ public class Main {
         trueAnnotation1[2] = fr.readFile("true-ann3");
         trueAnnotation1[3] = fr.readFile("true-ann4");
         trueAnnotation1[4] = fr.readFile("true-ann5");
-        Main.Conversion converter = new Main.DNAConversion.DNAConversion31States();      //TODO here we choose model as well.
+        Main.Conversion converter = new Main.Conversions.DNAConversion.DNAConversion31States();      //TODO here we choose model as well.
         ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = ((Main.DNAConversion.DNAConversion31States) converter).statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+        ArrayList<int[]> statesConverted = ((Main.Conversions.DNAConversion.DNAConversion31States) converter).statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
         //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
-        Main.FileWriter fw = new Main.FileWriter();
+        Main.FileInteraction.FileWriter fw = new Main.FileInteraction.FileWriter();
         fw.writeStatesToFile("Please", Arrays.toString(statesConverted.get(0)));
-        Main.CountTraining trainer = new Main.CountTraining(observedConverted,statesConverted,31,4); //TODO We train and choose model
+        Main.Algorithms.CountTraining trainer = new Main.Algorithms.CountTraining(observedConverted,statesConverted,31,4); //TODO We train and choose model
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
         double[][] E = trainer.getE();
         double[][] P = trainer.getP();
@@ -59,7 +60,7 @@ public class Main {
         genome6prediction[0] = fr.readFile("genome6");
         ArrayList<int[]> observedConvertedPredictionGenome6 = converter.observables(genome6prediction);
 
-        Main.Viterbi viterbi = new Main.Viterbi(P,E,pi);  //We run viterbi with the new parameters.
+        Main.Algorithms.Viterbi viterbi = new Main.Algorithms.Viterbi(P,E,pi);  //We run viterbi with the new parameters.
         int[] mostLikelySequence = viterbi.calculate(observedConvertedPredictionGenome6.get(0)); //We get the sequence of most likely states to have produced the observed
         fw.writeStatesToFile("MainMethodgenom6", Arrays.toString(mostLikelySequence));
 
@@ -68,7 +69,7 @@ public class Main {
         String[] convertedStatesFound = converter.states(mostlikely);
         fw.writeStatesToFile("convertedGenome6",convertedStatesFound[0]);
 
-        Main.Comparison comparer = new Main.Comparison();                     //We compare the true annotation, with the found annotation. This is kinda cheating...
+        Main.Experimentation.Comparison comparer = new Main.Experimentation.Comparison();                     //We compare the true annotation, with the found annotation. This is kinda cheating...
         //comparer.compare(trueAnnotation1[0],convertedStatesFound[0],'N','C','R');
 
         double[][] transition = {{0,0,0.9 ,0.1,0   ,0,0},
@@ -90,13 +91,13 @@ public class Main {
 
         double[] start =  {0,0,0,1,0,0,0};
 
-        Main.Viterbi viterbi2 = new Main.Viterbi(transition,emission,start);  //We run viterbi with the old paramters
+        Main.Algorithms.Viterbi viterbi2 = new Main.Algorithms.Viterbi(transition,emission,start);  //We run viterbi with the old paramters
         //int[] likelySequenceNoTraining = viterbi2.calculate(observedConverted.get(0)); //We get the sequence of most likely states to have produced the observed
         int[] likelySequenceNoTraining = viterbi2.calculate(observedConvertedPredictionGenome6.get(0)); //We get the sequence of most likely states to have produced the observed
 
         ArrayList<int[]> noTrainingLikely = new ArrayList<>();
         noTrainingLikely.add(likelySequenceNoTraining);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
-        Main.Conversion converter7StateModel = new Main.DNAConversion.DNAConversion7States();
+        Main.Conversion converter7StateModel = new Main.Conversions.DNAConversion.DNAConversion7States();
         String[] convertedStates = converter7StateModel.states(noTrainingLikely);
         fw.writeStatesToFile("convertedGenome6_7model",convertedStates[0]);
         //comparer.compare(trueAnnotation1[0],convertedStates[0],'N','C','R');

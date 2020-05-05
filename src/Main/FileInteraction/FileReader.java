@@ -1,4 +1,6 @@
-package Main;
+package Main.FileInteraction;
+
+import Main.Main;
 
 import java.io.BufferedReader;
 import java.io.File;

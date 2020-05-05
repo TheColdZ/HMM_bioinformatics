@@ -1,7 +1,8 @@
 package Test;
 
-import Main.*;
-import Main.DNAConversion.DNA_conversion;
+import Main.Conversions.Conversion;
+import Main.Algorithms.ForwardBackward;
+import Main.Conversions.DNAConversion.DNA_conversion;
 import org.junit.Before;
 import org.junit.Test;
 

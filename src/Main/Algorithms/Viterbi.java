@@ -1,4 +1,6 @@
-package Main;
+package Main.Algorithms;
+
+import Main.Main;
 
 public class Viterbi {
     private double[][] P;
@@ -9,7 +11,7 @@ public class Viterbi {
     private int[] sk;
 
     /**
-     * Sets up the model for a run of the Main.Viterbi algorithm
+     * Sets up the model for a run of the Main.Algorithms.Viterbi algorithm
      *
      * @param transition a quadratic P matrix
      *  @param emission an E probability matrix, |states| x |E alphabet|

@@ -1,6 +1,6 @@
-package Main.DNAConversion;
+package Main.Conversions.DNAConversion;
 
-import Main.*;
+import Main.Conversions.Conversion;
 
 import java.util.ArrayList;
 
@@ -191,7 +191,7 @@ public class DNAConversion7States implements Conversion {
 
     @Override
     public String getNameOfModel() {
-        return "Main.DNAConversion.DNAConversion7States";
+        return "Main.Conversions.DNAConversion.DNAConversion7States";
     }
 
     @Override

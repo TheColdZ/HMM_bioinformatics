@@ -1,5 +1,7 @@
 package Test;
-import Main.*;
+import Main.Algorithms.CountTraining;
+import Main.Conversions.weather_conversion;
+import Main.Conversions.Conversion;
 import org.junit.Before;
 import org.junit.Test;
 

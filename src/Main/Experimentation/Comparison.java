@@ -1,4 +1,6 @@
-package Main;
+package Main.Experimentation;
+
+import Main.Main;
 
 /**
  * This class will handle comparison of two strings. Using techniques descrribed

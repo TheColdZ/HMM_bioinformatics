@@ -1,7 +1,7 @@
 package Test;
 
-import Main.*;
-import Main.DNAConversion.DNAConversion16States;
+import Main.Algorithms.CountTraining;
+import Main.Conversions.DNAConversion.DNAConversion16States;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,5 +1,5 @@
 package Test;
-import Main.*;
+import Main.Experimentation.Comparison;
 import org.junit.Before;
 import org.junit.Test;
 
