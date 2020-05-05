@@ -1,7 +1,5 @@
 package Main.Algorithms;
 
-import Main.Main;
-
 /**
  * Class to handle the alpha and beta algorithms of the forward backward procedure.
  */
@@ -14,6 +12,8 @@ public class ForwardBackward {
     private int[] observed;
     private int N; //nr of states
     private int K; //nr of observations
+    private boolean alphaRan;
+    private boolean betaRan;
 
     public ForwardBackward(int[] observed, double[] pi, double[][] P, double[][] E){
         this.N = P.length; //nr of states
@@ -24,6 +24,8 @@ public class ForwardBackward {
         this.P = P;
         this.E = E;
         this.observed = observed;
+        this.alphaRan = false;
+        this.betaRan = false;
     }
 
     /**
@@ -31,6 +33,9 @@ public class ForwardBackward {
      * @return alpha
      */
     public double[][] calculateAlpha(){
+        if(this.alphaRan){
+            return this.alpha;
+        }
         int firstObserved = observed[0];
         // alpha_1 =
         for (int i = 0; i < N; i++) { //initialization
@@ -46,6 +51,7 @@ public class ForwardBackward {
                 alpha[j][t] = sum * E[j][observed[t]];
             }
         }
+        this.alphaRan = true;
         return alpha;
     }
 
@@ -54,6 +60,9 @@ public class ForwardBackward {
      * @return beta
      */
     public double[][] calculateBeta(){
+        if (this.betaRan){
+            return this.beta;
+        }
         //initialize the last column
         for (int i = 0; i < N; i++) {
             beta[i][K -1] = 1;
@@ -62,10 +71,34 @@ public class ForwardBackward {
         for (int t = K -2; t >= 0; t--) {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    beta[i][t] += P[i][j] * E[j][observed[t+1]] * beta[j][t+1];
+                    beta[i][t] += P[i][j] * E[j][observed[t + 1]] * beta[j][t + 1];
                 }
             }
         }
-        return beta;
+        this.betaRan = true;
+        return this.beta;
+    }
+
+    /**
+     * Calculates P(X = x) based on the forward or backward algorithm
+     * if none of them have run yet, runs forward
+     *
+     * @return P(X=x)
+     */
+    public double calculateProbability(){
+        double res = 0;
+        if (this.alphaRan){
+            for (int i = 0; i < this.N; i++) {
+                res += this.alpha[i][this.K-1];
+            }
+        } else if (this.betaRan){
+            for (int i = 0; i < this.N; i++) {
+                res += this.pi[i] * this.E[i][0] * this.beta[i][0];
+            }
+        } else{
+            calculateAlpha();
+            res = calculateProbability();
+        }
+        return res;
     }
 }

@@ -1,15 +1,15 @@
 package Test;
 
-import Main.Algorithms.ViterbiTraining;
+import Main.Algorithms.BaumWelchTraining;
 import Main.Conversions.Conversion;
 import Main.Conversions.weather_conversion;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
+public class BaumWelchTrainingTest {
+    private BaumWelchTraining training;
 
-public class ViterbiTrainingTest {
-    private ViterbiTraining vt;
+
 
     @Before
     public void setup(){
@@ -24,13 +24,13 @@ public class ViterbiTrainingTest {
         observed[2] = "RRSSRRRRRRRRSSSSRSRSRS";
         observed[3] = "RRRRRSSSSSRRRRRRSSSSSR";
         Conversion converter = new weather_conversion();
-        vt = new ViterbiTraining(converter.observables(observed), P, E, pi);
+        training = new BaumWelchTraining(converter.observables(observed),P,E,pi,0.01);
     }
 
     @Test
     public void getPi() {
         System.out.println("Pi");
-        double[] pi = vt.getPi();
+        double[] pi = training.getPi();
         for (int i = 0; i < pi.length; i++) {
             System.out.println(pi[i]);
         }
@@ -39,7 +39,7 @@ public class ViterbiTrainingTest {
     @Test
     public void getE() {
         System.out.println("E");
-        double[][] E = vt.getE();
+        double[][] E = training.getE();
         for (int i = 0; i < E.length; i++) {
             for (int j = 0; j < E[i].length; j++) {
                 System.out.print(E[i][j]);
@@ -52,24 +52,13 @@ public class ViterbiTrainingTest {
     @Test
     public void getP() {
         System.out.println("P");
-        double[][] P = vt.getP();
+        double[][] P = training.getP();
         for (int i = 0; i < P.length; i++) {
             for (int j = 0; j < P[0].length; j++) {
                 System.out.print(P[i][j]);
                 System.out.print(" ");
             }
             System.out.println();
-        }
-    }
-
-    @Test
-    public void getStates() {
-        System.out.println("states");
-        ArrayList<int[]> states = vt.getStates();
-        Conversion conv = new weather_conversion();
-        String[] strings = conv.states(states);
-        for (String str : strings) {
-            System.out.println(str);
         }
     }
 }

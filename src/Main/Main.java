@@ -5,6 +5,9 @@ import Main.Experimentation.TrainingByCountingExperimentation;
 
 public class Main {
     public static void main(String[] args) {
+
+
+
         TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
         experiment.trainingByCounting(new DNAConversion5States());
 
