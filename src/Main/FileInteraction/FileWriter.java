@@ -4,13 +4,13 @@ import java.util.Map;
 
 public class FileWriter {
 
-    public void writePredictedStatesTofile(String[] predcitedStates,String nameOfModel){
-        int genomes = predcitedStates.length;
+    public void writePredictedStatesTofile(String[] predictedStates,String nameOfModel){
+        int genomes = predictedStates.length;
 
             try {
                 java.io.FileWriter fw = new java.io.FileWriter("predictedStates"+nameOfModel+".txt");      //Writing states to a file
                 for (int i = 0; i < genomes ; i++) {
-                    fw.write("> pred-ann" + (i + 6) + "\n" + predcitedStates[i] + "\n");
+                    fw.write("> pred-ann" + (i + 6) + "\n" + predictedStates[i] + "\n");
                 }
                 fw.close();
             }

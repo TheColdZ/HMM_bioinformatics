@@ -1,22 +1,39 @@
 package Main;
 
-import Main.Conversions.DNAConversion.*;
-import Main.Experimentation.TrainingByCountingExperimentation;
+import Main.Conversions.DNAConversion.DNAConversion7States;
+import Main.Experimentation.BaumWelchExperiment;
 
 public class Main {
     public static void main(String[] args) {
 
+        //need paramaters for initial ...
+        double[][] P = {{0,0,0.9 ,0.1,0   ,0,0},
+                {1,0,0   ,0  ,0   ,0,0},
+                {0,1,0   ,0  ,0   ,0,0},
+                {0,0,0.05,0.9,0.05,0,0},
+                {0,0,0   ,0  ,0   ,1,0},
+                {0,0,0   ,0  ,0   ,0,1},
+                {0,0,0   ,0.1,0.9 ,0,0} };
+        double[][] E ={{0.3 ,0.25,0.25,0.2},
+                {0.2 ,0.35,0.15,0.3},
+                {0.4 ,0.15,0.2 ,0.25},
+                {0.25,0.25,0.25,0.25},
+                {0.2 ,0.4 ,0.3 ,0.1},
+                {0.3 ,0.2 ,0.3 ,0.20},
+                {0.15,0.3 ,0.2 ,0.35}};
+        double[] pi =  {0,0,0,1,0,0,0};
 
+        BaumWelchExperiment BWE = new BaumWelchExperiment(new DNAConversion7States(),P,E,pi);
 
+        /*
         TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
         experiment.trainingByCounting(new DNAConversion5States());
-
         experiment.trainingByCounting(new DNAConversion7States());
-
         experiment.trainingByCounting(new DNAConversion7States());
         experiment.trainingByCounting(new DNAConversion14States());
         experiment.trainingByCounting(new DNAConversion16States());
         experiment.trainingByCounting(new DNAConversion31States());
+        */
 
         /*
         Main.FileInteraction.FileReader fr = new Main.FileInteraction.FileReader();
