@@ -1,6 +1,10 @@
+package Main.DNAConversion;
+
+import Main.*;
+
 import java.util.ArrayList;
 
-public class DNAConversion16States implements Conversion{
+public class DNAConversion31States implements Conversion {
     private int emission_conversion_char_to_int(Character c){
         int res;
         switch(c){
@@ -27,16 +31,50 @@ public class DNAConversion16States implements Conversion{
                     break;
                 case 'C': states[i] = codingStates(trueAnnotation,observed,states,i);
                     break;
-                default: states[i] = 0 ;   //TODO maybe change this, but this model does not model R
-                //default: throw new RuntimeException("Conversion error");
+                case 'R': states[i] = reverseCodingStates(trueAnnotation,observed,states,i) ;
+                    break;
+                default: throw new RuntimeException("Main.Conversion error");
 
             }
         }
         return states;
     }
 
+    private int reverseCodingStates(String trueAnnotation,String observed, int[] states,int n) {
+        if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A')return 16;
+        else if(states[n-1] == 16)return 17;
+        else if(states[n-1] == 17)return 18;
+        else if(states[n-1] == 18)return 25;
 
-    private int codingStates(String trueAnnotation,String observed, int[] states,int n) {
+        else if(observed.charAt(n) == 'C' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A' )return 19;
+
+        else if(states[n-1] == 19) return 20;
+        else if(states[n-1] == 20) return 21;
+        else if(states[n-1] == 21) return 25;
+
+        else if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'C' && observed.charAt(n+2)== 'A' )return 22;
+        else if(states[n-1] == 22) return 23;
+        else if(states[n-1] == 23) return 24;
+        else if(states[n-1] == 24) return 25;
+
+        else if(states[n-1] == 25) return 26;
+        else if(states[n-1] == 26) return 27;
+
+
+        else if(observed.charAt(n) == 'C' && states[n-1] == 27 && observed.charAt(n+1) == 'A'
+                && observed.charAt(n+2) == 'T' && trueAnnotation.charAt(n+3)== 'N' ) return 28;
+        else if(observed.charAt(n) == 'A' && states[n-1] == 28 && observed.charAt(n+1) == 'T') return 29;
+        else if(observed.charAt(n) == 'T' && states[n-1] == 29) return 30;
+
+
+        else if( n+4 < observed.length()) {
+            if (observed.charAt(n + 4) != 'N' && (states[n-1] == 27 || states[n-1] == 18 || states[n-1] == 21 || states[n-1] == 24)) return 25; //We loop if we are not done in 4 steps. 25->26->27->25..
+        }
+        else return 0;
+        return 0;
+    }
+
+    private int codingStates(String trueAnnotation,String observed, int[] states,int n) {   //TODO Code duplication, almost same as in 16 state
         if(observed.charAt(n) == 'A' && states[n-1] == 0 )return 1;
         else if(observed.charAt(n) == 'T' && states[n-1] == 1)return 2;
         else if(observed.charAt(n) == 'G' && states[n-1] == 2)return 3;
@@ -45,15 +83,16 @@ public class DNAConversion16States implements Conversion{
         else if(states[n-1] == 5) return 6;
 
         else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'A'
-                && observed.charAt(n+2) == 'A' && trueAnnotation.charAt(n+3)== 'N' ) return 7;
+                && observed.charAt(n+2) == 'A' ) return 7; //&& trueAnnotation.charAt(n+3)== 'N'
+
         else if(states[n-1] == 7 ) return 8;
         else if(states[n-1] == 8 ) return 9;
         else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'A'
-                && observed.charAt(n+2) == 'G' && trueAnnotation.charAt(n+3)== 'N'  ) return 10;
+                && observed.charAt(n+2) == 'G'  ) return 10;
         else if(states[n-1] == 10 ) return 11;
         else if(states[n-1] == 11 ) return 12;
         else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'G'
-                && observed.charAt(n+2) == 'A' && trueAnnotation.charAt(n+3)== 'N' ) return 13;
+                && observed.charAt(n+2) == 'A'   ) return 13;
         else if(states[n-1] == 13 ) return 14;
         else if(states[n-1] == 14 ) return 15;
         else if( n+4 < observed.length()) {
@@ -75,10 +114,10 @@ public class DNAConversion16States implements Conversion{
             String obs = observed[l];
             if(observables) {
                 for (int k = 0; k < annotation.length(); k++) {
-                     strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
+                    strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
                 }
             } else {
-                  strings_int.add(convertAnnotationToState(annotation,obs));
+                strings_int.add(convertAnnotationToState(annotation,obs));
             }
 
         }
@@ -90,7 +129,6 @@ public class DNAConversion16States implements Conversion{
     public ArrayList<int[]> observables(String[] observables) {
         return convert_str_to_int(observables,observables,true);    //TODO this is not pretty... but it should work
     }
-
 
 
     @Override
@@ -136,7 +174,8 @@ public class DNAConversion16States implements Conversion{
     private String state_conversion_int_to_str(int i) {
         if(i == 0) return "N";
         else if (i <16) return "C";
-        else return "N"; //TODO right now we do not look at R's, as this model does not represent it.
+        else if (i <31) return "R";
+        else return "N";
 
     }
 
@@ -152,11 +191,11 @@ public class DNAConversion16States implements Conversion{
 
     @Override
     public String getNameOfModel() {
-        return "DNAConversion16States";
+        return "Main.DNAConversion.DNAConversion31States";
     }
 
     @Override
     public int getNumberOfstates() {
-        return 16;
+        return 31;
     }
 }

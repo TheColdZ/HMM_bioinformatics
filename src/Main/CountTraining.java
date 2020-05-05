@@ -1,3 +1,5 @@
+package Main;
+
 import java.util.ArrayList;
 
 /**
@@ -41,10 +43,11 @@ public class CountTraining {
      * Calculates the training by counting steps.
      *
      * @param observables
+     * @param states
      */
     private void calculate(ArrayList<int[]> observables,ArrayList<int[]> states){
-        int[] state_counts = new int[N]; //denominator 2.32 TODO are these right?
-        int[] emission_counts = new int[N]; //denominator 2.34
+        int[] state_counts = new int[N]; //denominator (2.39)
+        int[] emission_counts = new int[N]; //denominator (2.40)
         for (int l = 0; l < L; l++) {
             int[] observable = observables.get(l);
             int[] state = states.get(l);

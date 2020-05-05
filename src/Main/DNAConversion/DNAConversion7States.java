@@ -1,6 +1,10 @@
+package Main.DNAConversion;
+
+import Main.*;
+
 import java.util.ArrayList;
 
-public class DNAConversion7States implements Conversion{
+public class DNAConversion7States implements Conversion {
     private int emission_conversion_char_to_int(Character c){
         int res;
         switch(c){
@@ -32,7 +36,7 @@ public class DNAConversion7States implements Conversion{
 
                 case 'R': return reverseCodingState7States(previousState);
 
-                default: throw new RuntimeException("Conversion error");
+                default: throw new RuntimeException("Main.Conversion error");
 
             }
     }
@@ -187,7 +191,7 @@ public class DNAConversion7States implements Conversion{
 
     @Override
     public String getNameOfModel() {
-        return "DNAConversion7States";
+        return "Main.DNAConversion.DNAConversion7States";
     }
 
     @Override

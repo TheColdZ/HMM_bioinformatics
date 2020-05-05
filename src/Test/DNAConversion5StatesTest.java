@@ -1,3 +1,6 @@
+package Test;
+import Main.*;
+import Main.DNAConversion.DNAConversion5States;
 import org.junit.Before;
 import org.junit.Test;
 

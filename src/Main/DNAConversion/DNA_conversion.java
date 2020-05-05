@@ -1,6 +1,10 @@
+package Main.DNAConversion;
+
+import Main.*;
+
 import java.util.ArrayList;
 
-public class DNA_conversion implements Conversion{
+public class DNA_conversion implements Conversion {
 
 
     private int emission_conversion_char_to_int(Character c){
@@ -128,6 +132,6 @@ public class DNA_conversion implements Conversion{
 
     @Override
     public String getNameOfModel() {
-        return "DNA_conversion";
+        return "Main.DNAConversion.DNA_conversion";
     }
 }

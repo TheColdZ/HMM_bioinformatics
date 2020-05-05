@@ -1,6 +1,10 @@
+package Main.DNAConversion;
+
+import Main.*;
+
 import java.util.ArrayList;
 
-public class DNAConversion14States implements Conversion{
+public class DNAConversion14States implements Conversion {
     private int emission_conversion_char_to_int(Character c){
         int res;
         switch(c){
@@ -28,7 +32,7 @@ public class DNAConversion14States implements Conversion{
                 case 'C': states[i] = codingStates(trueAnnotation,observed,states,i);
                     break;
                 default: states[i] = 0 ;   //TODO maybe change this, but this model does not model R
-                    //default: throw new RuntimeException("Conversion error");
+                    //default: throw new RuntimeException("Main.Conversion error");
 
             }
         }
@@ -150,7 +154,7 @@ public class DNAConversion14States implements Conversion{
 
     @Override
     public String getNameOfModel() {
-        return "DNAConversion14States";
+        return "Main.DNAConversion.DNAConversion14States";
     }
 
     @Override

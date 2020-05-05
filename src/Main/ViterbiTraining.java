@@ -1,7 +1,9 @@
+package Main;
+
 import java.util.ArrayList;
 
 /**
- * Class to handle Viterbi training
+ * Class to handle Main.Viterbi training
  */
 public class ViterbiTraining {
     private ArrayList<int[]> states;
@@ -29,9 +31,9 @@ public class ViterbiTraining {
     }
 
     private void calculate(ArrayList<int[]> observables) {
-        ArrayList<int[]> old_states = new ArrayList<>();
+        ArrayList<int[]> old_states;
         do{
-            old_states = (ArrayList<int[]>) states.clone(); //suspicious TODO
+            old_states = (ArrayList<int[]>) states.clone();
             Viterbi vit = new Viterbi(P,E,pi);
             for (int l = 0; l < L; l++) {
                 int[] state_as_int = vit.calculate(observables.get(l));

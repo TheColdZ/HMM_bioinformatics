@@ -1,3 +1,5 @@
+package Main;
+
 /**
  * Class to handle the alpha and beta algorithms of the forward backward procedure.
  */

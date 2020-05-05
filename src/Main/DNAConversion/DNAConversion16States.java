@@ -1,6 +1,10 @@
+package Main.DNAConversion;
+
+import Main.*;
+
 import java.util.ArrayList;
 
-public class DNAConversion5States implements Conversion{
+public class DNAConversion16States implements Conversion {
     private int emission_conversion_char_to_int(Character c){
         int res;
         switch(c){
@@ -28,7 +32,7 @@ public class DNAConversion5States implements Conversion{
                 case 'C': states[i] = codingStates(trueAnnotation,observed,states,i);
                     break;
                 default: states[i] = 0 ;   //TODO maybe change this, but this model does not model R
-                    //default: throw new RuntimeException("Conversion error");
+                //default: throw new RuntimeException("Main.Conversion error");
 
             }
         }
@@ -40,9 +44,27 @@ public class DNAConversion5States implements Conversion{
         if(observed.charAt(n) == 'A' && states[n-1] == 0 )return 1;
         else if(observed.charAt(n) == 'T' && states[n-1] == 1)return 2;
         else if(observed.charAt(n) == 'G' && states[n-1] == 2)return 3;
-        else if (states[n-1] == 3 || states[n-1] == 4) return 4;
-        else return 0;
+        else if(states[n-1] == 3) return 4;
+        else if(states[n-1] == 4) return 5;
+        else if(states[n-1] == 5) return 6;
 
+        else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'A'
+                && observed.charAt(n+2) == 'A' && trueAnnotation.charAt(n+3)== 'N' ) return 7;
+        else if(states[n-1] == 7 ) return 8;
+        else if(states[n-1] == 8 ) return 9;
+        else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'A'
+                && observed.charAt(n+2) == 'G' && trueAnnotation.charAt(n+3)== 'N'  ) return 10;
+        else if(states[n-1] == 10 ) return 11;
+        else if(states[n-1] == 11 ) return 12;
+        else if(observed.charAt(n) == 'T' && states[n-1] == 6 && observed.charAt(n+1) == 'G'
+                && observed.charAt(n+2) == 'A' && trueAnnotation.charAt(n+3)== 'N' ) return 13;
+        else if(states[n-1] == 13 ) return 14;
+        else if(states[n-1] == 14 ) return 15;
+        else if( n+4 < observed.length()) {
+            if (observed.charAt(n + 4) != 'N') return 4; //We loop if we are not done in 4 steps. 4->5->6->4..
+        }
+        else return 0;
+        return 0;
     }
     private ArrayList<int[]> convert_str_to_int(String[] trueAnnotation,String[] observed,boolean observables){
         int L = trueAnnotation.length;
@@ -57,10 +79,10 @@ public class DNAConversion5States implements Conversion{
             String obs = observed[l];
             if(observables) {
                 for (int k = 0; k < annotation.length(); k++) {
-                    strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
+                     strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
                 }
             } else {
-                strings_int.add(convertAnnotationToState(annotation,obs));
+                  strings_int.add(convertAnnotationToState(annotation,obs));
             }
 
         }
@@ -72,6 +94,7 @@ public class DNAConversion5States implements Conversion{
     public ArrayList<int[]> observables(String[] observables) {
         return convert_str_to_int(observables,observables,true);    //TODO this is not pretty... but it should work
     }
+
 
 
     @Override
@@ -116,7 +139,7 @@ public class DNAConversion5States implements Conversion{
 
     private String state_conversion_int_to_str(int i) {
         if(i == 0) return "N";
-        else if (i <5) return "C";
+        else if (i <16) return "C";
         else return "N"; //TODO right now we do not look at R's, as this model does not represent it.
 
     }
@@ -133,11 +156,11 @@ public class DNAConversion5States implements Conversion{
 
     @Override
     public String getNameOfModel() {
-        return "DNAConversion5states";
+        return "Main.DNAConversion.DNAConversion16States";
     }
 
     @Override
     public int getNumberOfstates() {
-        return 5;
+        return 16;
     }
 }

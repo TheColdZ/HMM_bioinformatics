@@ -1,3 +1,5 @@
+package Main;
+
 /**
  * This class will handle comparison of two strings. Using techniques descrribed
  */
