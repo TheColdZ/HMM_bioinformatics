@@ -41,7 +41,7 @@ public class TestForwardBackward {
     @Test
     public void TestAlpha(){
         double[][] preCalculatedAlpha = PreCalculatedAlpha();
-        double[][] alpha = FB.calculateAlpha();
+        double[][] alpha = FB.getAlpha();
         boolean err = false;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
@@ -59,12 +59,18 @@ public class TestForwardBackward {
     @Test
     public void TestBeta(){
         double[][] preCalculatedBeta = PreCalculatedBeta();
-        double[][] beta = FB.calculateBeta();
+        double[][] beta = FB.getBeta();
+        boolean err = false;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
-                assert(compareFactor(beta[i][j],preCalculatedBeta[i][j],0.001));
+                boolean cmp = compareFactor(beta[i][j],preCalculatedBeta[i][j],0.001);
+                if(!cmp){
+                    System.out.println("Expected: "+preCalculatedBeta[i][j]+" but got: "+beta[i][j]+" at alpha["+i+","+j+"]");
+                    err = true;
+                }
             }
         }
+        assert(!err);
     }
 
     private double[][] PreCalculatedAlpha(){

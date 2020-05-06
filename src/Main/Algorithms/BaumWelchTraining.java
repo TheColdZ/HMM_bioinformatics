@@ -26,7 +26,14 @@ public class BaumWelchTraining {
             disposeable[0] = -1;
             states.add(disposeable);
         }
-        calculate(observables);
+        //calculate(observables);
+        iterate(observables,10);
+    }
+
+    private void iterate(ArrayList<int[]> observables, int n){
+        for (int i = 0; i < n; i++) {
+            reestimate(observables);
+        }
     }
 
     private void calculate(ArrayList<int[]> observables) {
@@ -59,10 +66,11 @@ public class BaumWelchTraining {
 
         for (int l = 0; l < L; l++) {
             int[] obsl = observables.get(l);
-            ForwardBackward fwdBck = new ForwardBackward(obsl, this.pi, this.P, this.E);
-            double[][] alphal = fwdBck.calculateAlpha();
-            double[][] betal = fwdBck.calculateBeta();
-            double Pl = fwdBck.calculateProbability();
+            ForwardBackwardScaled fwdBck = new ForwardBackwardScaled(obsl, this.pi, this.P, this.E);
+            double[][] alphal = fwdBck.getAlpha();
+            double[][] betal = fwdBck.getBeta();
+            //double Pl = fwdBck.calculateProbability();
+            double Pl = 1;
             int Kl = obsl.length;
             for (int k = 0; k < Kl - 2; k++) {
                 int xlk = obsl[k];
