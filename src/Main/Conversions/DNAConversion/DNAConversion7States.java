@@ -58,8 +58,8 @@ public class DNAConversion7States implements Conversion {
             case 6 : foundState = 4;
                 return foundState;
             default:
-                System.out.println("Previous state reversecoding was:"+state);
-                return 4;  //TODO this is bad
+                System.out.println("Previous state reversecoding was:"+state); //TODO delete print
+                return 4;
             //default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
         }
     }
@@ -80,8 +80,8 @@ public class DNAConversion7States implements Conversion {
             case 0 : foundState = 2;
                 return foundState;
             default:
-                System.out.println("Previous state, coding was:"+state);
-                return 2; //TODO This... is bad
+                System.out.println("Previous state, coding was:"+state); //TODO delete print
+                return 2;
             //default: throw new RuntimeException("CodingState error, previous state not correct., state:"+state);
         }
     }

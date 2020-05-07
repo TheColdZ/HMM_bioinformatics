@@ -134,6 +134,58 @@ public class DNAConversion7StatesTest {
 
     }
 
+    @Test
+    public void testMixedStatesRtoC(){
+        String[] genome1 = new String[1];
+        genome1[0] = getStringMixedRC();
+
+        String[] trueAnnotation1 = new String[1];
+        trueAnnotation1[0] = getTrueStringMixedRC();//This is a file containing N's, C's and R's
+
+        converter = new DNAConversion7States();
+
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+
+        assert(statesConverted.get(0).length == trueAnnotation1[0].length());
+        int length = statesConverted.get(0).length;
+        assert(statesConverted.get(0)[0]==3);
+        assert(statesConverted.get(0)[1]==4);
+        assert(statesConverted.get(0)[2]==5);
+        assert(statesConverted.get(0)[3]==6);
+        assert(statesConverted.get(0)[10]==2);
+        assert(statesConverted.get(0)[11]==1);
+        assert(statesConverted.get(0)[12]==0);
+        assert(statesConverted.get(0)[13]==2);
+
+    }
+
+    @Test
+    public void testMixedStatesCtoR(){
+        String[] genome1 = new String[1];
+        genome1[0] = getStringMixedCR();
+
+        String[] trueAnnotation1 = new String[1];
+        trueAnnotation1[0] = getTrueStringMixedCR();//This is a file containing N's, C's and R's
+
+        converter = new DNAConversion7States();
+
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+
+        assert(statesConverted.get(0).length == trueAnnotation1[0].length());
+        int length = statesConverted.get(0).length;
+        for (int i = 0; i <length ; i++) {
+            System.out.println(statesConverted.get(0)[i]);
+        }
+        assert(statesConverted.get(0)[0]==3);
+        assert(statesConverted.get(0)[1]==2);
+        assert(statesConverted.get(0)[2]==1);
+        assert(statesConverted.get(0)[3]==0);
+        assert(statesConverted.get(0)[10]==4);
+        assert(statesConverted.get(0)[11]==5);
+        assert(statesConverted.get(0)[12]==6);
+        assert(statesConverted.get(0)[13]==4);
+
+    }
 
 
     @Test
@@ -185,6 +237,18 @@ public class DNAConversion7StatesTest {
     }
     private String getTrueStringCCCN(){
         return "NCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCN";
+    }
+    private String getTrueStringMixedCR(){
+        return "NCCCCCCCCCRRRRRRRRRN";
+    }
+    private String getTrueStringMixedRC(){
+        return "NRRRRRRRRRCCCCCCCCCN";
+    }
+    private String getStringMixedCR(){
+        return "TATGGATTGATTACGTCATG";
+    }
+    private String getStringMixedRC(){
+        return "TTTAGATCATATGACGTAAG";
     }
 
 }

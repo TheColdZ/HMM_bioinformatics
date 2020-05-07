@@ -86,11 +86,11 @@ public class DNAConversion31StatesTest {
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringStartNRRR();//This is a file containing N's, C's and R's
 
-        converter = new DNAConversion31States();     //TODO here we choose model as well.
+        converter = new DNAConversion31States();
         ArrayList<int[]> observedConverted = converter.observables(genome1);
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
         //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,31,4); //TODO We train and choose model
+        CountTraining trainer = new CountTraining(observedConverted,statesConverted,31,4);
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
         double[][] E = trainer.getE();
         double[][] P = trainer.getP();
@@ -247,13 +247,12 @@ public class DNAConversion31StatesTest {
     }
 
     @Test
-    public void testMixedStatesCR(){
-        //TODO So... vi blev jo egentlig aldrig rigtig enige om hvad vi gjorde i det her tilfælde. C -> R,
+    public void testMixedStatesCtoR(){
         String[] genome1 = new String[1];
-        genome1[0] = getStringMixed();
+        genome1[0] = getStringMixedCR();
 
         String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringMixed();//This is a file containing N's, C's and R's
+        trueAnnotation1[0] = getTrueStringMixedCR();//This is a file containing N's, C's and R's
 
         converter = new DNAConversion31States();
 
@@ -264,7 +263,7 @@ public class DNAConversion31StatesTest {
         assert(statesConverted.get(0)[0]==0);
 
         assert(statesConverted.get(0)[1]==1);
-        assert(statesConverted.get(0)[length-11]==15);
+
 
         assert(statesConverted.get(0)[length-1]==0);
         assert(statesConverted.get(0)[length-2]==30);
@@ -279,13 +278,44 @@ public class DNAConversion31StatesTest {
         assert(statesConverted.get(0)[length-8]==18);
         assert(statesConverted.get(0)[length-9]==17);
         assert(statesConverted.get(0)[length-10]==16);
-
-
-
-
+        assert(statesConverted.get(0)[length-11]==15);
+        assert(statesConverted.get(0)[length-12]==14);
+        assert(statesConverted.get(0)[length-13]==13);
     }
 
 
+
+    //N -> 16,17,18,25,26,27,28,29,30 -> 1,2,3,4,5,6,7,8,9 -> N
+    @Test
+    public void testMixedStatesRtoC(){
+
+        String[] genome1 = new String[1];
+        genome1[0] = getStringMixedRC();
+
+        String[] trueAnnotation1 = new String[1];
+        trueAnnotation1[0] = getTrueStringMixedRC();//This is a file containing N's, C's and R's
+
+        converter = new DNAConversion31States();
+
+        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
+
+        assert(statesConverted.get(0).length == trueAnnotation1[0].length());
+        int length = statesConverted.get(0).length;
+        assert(statesConverted.get(0)[0]==0);
+
+        assert(statesConverted.get(0)[1]==16);
+        assert(statesConverted.get(0)[2]==17);
+
+        assert(statesConverted.get(0)[3]==18);
+        assert(statesConverted.get(0)[4]==25);
+        assert(statesConverted.get(0)[5]==26);
+        assert(statesConverted.get(0)[6]==27);
+
+        assert(statesConverted.get(0)[10]==1);
+        assert(statesConverted.get(0)[11]==2);
+        assert(statesConverted.get(0)[12]==3);
+
+    }
 
 
 
@@ -352,11 +382,18 @@ public class DNAConversion31StatesTest {
         return "NCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCN";
     }
 
-    private String getTrueStringMixed(){
+    private String getTrueStringMixedCR(){
         return "NCCCCCCCCCRRRRRRRRRN";
     }
-    private String getStringMixed(){
+    private String getTrueStringMixedRC(){
+        return "NRRRRRRRRRCCCCCCCCCN";
+    }
+    private String getStringMixedCR(){
         return "TATGGATTGATTACGTCATG";
     }
+    private String getStringMixedRC(){
+        return "TTTAGATCATATGACGTAAG";
+    }
+
 
 }
