@@ -14,8 +14,8 @@ public class FileReader {
      */
 
     public String readFile(String filename) {
-        //File file = new File("C:\\Users\\thoma\\Bachelor\\"+filename+".txt");
-        File file = new File("E:\\Uni\\Dat\\HMM_bioinformatics\\"+filename+".txt");
+        File file = new File("C:\\Users\\thoma\\Bachelor\\"+filename+".txt");
+        //File file = new File("E:\\Uni\\Dat\\HMM_bioinformatics\\"+filename+".txt");
         StringBuilder sb1 = new StringBuilder();
         try {
             BufferedReader br = new BufferedReader(new java.io.FileReader(file));

@@ -41,7 +41,7 @@ public class DNAConversion31States implements Conversion {
     }
 
     private int reverseCodingStates(String trueAnnotation,String observed, int[] states,int n) {
-        if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A')return 16;
+        if(observed.charAt(n) == 'T' && (states[n-1] == 0 || states[n-1] < 16) && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A')return 16;
         else if(states[n-1] == 16)return 17;
         else if(states[n-1] == 17)return 18;
         else if(states[n-1] == 18)return 25;
@@ -75,7 +75,7 @@ public class DNAConversion31States implements Conversion {
     }
 
     private int codingStates(String trueAnnotation,String observed, int[] states,int n) {   //TODO Code duplication, almost same as in 16 state
-        if(observed.charAt(n) == 'A' && states[n-1] == 0 )return 1;
+        if(observed.charAt(n) == 'A' && (states[n-1] == 0 || states[n-1] >15 )) return 1;
         else if(observed.charAt(n) == 'T' && states[n-1] == 1)return 2;
         else if(observed.charAt(n) == 'G' && states[n-1] == 2)return 3;
         else if(states[n-1] == 3) return 4;
