@@ -27,7 +27,7 @@ public class BaumWelchTraining {
             states.add(disposeable);
         }
         //calculate(observables);
-        iterate(observables,10);
+        iterate(observables,5);
     }
 
     private void iterate(ArrayList<int[]> observables, int n){
@@ -51,7 +51,6 @@ public class BaumWelchTraining {
             //System.out.println(i);
             i++;
             //run until reestimation grants only a small increase in likelihood
-            //System.out.println(initialLikelihood + " == " + newLikelihood);
         } while (initialLikelihood <= newLikelihood * (1 - compareFactor));
     }
 
@@ -69,28 +68,43 @@ public class BaumWelchTraining {
             ForwardBackwardScaled fwdBck = new ForwardBackwardScaled(obsl, this.pi, this.P, this.E);
             double[][] alphal = fwdBck.getAlpha();
             double[][] betal = fwdBck.getBeta();
-            //double Pl = fwdBck.calculateProbability();
-            double Pl = 1;
             int Kl = obsl.length;
+            double Pl = 0;
+            for (int i = 0; i < N; i++) {
+                Pl += alphal[i][Kl - 1]; //this is just 1 :(
+            }
             for (int k = 0; k < Kl - 2; k++) {
                 int xlk = obsl[k];
                 int xlkPlusPlus = obsl[k + 1];
                 for (int i = 0; i < N; i++) {
                     for (int j = 0; j < N; j++) {
-                        newP[i][j] += alphal[i][k] * this.P[i][j] * this.E[j][xlkPlusPlus] * betal[j][k + 1] / Pl;
+                        newP[i][j] += alphal[i][k] * this.P[i][j] * this.E[j][xlkPlusPlus] * betal[j][k + 1];
                     }
-                    pDenominators[i] += alphal[i][k] * betal[i][k] / Pl;
+                    double sum = 0;
+                    for (int j = 0; j < N; j++) {
+                        sum += P[i][j] * E[j][xlkPlusPlus] * betal[j][k+1];
+                    }
+                    pDenominators[i] += alphal[i][k] * sum;
                     for (int a = 0; a < M; a++) {
 
                         if (xlk == a) {
-                            newE[i][a] += alphal[i][k] * betal[i][k] / Pl;
+                            newE[i][a] += alphal[i][k] * betal[i][k];
                         }
                     }
-                    eDenominators[i] += alphal[i][k] * betal[i][k] / Pl;
+                    eDenominators[i] += alphal[i][k] * betal[i][k];
                 }
             }
             for (int i = 0; i < N; i++) {
-                    newPi[i] += alphal[i][0]  * betal[i][0] / Pl;
+                double sum = 0;
+                int x2 = obsl[1];
+                for (int j = 0; j < N; j++) {
+                    sum += P[i][j] * E[j][x2] * betal[j][1];
+                }
+                newPi[i] = alphal[i][0] * sum / Pl;
+                //System.out.println(alphal[i][0] * betal[i][0] / Pl);
+                //newPi[i] += alphal[i][0] * betal[i][0] / Pl;
+                //newPi[i] += alphal[i][0] * betal[i][0] * fwdBck.calculateAlphaSum(0) / Pl;
+                //                                               c1
             }
             likelihood *= Pl;
         }
@@ -102,13 +116,18 @@ public class BaumWelchTraining {
             for (int j = 0; j < M; j++) {
                 newE[i][j] = newE[i][j] / eDenominators[i];
             }
-            newPi[i] = newPi[i] / L;
+            newPi[i] = newPi[i];
         }
-
         this.P = newP;
         this.E = newE;
         this.pi = newPi;
 
+        //proof that pi is the problem
+        /*
+        for (int i = 0; i < N; i++) {
+            pi[i] = 1.0/N;
+        }
+        */
         return likelihood;
     }
 

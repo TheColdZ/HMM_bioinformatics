@@ -114,7 +114,7 @@ public class weather_conversion implements Conversion {
     }
 
     @Override
-    public int getNumberOfstates() {
+    public int getNumberOfStates() {
         return 2;
     }
 }

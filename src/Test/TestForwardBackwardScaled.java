@@ -27,10 +27,16 @@ public class TestForwardBackwardScaled {
         FBs = new ForwardBackwardScaled(obs_int_arr,pi,P,E);
     }
 
+    /**
+     * This should fail
+     */
     @Test
     public void testProbability(){
         double a = FB.calculateProbability();
-        double b = FBs.calculateProbability();
+        double b = 0;
+        for (int i = 0; i < 2; i++) {
+            b += FBs.getAlpha()[i][1];
+        }
         System.out.println("Expected: "+a+" but got: "+b);
         assert(compareFactor(a,b,0.01));
     }

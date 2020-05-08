@@ -11,5 +11,5 @@ public interface Conversion {
     String[] observables(ArrayList<int[]> observables);
     String[] states(ArrayList<int[]> states);
     String getNameOfModel();
-    int getNumberOfstates();
+    int getNumberOfStates();
 }

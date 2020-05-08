@@ -158,7 +158,7 @@ public class DNAConversion14States implements Conversion {
     }
 
     @Override
-    public int getNumberOfstates() {
+    public int getNumberOfStates() {
         return 14;
     }
 }

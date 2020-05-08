@@ -126,7 +126,7 @@ public class DNA_conversion implements Conversion {
     }
 
     @Override
-    public int getNumberOfstates() {
+    public int getNumberOfStates() {
         return 3;
     }
 

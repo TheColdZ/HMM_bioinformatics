@@ -32,20 +32,20 @@ public class TrainingByCountingExperimentation {
         ArrayList<int[]> statesConverted =  converter.states(trueAnnotationOfGenomes,observedGenomes);   //This conversion should give us which states produced the true annotation
 
 
-        CountTraining countTrainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfstates(),4);
+        CountTraining countTrainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
         double[] pi = countTrainer.getPi();  //We retrieve the newly found parameters TODO used for debugging, remove when appropiate
         double[][] E = countTrainer.getE();
         double[][] P = countTrainer.getP();
 
 
-        for (int i = 0; i < converter.getNumberOfstates(); i++) {
-            for (int j = 0; j < converter.getNumberOfstates(); j++) {
+        for (int i = 0; i < converter.getNumberOfStates(); i++) {
+            for (int j = 0; j < converter.getNumberOfStates(); j++) {
                 System.out.print(P[i][j]);
                 System.out.print(" ");
             }
             System.out.println();
         }
-        for (int i = 0; i < converter.getNumberOfstates(); i++) {
+        for (int i = 0; i < converter.getNumberOfStates(); i++) {
             for (int j = 0; j < 4; j++) {
                 System.out.print(E[i][j]);
                 System.out.print(" ");

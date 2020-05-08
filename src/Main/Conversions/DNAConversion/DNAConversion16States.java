@@ -160,7 +160,7 @@ public class DNAConversion16States implements Conversion {
     }
 
     @Override
-    public int getNumberOfstates() {
+    public int getNumberOfStates() {
         return 16;
     }
 }

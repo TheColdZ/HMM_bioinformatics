@@ -26,14 +26,14 @@ public class BaumWelchExperiment {
         double[][] E = baumWelchTraining.getE();
         double[][] P = baumWelchTraining.getP();
 
-        for (int i = 0; i < converter.getNumberOfstates(); i++) {
-            for (int j = 0; j < converter.getNumberOfstates(); j++) {
+        for (int i = 0; i < converter.getNumberOfStates(); i++) {
+            for (int j = 0; j < converter.getNumberOfStates(); j++) {
                 System.out.print(P[i][j]);
                 System.out.print(" ");
             }
             System.out.println();
         }
-        for (int i = 0; i < converter.getNumberOfstates(); i++) {
+        for (int i = 0; i < converter.getNumberOfStates(); i++) {
             for (int j = 0; j < 4; j++) {
                 System.out.print(E[i][j]);
                 System.out.print(" ");
