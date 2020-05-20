@@ -1,6 +1,5 @@
 package Main.Algorithms;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -138,21 +137,14 @@ public class BaumWelchTraining {
         double[][] newP = new double[N][N];
         double[] denominators = new double[N];
         double[][] newE = new double[N][M];
-
-        double likelihood = 1;
-
         for (int l = 0; l < L; l++) {
             int[] obsl = observables.get(l);
             ForwardBackwardScaled fwdBck = new ForwardBackwardScaled(obsl, this.pi, this.P, this.E);
             double[][] alphal = fwdBck.getAlpha();
-            //System.out.println("printing alpha"+l);
-            //print_double(alphal);
             double[][] betal = fwdBck.getBeta();
-            //System.out.println("printing beta"+l);
-            //print_double(betal);
             double[] cl = fwdBck.getScalingFactors();
             int Kl = obsl.length;
-            //pi[i] = sum_l alpha_l[i,1] * beta_l[i,1]
+            //pi[i] = 1/L sum_l alpha_l[i,1] * beta_l[i,1]
             for (int i = 0; i < N; i++) {
                 newPi[i] += alphal[i][0] * betal[i][0];
             }
@@ -160,7 +152,6 @@ public class BaumWelchTraining {
                 int xlk = obsl[k];
                 int xlkplus = obsl[k+1];
                 for (int i = 0; i < N; i++) {
-                    //sum_l sum_k alp
                     for (int j = 0; j < N; j++) {
 
                         newP[i][j] += alphal[i][k] * P[i][j] * E[j][xlkplus] *
@@ -189,20 +180,6 @@ public class BaumWelchTraining {
             }
             newPi[i] /= L;
         }
-
-        /*
-        System.out.println("Printing newP");
-        print_double(newP);
-
-        System.out.println("Printing newE");
-        print_double(newE);
-        */
-        System.out.println("Printing newPi");
-        for (double d : newPi){
-            System.out.print(d + " ");
-        }
-        System.out.println();
-
 
         this.P = newP;
         this.E = newE;
