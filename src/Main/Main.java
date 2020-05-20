@@ -1,8 +1,5 @@
 package Main;
 
-import Main.Conversions.DNAConversion.*;
-import Main.Experimentation.TrainingByCountingExperimentation;
-
 public class Main {
     public static void main(String[] args) {
 
@@ -23,15 +20,20 @@ public class Main {
                 {0.15,0.3 ,0.2 ,0.35}};
         double[] pi =  {0,0,0,1,0,0,0};
 
-       // BaumWelchExperiment BWE = new BaumWelchExperiment(new DNAConversion7States(),P,E,pi);
+        //BaumWelchExperiment BWE = new BaumWelchExperiment(new DNAConversion7States(),P,E,pi);
 
 
-        TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
-        experiment.trainingByCounting(new DNAConversion5States());
-        experiment.trainingByCounting(new DNAConversion7States());
-        experiment.trainingByCounting(new DNAConversion14States());
-        experiment.trainingByCounting(new DNAConversion16States());
-        experiment.trainingByCounting(new DNAConversion31States());
+        //TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
+        //experiment.trainingByCounting(new DNAConversion5States());
+        //experiment.trainingByCounting(new DNAConversion7States());
+        //experiment.trainingByCounting(new DNAConversion14States());
+        //experiment.trainingByCounting(new DNAConversion16States());
+        //experiment.trainingByCounting(new DNAConversion31States());
+
+        //Comparison comparer = new Comparison();
+        //comparer.calculate();
+
+
 
 
         /*  TODO delete when appropiate i.e. when experimentation with train by count is satisfacotry

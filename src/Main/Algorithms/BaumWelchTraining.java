@@ -27,7 +27,7 @@ public class BaumWelchTraining {
             states.add(disposeable);
         }
         //calculate(observables);
-        iterate(observables,5);
+        iterate(observables,7);
     }
 
     private void iterate(ArrayList<int[]> observables, int n){

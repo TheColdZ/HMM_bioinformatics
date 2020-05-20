@@ -191,7 +191,7 @@ public class DNAConversion7States implements Conversion {
 
     @Override
     public String getNameOfModel() {
-        return "Main.Conversions.DNAConversion.DNAConversion7States";
+        return "DNAConversion7States";
     }
 
     @Override

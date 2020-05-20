@@ -96,7 +96,7 @@ public class DNAConversion31States implements Conversion {
         else if(states[n-1] == 13 ) return 14;
         else if(states[n-1] == 14 ) return 15;
         else if( n+4 < observed.length()) {
-            if (observed.charAt(n + 4) != 'N') return 4; //We loop if we are not done in 4 steps. 4->5->6->4..
+            if (observed.charAt(n + 4) != 'N' && (states[n-1] == 3 || states[n-1] == 6)) return 4; //We loop if we are not done in 4 steps. 4->5->6->4..
         }
         else return 0;
         return 0;
@@ -191,7 +191,7 @@ public class DNAConversion31States implements Conversion {
 
     @Override
     public String getNameOfModel() {
-        return "Main.Conversions.DNAConversion.DNAConversion31States";
+        return "DNAConversion31States";
     }
 
     @Override

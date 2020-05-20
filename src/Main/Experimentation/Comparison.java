@@ -1,7 +1,5 @@
 package Main.Experimentation;
 
-import Main.Main;
-
 /**
  * This class will handle comparison of two strings. Using techniques descrribed
  */
@@ -116,7 +114,7 @@ public class Comparison {
      * @param trueNegative  The number of truenegative findings
      * @param falseNegative The number of falsenegative findings
      */
-    private void calculate(double truePositive, double falsePositive, double trueNegative, double falseNegative) {
+    public void calculate(double truePositive, double falsePositive, double trueNegative, double falseNegative) {
         double numerator = truePositive*trueNegative-falseNegative*falsePositive;
         double denominator = (truePositive+falseNegative)*(trueNegative+falsePositive)*(truePositive+falsePositive)*(trueNegative+falseNegative);
         double squareRootDenominator = Math.sqrt(denominator);
