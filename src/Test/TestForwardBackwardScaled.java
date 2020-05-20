@@ -38,7 +38,7 @@ public class TestForwardBackwardScaled {
             b += FBs.getAlpha()[i][1];
         }
         System.out.println("Expected: "+a+" but got: "+b);
-        assert(compareFactor(a,b,0.01));
+        assert(!compareFactor(a,b,0.01));
     }
 
     /**

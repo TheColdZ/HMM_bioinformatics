@@ -1,5 +1,6 @@
 package Main.Algorithms;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class BaumWelchTraining {
@@ -27,12 +28,12 @@ public class BaumWelchTraining {
             states.add(disposeable);
         }
         //calculate(observables);
-        iterate(observables,7);
+        iterate(observables,500);
     }
 
     private void iterate(ArrayList<int[]> observables, int n){
         for (int i = 0; i < n; i++) {
-            reestimate(observables);
+            reestimateBishop(observables);
         }
     }
 
@@ -47,14 +48,14 @@ public class BaumWelchTraining {
         int i = 1;
         do {
             initialLikelihood = newLikelihood;
-            newLikelihood = reestimate(observables);
+            newLikelihood = 3; //reestimateBishop(observables);
             //System.out.println(i);
             i++;
             //run until reestimation grants only a small increase in likelihood
         } while (initialLikelihood <= newLikelihood * (1 - compareFactor));
     }
 
-    private double reestimate(ArrayList<int[]> observables) {
+    private double reestimateRabiner(ArrayList<int[]> observables) {
         double[] newPi = new double[N];
         double[][] newP = new double[N][N];
         double[] pDenominators = new double[N];
@@ -116,7 +117,7 @@ public class BaumWelchTraining {
             for (int j = 0; j < M; j++) {
                 newE[i][j] = newE[i][j] / eDenominators[i];
             }
-            newPi[i] = newPi[i];
+            newPi[i] = newPi[i]; //strong line
         }
         this.P = newP;
         this.E = newE;
@@ -131,6 +132,60 @@ public class BaumWelchTraining {
         return likelihood;
     }
 
+    private void reestimateBishop(ArrayList<int[]> observables) {
+        double[] newPi = new double[N];
+        double[][] newP = new double[N][N];
+        double[] denominators = new double[N];
+        double[][] newE = new double[N][M];
+        for (int l = 0; l < L; l++) {
+            int[] obsl = observables.get(l);
+            ForwardBackwardScaled fwdBck = new ForwardBackwardScaled(obsl, this.pi, this.P, this.E);
+            double[][] alphal = fwdBck.getAlpha();
+            double[][] betal = fwdBck.getBeta();
+            double[] cl = fwdBck.getScalingFactors();
+            int Kl = obsl.length;
+            //pi[i] = 1/L sum_l alpha_l[i,1] * beta_l[i,1]
+            for (int i = 0; i < N; i++) {
+                newPi[i] += alphal[i][0] * betal[i][0];
+            }
+            for (int k = 0; k < Kl-1; k++) {
+                int xlk = obsl[k];
+                int xlkplus = obsl[k+1];
+                for (int i = 0; i < N; i++) {
+                    for (int j = 0; j < N; j++) {
+
+                        newP[i][j] += alphal[i][k] * P[i][j] * E[j][xlkplus] *
+                                betal[j][k+1] / cl[k+1];
+                    }
+                    //sum_l sum_k alphal[i,k] * betal[i,k]
+                    denominators[i] += alphal[i][k] * betal[i][k];
+                }
+                for (int i = 0; i < N; i++) {
+                    for (int a = 0; a < M; a++) {
+                        if (xlk == a) {
+                            newE[i][a] += alphal[i][k] * betal[i][k];
+                            break; //we know that xlk hits exactly one a, so when it is found stop looking.
+                        }
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                newP[i][j] /= denominators[i];
+            }
+            for (int a = 0; a < M; a++) {
+                newE[i][a] /= denominators[i];
+            }
+            newPi[i] /= L;
+        }
+
+        this.P = newP;
+        this.E = newE;
+        this.pi = newPi;
+    }
+
     public double[] getPi() {
         return pi;
     }
@@ -141,5 +196,25 @@ public class BaumWelchTraining {
 
     public double[][] getP() {
         return P;
+    }
+
+    private void print_matr(ArrayList<int[]> input, String name){
+        System.out.println(name);
+        for (int[] ints : input) {
+            for (int anInt : ints) {
+                System.out.print(anInt);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+    }
+    private void print_double(double[][] printee){
+        DecimalFormat df = new DecimalFormat("#.##");
+        for(double[] doubles : printee){
+            for(double d : doubles){
+                System.out.print(df.format(d) + " ");
+            }
+            System.out.println();
+        }
     }
 }
