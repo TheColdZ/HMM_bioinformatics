@@ -11,7 +11,7 @@ public class BaumWelchTrainingTest {
 
     @Before
     public void setup(){
-        setup2();
+        setup1();
     }
 
     private void setup1(){

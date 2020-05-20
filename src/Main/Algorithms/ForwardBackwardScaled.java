@@ -1,5 +1,8 @@
 package Main.Algorithms;
 
+/**
+ * Implements a scaled version of the Forward and Backward algorithms, due to Bishop.
+ */
 public class ForwardBackwardScaled {
     private double[][] alpha;
     private double[][] beta;
@@ -22,7 +25,7 @@ public class ForwardBackwardScaled {
         this.P = P;
         this.E = E;
         this.observed = observed;
-        calculateAlpha();
+        calculateAlphaBishop();
         this.betaRan = false;
     }
 
@@ -30,18 +33,22 @@ public class ForwardBackwardScaled {
         return alpha;
     }
 
+    public double[] getScalingFactors() {
+        return c;
+    }
+
     public double[][] getBeta() {
         if (!betaRan){
-            calculateBeta();
+            calculateBetaBishop();
         }
         return beta;
     }
 
     /**
      * Forward algorithm, that returns the alpha values as a N x K matrix
-     * @return alpha
+     * Rabiner
      */
-    private void calculateAlpha(){
+    private void calculateAlphaRabiner(){
         int firstObserved = observed[0];
         // alpha_1 =
         for (int i = 0; i < N; i++) { //initialization
@@ -76,9 +83,9 @@ public class ForwardBackwardScaled {
 
     /**
      * Backward algorithm, that returns the beta values as a N x K matrix
-     * @return beta
+     * Rabiner
      */
-    private void calculateBeta(){
+    private void calculateBetaRabiner(){
         //initialize the last column
         for (int i = 0; i < N; i++) {
             beta[i][K-1] = 1.0 / c[K-1];
@@ -90,16 +97,59 @@ public class ForwardBackwardScaled {
                     beta[i][k] += P[i][j] * E[j][observed[k + 1]] * beta[j][k + 1] / c[k];
                 }
             }
-            /*
-            for (int i = 0; i < N; i++) {
-                //beta[i][k] /= c[k];
-                System.out.println(c[k] + " = c[k], k = " + k);
-                System.out.println(beta[i][k] + " = beta[j][k] with i,k = "+i+","+k);
-            }
-            */
         }
         betaRan = true;
     }
 
+    /**
+     * Forward algorithm, due to Bishop
+     */
+    private void calculateAlphaBishop() {
+        //init, calculate first column
+        for (int i = 0; i < N; i++) {
+            alpha[i][0] = pi[i] * E[i][observed[0]];
+        }
+        scaleAlphaBishop(0);
+        for (int k = 0; k < K-1; k++) {
+            int xkPlus = observed[k+1];
+            //calculate c[k+1] * \hat{\alpha}[j][k+1]
+            for (int j = 0; j < N; j++) {
+                double sum = 0;
+                for (int i = 0; i < N; i++) {
+                    sum += alpha[i][k] * P[i][j];
+                }
+                alpha[j][k+1] = sum * E[j][xkPlus];
+            }
+            scaleAlphaBishop(k+1);
+        }
+    }
 
+    private void scaleAlphaBishop(int k){
+        //calculate c[k] = \sum_j c[k] * \hat{\alpha}[j][k]
+        for (int i = 0; i < N; i++) {
+            c[k] += alpha[i][k];
+        }
+        //calculate \hat{\alpha}[j][k] = c[k] * \hat{\alpha}[j][k] / c[k]
+        for (int i = 0; i < N; i++) {
+            alpha[i][k] /= c[k];
+        }
+    }
+
+    private void calculateBetaBishop(){
+        //initialize the last column
+        for (int i = 0; i < N; i++) {
+            beta[i][K-1] = 1.0;
+        }
+        //beta_k (i) = sum_j^N P[i,j] E[j,x_{k+1}] beta_{k+1} (j)
+        for (int k = K-2; k >= 0; k--) {
+            int xkPlus = observed[k + 1];
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    //System.out.println(P[i][j] +" * "+ E[j][xkPlus] +" * "+ beta[j][k + 1] +" / "+ c[k+1]);
+                    beta[i][k] += P[i][j] * E[j][xkPlus] * beta[j][k + 1] / c[k+1];
+                }
+            }
+        }
+        betaRan = true;
+    }
 }
