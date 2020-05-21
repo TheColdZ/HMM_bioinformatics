@@ -144,4 +144,28 @@ public class DNAConversion5States implements Conversion {
     public int getNumberOfStates() {
         return 5;
     }
+    @Override
+    public double[][] getInitialP(){
+        double[][] P = {{0.9994657980889959, 5.342019110040931E-4, 0, 0, 0 },
+                {0, 0, 1, 0, 0 },
+                {0, 0, 0, 1, 0 },
+                {0, 0, 0, 0, 1 },
+                {0.001137102843437669, 0, 0, 0, 0.9988628971565623 }
+        };
+        return P;
+    }
+    @Override
+    public double[][] getInitialE(){
+        double[][] E = {{0.3176419730554597, 0.18165490579535418, 0.1666847398198635, 0.3340183813293226 },
+                {1, 0, 0, 0 },
+                {0, 0, 0, 1 },
+                {0, 0, 1, 0 },
+                {0.3382739175830128, 0.16352928365923666, 0.1959066566170595, 0.3022901421406911 }};
+        return E;
+    }
+    @Override
+    public double[] getInitialPi(){
+        double[] pi ={1,0,0,0,0};
+        return pi;
+    }
 }

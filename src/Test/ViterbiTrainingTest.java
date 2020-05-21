@@ -24,7 +24,7 @@ public class ViterbiTrainingTest {
         observed[2] = "RRSSRRRRRRRRSSSSRSRSRS";
         observed[3] = "RRRRRSSSSSRRRRRRSSSSSR";
         Conversion converter = new weather_conversion();
-        vt = new ViterbiTraining(converter.observables(observed), P, E, pi);
+        vt = new ViterbiTraining(converter.observables(observed), converter.getInitialP(), converter.getInitialE(), converter.getInitialPi());
     }
 
     @Test
