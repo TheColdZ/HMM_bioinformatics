@@ -119,6 +119,7 @@ public class BaumWelchTraining {
             }
             newPi[i] = newPi[i]; //strong line
         }
+
         this.P = newP;
         this.E = newE;
         this.pi = newPi;
@@ -153,7 +154,6 @@ public class BaumWelchTraining {
                 int xlkplus = obsl[k+1];
                 for (int i = 0; i < N; i++) {
                     for (int j = 0; j < N; j++) {
-
                         newP[i][j] += alphal[i][k] * P[i][j] * E[j][xlkplus] *
                                 betal[j][k+1] / cl[k+1];
                     }
@@ -180,7 +180,6 @@ public class BaumWelchTraining {
             }
             newPi[i] /= L;
         }
-
         this.P = newP;
         this.E = newE;
         this.pi = newPi;
@@ -209,7 +208,7 @@ public class BaumWelchTraining {
         }
     }
     private void print_double(double[][] printee){
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("#.###");
         for(double[] doubles : printee){
             for(double d : doubles){
                 System.out.print(df.format(d) + " ");

@@ -106,8 +106,9 @@ public class ForwardBackwardScaled {
      */
     private void calculateAlphaBishop() {
         //init, calculate first column
+        int xzero = observed[0];
         for (int i = 0; i < N; i++) {
-            alpha[i][0] = pi[i] * E[i][observed[0]];
+            alpha[i][0] = pi[i] * E[i][xzero];
         }
         scaleAlphaBishop(0);
         for (int k = 0; k < K-1; k++) {
