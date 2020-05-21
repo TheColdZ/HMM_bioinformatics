@@ -4,7 +4,7 @@ import Main.Conversions.Conversion;
 
 import java.util.ArrayList;
 
-public class DNA_conversion implements Conversion {
+public class DNAConversion3States implements Conversion {
 
 
     private int emission_conversion_char_to_int(Character c){
@@ -132,6 +132,6 @@ public class DNA_conversion implements Conversion {
 
     @Override
     public String getNameOfModel() {
-        return "Main.Conversions.DNAConversion.DNA_conversion";
+        return "DNAConversion3States";
     }
 }

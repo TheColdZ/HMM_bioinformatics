@@ -3,7 +3,7 @@ package Main.Algorithms;
 import java.util.ArrayList;
 
 /**
- * Class to handle Main.Algorithms.Viterbi training
+ * Class to handle Viterbi training
  */
 public class ViterbiTraining {
     private ArrayList<int[]> states;

@@ -59,7 +59,7 @@ public class DNAConversion7States implements Conversion {
                 return foundState;
             default:
                 System.out.println("Previous state reversecoding was:"+state); //TODO delete print
-                return 4;
+                return 4;       //We have a C -> R transition
             //default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
         }
     }
@@ -81,7 +81,7 @@ public class DNAConversion7States implements Conversion {
                 return foundState;
             default:
                 System.out.println("Previous state, coding was:"+state); //TODO delete print
-                return 2;
+                return 2; //We have a R -> C transition
             //default: throw new RuntimeException("CodingState error, previous state not correct., state:"+state);
         }
     }

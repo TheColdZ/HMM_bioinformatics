@@ -104,7 +104,8 @@ public class Comparison {
      * @param fn                The number of falsenegative findings
      */
     private void printPositiveAndNegatives(char comparisonChar1, char comparisonChar2, double tp, double fp, double tn, double fn){
-        System.out.print(comparisonChar1+""+comparisonChar2+"s: tp="+tp+", fp="+fp+", tn="+tn+",fn="+fn);
+        //System.out.print(comparisonChar1+""+comparisonChar2+"s: tp="+tp+", fp="+fp+", tn="+tn+",fn="+fn);
+        System.out.print((int)tp+"& "+(int)fp+"& "+(int)tn+"& "+(int)fn+"& ");      //TODO revert to above print
     }
 
     /**
@@ -115,6 +116,7 @@ public class Comparison {
      * @param falseNegative The number of falsenegative findings
      */
     public void calculate(double truePositive, double falsePositive, double trueNegative, double falseNegative) {
+        printPositiveAndNegatives('a','a',truePositive,falsePositive,trueNegative,falseNegative);
         double numerator = truePositive*trueNegative-falseNegative*falsePositive;
         double denominator = (truePositive+falseNegative)*(trueNegative+falsePositive)*(truePositive+falsePositive)*(trueNegative+falseNegative);
         double squareRootDenominator = Math.sqrt(denominator);
@@ -128,7 +130,8 @@ public class Comparison {
     }
 
     private void printStatistical(double sensitivity,double specificity, double AC, double ACP, double correlationCoefficient){
-        System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);
+        //System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);
+        System.out.println(sensitivity+"& "+specificity+"& "+AC); //TODO revert to above print
     }
 
 

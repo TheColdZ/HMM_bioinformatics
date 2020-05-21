@@ -41,7 +41,22 @@ public class DNAConversion16States implements Conversion {
 
 
     private int codingStates(String trueAnnotation,String observed, int[] states,int n) {
-        if(observed.charAt(n) == 'A' && states[n-1] == 0 )return 1;
+        boolean correctStartCodon = observed.charAt(n) == 'A' && observed.charAt(n+1) == 'T' && observed.charAt(n+2) == 'G' && trueAnnotation.charAt(n-1)== 'N';
+        if( correctStartCodon){
+            int endOfCoding = n;
+            while(trueAnnotation.charAt(endOfCoding) != 'N'){
+                endOfCoding++;
+            }
+            boolean TAA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean TAG = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'G' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean TGA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'G' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean correctEndCodons = TAA || TAG || TGA;
+            if(correctEndCodons){
+                return 1;
+            }
+        }
+
+
         else if(observed.charAt(n) == 'T' && states[n-1] == 1)return 2;
         else if(observed.charAt(n) == 'G' && states[n-1] == 2)return 3;
         else if(states[n-1] == 3) return 4;

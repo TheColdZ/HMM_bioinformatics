@@ -6,6 +6,7 @@ import Main.Conversions.Conversion;
 import Main.FileInteraction.FileReader;
 import Main.FileInteraction.FileWriter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class TrainingByCountingExperimentation {
@@ -36,87 +37,17 @@ public class TrainingByCountingExperimentation {
         double[] pi = countTrainer.getPi();  //We retrieve the newly found parameters TODO used for debugging, remove when appropiate
         double[][] E = countTrainer.getE();
         double[][] P = countTrainer.getP();
-        /**
-         * 5 states pseudo counts:
-        P[1][2] = 1;
-        P[1][0] = 0;
-        P[2][0] = 0;
-        P[2][3] = 1;*/
-
-        /**
-        //          7 states pseudo counts
-        P[0][3] = P[0][3] + P[0][4];
-        P[0][4] = 0;
-        P[6][4] = P[6][4] + P[6][2];
-        P[6][2]= 0;
-        */
-        /**
-        //14 state model pseudo counts
-        P[1][2] = 1;
-        P[1][0] = 0;
-        P[2][3] = 1;
-        P[2][0] = 0;
-        P[4][5] += P[4][0]/4;       //Transitioned to neutral state 0, now splitted between the three ending states codons.
-        P[4][8] += P[4][0]/4;
-        P[4][11] += P[4][0]/4;
-        P[4][4] += P[4][0]/4;
-        P[4][0] = 0;
-         */
-
-        /**
-        //16 states
-        P[1][2] = 1;
-        P[1][0] = 0;
-        P[2][3] = 1;
-        P[2][0] = 0;
-        P[4][5] = 1;
-        P[4][0] = 0;
-        P[5][0] = 0;
-        P[5][6] = 1;
-        P[6][4] += P[6][0]/4;
-        P[6][7] += P[6][0]/4;
-        P[6][10] += P[6][0]/4;
-        P[6][13] += P[6][0]/4;
-        P[6][0] = 0;
-        */
-
-        //30 states pseudo counts
-        P[1][2] = 1;
-        P[1][0] = 0;
-        P[2][3] = 1;
-        P[2][0] = 0;
-        P[4][5] = 1;
-        P[4][0] = 0;
-        P[5][0] = 0;
-        P[5][6] = 1;
-        P[6][4] += P[6][0]/4;
-        P[6][7] += P[6][0]/4;
-        P[6][10] += P[6][0]/4;
-        P[6][13] += P[6][0]/4;
-        P[6][0] = 0;
-
-        P[9][0]=1;
-        P[9][16] = 0;
-        P[12][0] = 1;
-        P[12][16] = 0;
-        P[15][0] = 1;
-        P[15][16] = 0;
-
-        P[27][28] += P[27][0]/2;
-        P[27][25] += P[27][0]/2;
-        P[27][0] = 0;
-        P[27][28] += P[27][1]/2;
-        P[27][25] += P[27][1]/2;
-        P[27][1] = 0;
 
 
 
 
+        DecimalFormat df = new DecimalFormat("#.###########################");
 
         for (int i = 0; i < converter.getNumberOfStates(); i++) {
-            System.out.print("state :"+i+":");
+            //System.out.print("state :"+i+":");
             for (int j = 0; j < converter.getNumberOfStates(); j++) {
                 System.out.print(P[i][j]);
+                //System.out.print(df.format(P[i][j]));
                 System.out.print(" ");
             }
             System.out.println();
@@ -129,6 +60,7 @@ public class TrainingByCountingExperimentation {
             }
             System.out.println();
         }
+
 
         String[] genomesForPrediction = new String[5];
         genomesForPrediction[0] = fr.readFile("genome6");

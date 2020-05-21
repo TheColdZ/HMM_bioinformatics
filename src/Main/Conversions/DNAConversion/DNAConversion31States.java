@@ -41,18 +41,37 @@ public class DNAConversion31States implements Conversion {
     }
 
     private int reverseCodingStates(String trueAnnotation,String observed, int[] states,int n) {
-        if(observed.charAt(n) == 'T' && (states[n-1] == 0 || states[n-1] < 16) && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A')return 16;
+
+        boolean TTA = observed.charAt(n) == 'T' && observed.charAt(n+1) == 'T' && observed.charAt(n+2) == 'A';
+        boolean CTA = observed.charAt(n) == 'C' && observed.charAt(n+1) == 'T' && observed.charAt(n+2) == 'A';
+        boolean TCA = observed.charAt(n) == 'T' && observed.charAt(n+1) == 'C' && observed.charAt(n+2) == 'A';
+        boolean previousTrue = trueAnnotation.charAt(n-1)== 'N' || trueAnnotation.charAt(n-1)== 'C';
+        boolean correctStartCodons = TTA || CTA || TCA;
+        if(correctStartCodons && previousTrue ){
+            int endOfCoding = n;
+            while(trueAnnotation.charAt(endOfCoding) == 'R'){
+                endOfCoding++;
+            }
+            boolean correctEndCodon = observed.charAt(endOfCoding-3) == 'C' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'T' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'C');
+
+            if(correctEndCodon){
+                if (TTA) return 16;
+                if (CTA) return 19;
+                if (TCA) return 22;
+            }
+        }
+
+
+
         else if(states[n-1] == 16)return 17;
         else if(states[n-1] == 17)return 18;
         else if(states[n-1] == 18)return 25;
 
-        else if(observed.charAt(n) == 'C' && states[n-1] == 0 && observed.charAt(n+1) == 'T' && observed.charAt(n+2)== 'A' )return 19;
 
         else if(states[n-1] == 19) return 20;
         else if(states[n-1] == 20) return 21;
         else if(states[n-1] == 21) return 25;
 
-        else if(observed.charAt(n) == 'T' && states[n-1] == 0 && observed.charAt(n+1) == 'C' && observed.charAt(n+2)== 'A' )return 22;
         else if(states[n-1] == 22) return 23;
         else if(states[n-1] == 23) return 24;
         else if(states[n-1] == 24) return 25;
@@ -75,7 +94,20 @@ public class DNAConversion31States implements Conversion {
     }
 
     private int codingStates(String trueAnnotation,String observed, int[] states,int n) {   //TODO Code duplication, almost same as in 16 state
-        if(observed.charAt(n) == 'A' && (states[n-1] == 0 || states[n-1] >15 )) return 1;
+        boolean correctStartCodon = observed.charAt(n) == 'A' && observed.charAt(n+1) == 'T' && observed.charAt(n+2) == 'G' && (trueAnnotation.charAt(n-1)== 'N' || trueAnnotation.charAt(n-1)== 'R');
+        if( correctStartCodon){
+            int endOfCoding = n;
+            while(trueAnnotation.charAt(endOfCoding) == 'C'){
+                endOfCoding++;
+            }
+            boolean TAA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean TAG = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'G' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean TGA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'G' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean correctEndCodons = TAA || TAG || TGA;
+            if(correctEndCodons){
+                return 1;
+            }
+        }
         else if(observed.charAt(n) == 'T' && states[n-1] == 1)return 2;
         else if(observed.charAt(n) == 'G' && states[n-1] == 2)return 3;
         else if(states[n-1] == 3) return 4;

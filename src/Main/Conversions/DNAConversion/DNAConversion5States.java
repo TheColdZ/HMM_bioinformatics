@@ -41,9 +41,9 @@ public class DNAConversion5States implements Conversion {
 
 
     private int codingStates(String trueAnnotation,String observed, int[] states,int n) {
-        if(observed.charAt(n) == 'A' && states[n-1] == 0 )return 1;
-        else if(observed.charAt(n) == 'T' && states[n-1] == 1)return 2;
-        else if(observed.charAt(n) == 'G' && states[n-1] == 2)return 3;
+        if(observed.charAt(n) == 'A' && observed.charAt(n+1) == 'T' && observed.charAt(n+2) == 'G' && trueAnnotation.charAt(n-1)== 'N' )return 1;
+        else if(states[n-1] == 1)return 2;
+        else if(states[n-1] == 2)return 3;
         else if (states[n-1] == 3 || states[n-1] == 4) return 4;
         else return 0;
 
