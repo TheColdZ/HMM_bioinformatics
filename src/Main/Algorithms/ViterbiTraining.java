@@ -43,7 +43,7 @@ public class ViterbiTraining {
             P = ct.getP();
             E = ct.getE();
             pi = ct.getPi();
-            print_matr(states,"calc");
+            //print_matr(states,"calc");
         } while(!compareStates(states,old_states) ); //does this test pointers or nested elements?
     }
 
@@ -81,6 +81,8 @@ public class ViterbiTraining {
             int K = Math.min(sequence1.length,sequence2.length);
             for (int k = 0; k < K; k++) {
                 if (sequence1[k] != sequence2[k]){
+                    System.out.println("1"); //TODO
+                    System.out.println("2:"+k);
                     return false;
                 }
             }

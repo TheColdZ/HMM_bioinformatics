@@ -1,8 +1,7 @@
 package Main;
 
-import Main.Conversions.DNAConversion.*;
-import Main.Experimentation.Comparison;
-import Main.Experimentation.TrainingByCountingExperimentation;
+import Main.Conversions.DNAConversion.DNAConversion5States;
+import Main.Experimentation.ViterbiTrainingExperimentation;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,15 +26,17 @@ public class Main {
         //BaumWelchExperiment BWE = new BaumWelchExperiment(new DNAConversion7States(),P,E,pi);
 
 
-        TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
-        experiment.trainingByCounting(new DNAConversion3States());
-        experiment.trainingByCounting(new DNAConversion5States());
-        experiment.trainingByCounting(new DNAConversion7States());
-        experiment.trainingByCounting(new DNAConversion14States());
-        experiment.trainingByCounting(new DNAConversion16States());
-        experiment.trainingByCounting(new DNAConversion31States());
+        ViterbiTrainingExperimentation viterbiTrainingExperimentation = new ViterbiTrainingExperimentation();
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion5States());
+        //TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
+        //experiment.trainingByCounting(new DNAConversion3States());
+        //experiment.trainingByCounting(new DNAConversion5States());
+        //experiment.trainingByCounting(new DNAConversion7States());
+        //experiment.trainingByCounting(new DNAConversion14States());
+        //experiment.trainingByCounting(new DNAConversion16States());
+        //experiment.trainingByCounting(new DNAConversion31States());
 
-
+        /**
         Comparison comparer = new Comparison();
         System.out.println("5 state model:");
         comparer.calculate(698110+828290+695977+856721+685105,381250+426324+472380+607371+220618,922186+1327092+769966+846315+610595,126293+160825+107792+78028+54167);
@@ -49,6 +50,7 @@ public class Main {
         comparer.calculate(1336502+1621505+1231682+1363186+974399,382521+506058+427824+645541+297762,187770+349520+199351+174857+135569,221046+265448+187258+204851+162755);
         System.out.println("3 state model:");
         comparer.calculate(1328750+1424616+1236111+1541919+1017682,653601+721448+742101+831652+415843,50486+214631+27405+4784+52684,95002+381836+40498+10080+84276);
+        */
          /*  TODO delete when appropiate i.e. when experimentation with train by count is satisfacotry
         Main.FileInteraction.FileReader fr = new Main.FileInteraction.FileReader();
         String[] genome1 = new String[5];
