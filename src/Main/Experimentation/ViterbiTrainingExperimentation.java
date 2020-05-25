@@ -12,12 +12,12 @@ public class ViterbiTrainingExperimentation {
     public void viterbiTrainingCounting(Conversion converter){
         FileReader fr = new FileReader();
 
-        String[] observedGenomes = new String[1];
-        observedGenomes[0] = fr.readFile("genome2");                //This is a file containing A's, C's, T's and G's
-        //observedGenomes[1] = fr.readFile("genome2");
-        //observedGenomes[2] = fr.readFile("genome3");
-        //observedGenomes[3] = fr.readFile("genome4");
-        //observedGenomes[4] = fr.readFile("genome5");
+        String[] observedGenomes = new String[5];
+        observedGenomes[0] = fr.readFile("genome1");                //This is a file containing A's, C's, T's and G's
+        observedGenomes[1] = fr.readFile("genome2");
+        observedGenomes[2] = fr.readFile("genome3");
+        observedGenomes[3] = fr.readFile("genome4");
+        observedGenomes[4] = fr.readFile("genome5");
 
 
 
@@ -26,19 +26,19 @@ public class ViterbiTrainingExperimentation {
         System.out.println("Have read");
         ViterbiTraining vt = new ViterbiTraining(observedConverted, converter.getInitialP(), converter.getInitialE(), converter.getInitialPi());
         System.out.println("Have trained");
-        String[] genomesForPrediction = new String[1];
+        String[] genomesForPrediction = new String[5];
         genomesForPrediction[0] = fr.readFile("genome6");
-        //genomesForPrediction[1] = fr.readFile("genome7");
-        //genomesForPrediction[2] = fr.readFile("genome8");
-        //genomesForPrediction[3] = fr.readFile("genome9");
-        //genomesForPrediction[4] = fr.readFile("genome10");
+        genomesForPrediction[1] = fr.readFile("genome7");
+        genomesForPrediction[2] = fr.readFile("genome8");
+        genomesForPrediction[3] = fr.readFile("genome9");
+        genomesForPrediction[4] = fr.readFile("genome10");
         ArrayList<int[]> genomesForPredictionConverted = converter.observables(genomesForPrediction);
 
         System.out.println("Have read again");
-        Viterbi viterbi = new Viterbi(vt.getP(),vt.getP(),vt.getPi());  //We run viterbi with the new parameters.
+        Viterbi viterbi = new Viterbi(vt.getP(),vt.getE(),vt.getPi());  //We run viterbi with the new parameters.
 
         ArrayList<int[]> mostlikelyDecoding = new ArrayList<>();
-        for (int i = 0; i <5 ; i++) {
+        for (int i = 0; i < genomesForPrediction.length ; i++) {
             System.out.println("Is predicting: "+i);
             int[] mostLikelySequence = viterbi.calculate(genomesForPredictionConverted.get(i)); //We get the sequence of most likely states to have produced the observed
             mostlikelyDecoding.add(mostLikelySequence);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
