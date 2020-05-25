@@ -59,7 +59,7 @@ public class DNAConversion7States implements Conversion {
                 return foundState;
             default:
                 System.out.println("Previous state reversecoding was:"+state); //TODO delete print
-                return 4;
+                return 4;       //We have a C -> R transition
             //default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
         }
     }
@@ -81,7 +81,7 @@ public class DNAConversion7States implements Conversion {
                 return foundState;
             default:
                 System.out.println("Previous state, coding was:"+state); //TODO delete print
-                return 2;
+                return 2; //We have a R -> C transition
             //default: throw new RuntimeException("CodingState error, previous state not correct., state:"+state);
         }
     }
@@ -191,11 +191,38 @@ public class DNAConversion7States implements Conversion {
 
     @Override
     public String getNameOfModel() {
-        return "Main.Conversions.DNAConversion.DNAConversion7States";
+        return "DNAConversion7States";
     }
 
     @Override
     public int getNumberOfStates() {
         return 7;
+    }
+    @Override
+    public double[][] getInitialP(){
+        double[][] P = {{0.0, 0.0, 0.9965734014614962, 0.0034244352818507094, 2.1632566530958366E-6, 0.0, 0 },
+                {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0017035029916180194, 0.9966607612374366, 0.00163573577094536, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 },
+                {0.0, 0.0, 7.324740923913521E-7, 0.0033430117576741312, 0.9966562557682335, 0.0, 0.0 }};
+        return P;
+    }
+    @Override
+    public double[][] getInitialE(){
+        double[][] E = {{0.3392152281731009, 0.12997639165905922, 0.13122386966234448, 0.39958451050549537 },
+                {0.3525726169204167, 0.20005148550834367, 0.13622459795875103, 0.3111512996124886 },
+                {0.32120539545052706, 0.15902748633903424, 0.32264828763814196, 0.19711883057229676 },
+                {0.3343431467742144, 0.1647945258526105, 0.1661272788031685, 0.33473504857000663 },
+                {0.3994628035006402, 0.13240714425930755, 0.12861146351253555, 0.3395185887275167 },
+                {0.31271296684236277, 0.13711402277701437, 0.1975614472516107, 0.35261156312901215 },
+                {0.19904836965916514, 0.3182585281958577, 0.1605063153916246, 0.32218678675335255}};        // x = sun|L   x = rain|L
+        return E;
+    }
+    @Override
+    public double[] getInitialPi(){
+        double[] pi = {0.0,0.0,0.0,1.0,0.0,0.0,0.0};
+        return pi;
     }
 }

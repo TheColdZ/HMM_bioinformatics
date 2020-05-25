@@ -4,7 +4,7 @@ import Main.Conversions.Conversion;
 
 import java.util.ArrayList;
 
-public class DNA_conversion implements Conversion {
+public class DNAConversion3States implements Conversion {
 
 
     private int emission_conversion_char_to_int(Character c){
@@ -132,6 +132,28 @@ public class DNA_conversion implements Conversion {
 
     @Override
     public String getNameOfModel() {
-        return "Main.Conversions.DNAConversion.DNA_conversion";
+        return "DNAConversion3States";
+    }
+    @Override
+    public double[][] getInitialP(){
+        double[][] P = {
+        {0.9988578004871654, 0.0011414784272835699, 7.210855510319455E-7 },
+        {0.0017035029916180194, 0.9966607612374366, 0.00163573577094536 },
+        {2.441580307971174E-7, 0.0011143372525580437, 0.9988854185894112 }};
+
+
+        return P;
+    }
+    @Override
+    public double[][] getInitialE(){
+        double[][] E = {{0.3376644135146815, 0.16301845450214572, 0.19669891841974582, 0.30261821356342694 },
+                {0.3343431467742144, 0.1647945258526105, 0.1661272788031685, 0.33473504857000663 },
+                {0.3037413800007227, 0.1959265650773932, 0.1622264087185903, 0.3381056462032938 }};
+        return E;
+    }
+    @Override
+    public double[] getInitialPi(){
+        double[] pi = {0,1,0};
+        return pi;
     }
 }

@@ -3,7 +3,7 @@ package Main.Algorithms;
 import java.util.ArrayList;
 
 /**
- * Class to handle Main.Algorithms.Viterbi training
+ * Class to handle Viterbi training
  */
 public class ViterbiTraining {
     private ArrayList<int[]> states;
@@ -84,6 +84,8 @@ public class ViterbiTraining {
             int K = Math.min(sequence1.length,sequence2.length);
             for (int k = 0; k < K; k++) {
                 if (sequence1[k] != sequence2[k]){
+                    System.out.println("1"); //TODO
+                    System.out.println("2:"+k);
                     return false;
                 }
             }

@@ -29,7 +29,9 @@ public class DNAConversion14States implements Conversion {
             switch(trueAnnotationToConvert){
                 case 'N': states[i] = 0;
                     break;
-                case 'C': states[i] = codingStates(trueAnnotation,observed,states,i);
+                case 'C':
+
+                    states[i] = codingStates(trueAnnotation,observed,states,i);
                     break;
                 default: states[i] = 0 ;   //TODO maybe change this, but this model does not model R
                     //default: throw new RuntimeException("Main.Conversion error");
@@ -41,9 +43,22 @@ public class DNAConversion14States implements Conversion {
 
 
     private int codingStates(String trueAnnotation,String observed, int[] states,int n) {
-        if(observed.charAt(n) == 'A' && states[n-1] == 0 )return 1;
-        else if(observed.charAt(n) == 'T' && states[n-1] == 1)return 2;
-        else if(observed.charAt(n) == 'G' && states[n-1] == 2)return 3;
+        boolean correctStartCodon = observed.charAt(n) == 'A' && observed.charAt(n+1) == 'T' && observed.charAt(n+2) == 'G' && trueAnnotation.charAt(n-1)== 'N';
+        if( correctStartCodon){
+            int endOfCoding = n;
+            while(trueAnnotation.charAt(endOfCoding) != 'N'){
+                endOfCoding++;
+            }
+            boolean TAA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean TAG = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'G' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean TGA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'G' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
+            boolean correctEndCodons = TAA || TAG || TGA;
+            if(correctEndCodons){
+                return 1;
+            }
+        }
+        else if(states[n-1] == 1)return 2;
+        else if(states[n-1] == 2)return 3;
         else if(states[n-1] == 3) return 4;
 
         else if(observed.charAt(n) == 'T' && states[n-1] == 4 && observed.charAt(n+1) == 'A'
@@ -60,7 +75,7 @@ public class DNAConversion14States implements Conversion {
         else if(states[n-1] == 11 ) return 12;
         else if(states[n-1] == 12 ) return 13;
         else if( n+4 < observed.length()) {
-            if (observed.charAt(n + 4) != 'N') return 4; //We loop if we are not done in 4 steps. 4->5->6->4..
+            if (observed.charAt(n + 4) != 'N' && (states[n-1] == 3|| states[n-1] == 4)) return 4; //We loop if we are not done in 4 steps. 4->5->6->4..
         }
         else return 0;
         return 0;
@@ -154,11 +169,52 @@ public class DNAConversion14States implements Conversion {
 
     @Override
     public String getNameOfModel() {
-        return "Main.Conversions.DNAConversion.DNAConversion14States";
+        return "DNAConversion14States";
     }
 
     @Override
     public int getNumberOfStates() {
         return 14;
+    }
+    @Override
+    public double[][] getInitialP(){
+        double[][] P = {{0.9994664817527306, 5.335182472693972E-4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                {0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.998858566505379, 7.927650151061189E-4, 0.0, 0.0, 2.0424452599032957E-4, 0.0, 0.0, 1.4442395352454266E-4, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0 },
+                {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 },
+                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0 },
+                {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 }};             // L -> H   L -> L
+        return P;
+    }
+    @Override
+    public double[][] getInitialE(){
+        double[][] E = {{0.31768254314012095, 0.18164000763728133, 0.16667860546651458, 0.33399884375608313 },
+                {1.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 1.0 },
+                {0.0, 0.0, 1.0, 0.0 },
+                {0.3374347457255352, 0.16410007924801553, 0.19627557115828012, 0.3021896038681691 },
+                {0.0, 0.0, 0.0, 1.0 },
+                {1.0, 0.0, 0.0, 0.0 },
+                {1.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 0.0, 1.0 },
+                {1.0, 0.0, 0.0, 0.0 },
+                {0.0, 0.0, 1.0, 0.0 },
+                {0.0, 0.0, 0.0, 1.0 },
+                {0.0, 0.0, 1.0, 0.0 },
+                {1.0, 0.0, 0.0, 0.0 }};
+        return E;
+    }
+    @Override
+    public double[] getInitialPi(){
+        double[] pi = {1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,};
+        return pi;
     }
 }

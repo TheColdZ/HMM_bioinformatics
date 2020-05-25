@@ -1,7 +1,7 @@
 package Test;
 
 import Main.Conversions.Conversion;
-import Main.Conversions.DNAConversion.DNA_conversion;
+import Main.Conversions.DNAConversion.DNAConversion3States;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class DNA_conversionTest {
+public class DNAConversion3StatesTest {
     private Conversion conversion;
     private String[] observed_str;
     private String[] states_str;
@@ -19,7 +19,7 @@ public class DNA_conversionTest {
 
     @Before
     public void setUp() {
-        conversion = new DNA_conversion();
+        conversion = new DNAConversion3States();
         observed_str = new String[2];
         observed_str[0] = "CCCCA";
         observed_str[1] = "ACCAC";

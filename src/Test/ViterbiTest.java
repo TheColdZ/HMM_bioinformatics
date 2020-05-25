@@ -2,7 +2,7 @@ package Test;
 
 import Main.Algorithms.Viterbi;
 import Main.Conversions.Conversion;
-import Main.Conversions.DNAConversion.DNA_conversion;
+import Main.Conversions.DNAConversion.DNAConversion3States;
 import Main.Conversions.weather_conversion;
 import Main.FileInteraction.FileReader;
 import Main.FileInteraction.FileWriter;
@@ -70,7 +70,7 @@ public class ViterbiTest {
         String observed = fr.readFile("genome1");
         String[] obs = new String[1];
         obs[0] = observed;
-        Conversion conv = new DNA_conversion();
+        Conversion conv = new DNAConversion3States();
         int[] sk = viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
         FileWriter fw = new FileWriter();

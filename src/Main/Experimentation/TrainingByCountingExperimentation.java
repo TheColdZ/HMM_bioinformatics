@@ -6,6 +6,7 @@ import Main.Conversions.Conversion;
 import Main.FileInteraction.FileReader;
 import Main.FileInteraction.FileWriter;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class TrainingByCountingExperimentation {
@@ -38,20 +39,34 @@ public class TrainingByCountingExperimentation {
         double[][] P = countTrainer.getP();
 
 
+
+        //TODO remove ugly prints
+        DecimalFormat df = new DecimalFormat("#.#######");
+        //System.out.print("{");
         for (int i = 0; i < converter.getNumberOfStates(); i++) {
+            System.out.print(pi[i]+",");
+        }
+        //System.out.println("}");
+
+        for (int i = 0; i < converter.getNumberOfStates(); i++) {
+            //System.out.print("{");
             for (int j = 0; j < converter.getNumberOfStates(); j++) {
-                System.out.print(P[i][j]);
+                System.out.print(P[i][j]+",");
+                //System.out.print(df.format(P[i][j]));       //TODO
                 System.out.print(" ");
             }
             System.out.println();
         }
+        System.out.println();
         for (int i = 0; i < converter.getNumberOfStates(); i++) {
+            //System.out.print("{");
             for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
+                System.out.print(E[i][j]+",");
                 System.out.print(" ");
             }
             System.out.println();
         }
+
 
         String[] genomesForPrediction = new String[5];
         genomesForPrediction[0] = fr.readFile("genome6");
@@ -73,8 +88,8 @@ public class TrainingByCountingExperimentation {
         String[] convertedStatesFound = converter.states(mostlikelyDecoding);
 
         FileWriter fw = new FileWriter();
-        fw.writePredictedStatesTofile(convertedStatesFound,converter.getNameOfModel());
-
+        fw.writePredictedStatesTofile(convertedStatesFound,"TrainingByCounting"+converter.getNameOfModel());
+        System.out.println("Done"); //Todo
 
     }
 }

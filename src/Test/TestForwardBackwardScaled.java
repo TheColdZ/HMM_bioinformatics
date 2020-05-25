@@ -3,7 +3,7 @@ package Test;
 import Main.Algorithms.ForwardBackwardScaled;
 import Main.Conversions.Conversion;
 import Main.Algorithms.ForwardBackward;
-import Main.Conversions.DNAConversion.DNA_conversion;
+import Main.Conversions.DNAConversion.DNAConversion3States;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ public class TestForwardBackwardScaled {
         String obs = "CCCCA";
         String[] obs_arr = new String[1];
         obs_arr[0] = obs;
-        Conversion conv = new DNA_conversion();
+        Conversion conv = new DNAConversion3States();
         int[] obs_int_arr = conv.observables(obs_arr).get(0);
         FB = new ForwardBackward(obs_int_arr,pi,P,E);
         FBs = new ForwardBackwardScaled(obs_int_arr,pi,P,E);
