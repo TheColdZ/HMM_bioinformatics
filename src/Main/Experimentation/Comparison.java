@@ -1,5 +1,7 @@
 package Main.Experimentation;
 
+import java.text.DecimalFormat;
+
 /**
  * This class will handle comparison of two strings. Using techniques descrribed
  */
@@ -105,7 +107,7 @@ public class Comparison {
      */
     private void printPositiveAndNegatives(char comparisonChar1, char comparisonChar2, double tp, double fp, double tn, double fn){
         //System.out.print(comparisonChar1+""+comparisonChar2+"s: tp="+tp+", fp="+fp+", tn="+tn+",fn="+fn);
-        System.out.print((int)tp+"& "+(int)fp+"& "+(int)tn+"& "+(int)fn+"& ");      //TODO revert to above print
+        System.out.print((int)tp+" & "+(int)fp+" & "+(int)tn+" & "+(int)fn+" & ");      //TODO revert to above print
     }
 
     /**
@@ -130,8 +132,9 @@ public class Comparison {
     }
 
     private void printStatistical(double sensitivity,double specificity, double AC, double ACP, double correlationCoefficient){
+        DecimalFormat df = new DecimalFormat("#.#####");
         //System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);
-        System.out.println(sensitivity+"& "+specificity+"& "+AC); //TODO revert to above print
+        System.out.println(df.format(sensitivity)+" & "+df.format(specificity)+" & "+df.format(AC)); //TODO revert to above print
     }
 
 

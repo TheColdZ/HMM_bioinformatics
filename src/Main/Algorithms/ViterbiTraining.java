@@ -30,7 +30,21 @@ public class ViterbiTraining {
         calculate(observables);
     }
 
-    private void calculate(ArrayList<int[]> observables) {
+    private void calculate(ArrayList<int[]> observables){
+        for (int i = 0; i < 10 ; i++) {
+            Viterbi vit = new Viterbi(P,E,pi);
+            for (int l = 0; l < L; l++) {
+                int[] state_as_int = vit.calculate(observables.get(l));
+                this.states.set(l,state_as_int);
+            }
+            CountTraining ct = new CountTraining(observables,states,N,M);
+            P = ct.getP();
+            E = ct.getE();
+            pi = ct.getPi();
+        }
+    }
+
+    private void calculateOld(ArrayList<int[]> observables) {
         ArrayList<int[]> old_states;
         int i = 0;
         do{
@@ -84,6 +98,8 @@ public class ViterbiTraining {
             int K = Math.min(sequence1.length,sequence2.length);
             for (int k = 0; k < K; k++) {
                 if (sequence1[k] != sequence2[k]){
+                    System.out.println(sequence1[k]);
+                    System.out.println(sequence2[k]);
                     System.out.println("1"); //TODO
                     System.out.println("2:"+k);
                     return false;
