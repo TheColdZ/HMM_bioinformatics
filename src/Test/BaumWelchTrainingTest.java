@@ -6,12 +6,14 @@ import Main.Conversions.weather_conversion;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.function.Function;
+
 public class BaumWelchTrainingTest {
     private BaumWelchTraining training;
 
     @Before
     public void setup(){
-        setup2();
+        setup1();
     }
 
     private void setup1(){
@@ -26,7 +28,7 @@ public class BaumWelchTrainingTest {
         observed[2] = "RRSSRRRRRRRRSSSSRSRSRS";
         observed[3] = "RRRRRSSSSSRRRRRRSSSSSR";
         Conversion converter = new weather_conversion();
-        training = new BaumWelchTraining(converter.observables(observed),P,E,pi,0.01);
+        training = new BaumWelchTraining(converter.observables(observed),P,E,pi,0.00000000001);
     }
 
     private void setup2(){

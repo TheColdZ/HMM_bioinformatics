@@ -2,9 +2,9 @@ package Main.Algorithms;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class BaumWelchTraining {
-    private final double compareFactor;
     private ArrayList<int[]> states;
     private double[][] E;
     private double[][] P;
@@ -21,38 +21,71 @@ public class BaumWelchTraining {
         this.E = initial_E;
         this.pi = initial_pi;
         this.states = new ArrayList<>();
-        this.compareFactor = compareFactor;
         for (int i = 0; i < L; i++) {
             int[] disposeable = new int[1];
             disposeable[0] = -1;
             states.add(disposeable);
         }
         //calculate(observables);
-        iterate(observables,500);
+        //iterate(observables,500);
+        converge(observables,compareFactor);
+    }
+
+    private void converge(ArrayList<int[]> observables, double compareFactor){
+        double[][] oldP;
+        double[][] oldE;
+        double[] oldPi;
+        int iterations = 0;
+        do {
+            iterations++;
+            oldP = P;
+            oldE = E;
+            oldPi = pi;
+            reestimateBishop(observables);
+            /*
+            System.out.println("Comparing");
+            print_double(oldE);
+            System.out.println("-----");
+            print_double(E);
+            */
+        } while(!(compareMatrix(oldP,P,compareFactor) && compareMatrix(oldE,E,compareFactor) && compareVector(oldPi,pi,compareFactor)));
+        System.out.println(iterations);
+    }
+
+    private boolean compareVector(double[] A, double[] B, double compareFactor){
+        for (int j = 0; j < A.length; j++) {
+            if(Math.abs(A[j]-B[j])>compareFactor){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean compareMatrix(double[][] A, double[][] B, double compareFactor){
+        for (int i = 0; i < A.length; i++) {
+            if(!compareVector(A[i],B[i],compareFactor)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if n1 in [n2*(1-factor) , n2*(1+factor)], for instance a deviation of 0.01 means within 1%
+     * @param n1 first number
+     * @param n2 second number
+     * @param factor allowed deviation in %
+     * @return true if they are close
+     */
+    private boolean compareDoubles(double n1, double n2, double factor){
+        double standardDeviation = n2*factor;
+        return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;
     }
 
     private void iterate(ArrayList<int[]> observables, int n){
         for (int i = 0; i < n; i++) {
             reestimateBishop(observables);
         }
-    }
-
-    private void calculate(ArrayList<int[]> observables) {
-        double initialLikelihood = 1;
-        for (int l = 0; l < L; l++) {
-            ForwardBackward initialFwdBck = new ForwardBackward(observables.get(l), pi, P, E);
-            initialLikelihood *= initialFwdBck.calculateProbability();
-        }
-        double newLikelihood = initialLikelihood;
-        //System.out.println(newLikelihood);
-        int i = 1;
-        do {
-            initialLikelihood = newLikelihood;
-            newLikelihood = 3; //reestimateBishop(observables);
-            //System.out.println(i);
-            i++;
-            //run until reestimation grants only a small increase in likelihood
-        } while (initialLikelihood <= newLikelihood * (1 - compareFactor));
     }
 
     private double reestimateRabiner(ArrayList<int[]> observables) {
@@ -211,7 +244,8 @@ public class BaumWelchTraining {
         DecimalFormat df = new DecimalFormat("#.###");
         for(double[] doubles : printee){
             for(double d : doubles){
-                System.out.print(df.format(d) + " ");
+                System.out.print(d+ " ");
+                //System.out.print(df.format(d) + " ");
             }
             System.out.println();
         }

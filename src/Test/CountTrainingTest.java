@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class CountTrainingTest {
     private CountTraining ct;

@@ -14,7 +14,7 @@ public class ViterbiTraining {
     private int L; //nr of sequences
     private int M;
 
-    public ViterbiTraining(ArrayList<int[]> observables,double[][] initial_P, double[][] initial_E, double[] initial_pi){
+    public ViterbiTraining(ArrayList<int[]> observables, double[][] initial_P, double[][] initial_E, double[] initial_pi){
         this.L = observables.size();
         this.N = initial_P.length;
         this.M = initial_E[0].length;
@@ -32,7 +32,9 @@ public class ViterbiTraining {
 
     private void calculate(ArrayList<int[]> observables) {
         ArrayList<int[]> old_states;
+        int i = 0;
         do{
+            i++;
             old_states = (ArrayList<int[]>) states.clone();
             Viterbi vit = new Viterbi(P,E,pi);
             for (int l = 0; l < L; l++) {
@@ -43,8 +45,9 @@ public class ViterbiTraining {
             P = ct.getP();
             E = ct.getE();
             pi = ct.getPi();
-            print_matr(states,"calc");
-        } while(!compareStates(states,old_states) ); //does this test pointers or nested elements?
+            //print_matr(states,"calc");
+        } while( !compareStates(states,old_states) );
+        System.out.println(i);
     }
 
     public double[][] getP() {
