@@ -44,25 +44,7 @@ public class ViterbiTraining {
         }
     }
 
-    private void calculateOld(ArrayList<int[]> observables) {       //TODO Kill maybe?
-        ArrayList<int[]> old_states;
-        int i = 0;
-        do{
-            i++;
-            old_states = (ArrayList<int[]>) states.clone();
-            Viterbi vit = new Viterbi(P,E,pi);
-            for (int l = 0; l < L; l++) {
-                int[] state_as_int = vit.calculate(observables.get(l));
-                this.states.set(l,state_as_int);
-            }
-            CountTraining ct = new CountTraining(observables,states,N,M);
-            P = ct.getP();
-            E = ct.getE();
-            pi = ct.getPi();
-            //print_matr(states,"calc");
-        } while( !compareStates(states,old_states) );
-        System.out.println(i);
-    }
+
 
     public double[][] getP() {
         return P;
@@ -80,32 +62,5 @@ public class ViterbiTraining {
         return states;
     }
 
-    private void print_matr(ArrayList<int[]> input, String name){
-        System.out.println(name);
-        for (int[] ints : input) {
-            for (int anInt : ints) {
-                System.out.print(anInt);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
 
-    private boolean compareStates(ArrayList<int[]> list1 ,ArrayList<int[]> list2 ){
-        for (int l = 0; l < list1.size(); l++) {
-            int[] sequence1 = list1.get(l);
-            int[] sequence2 = list2.get(l);
-            int K = Math.min(sequence1.length,sequence2.length);
-            for (int k = 0; k < K; k++) {
-                if (sequence1[k] != sequence2[k]){
-                    System.out.println(sequence1[k]);
-                    System.out.println(sequence2[k]);
-                    System.out.println("1"); //TODO
-                    System.out.println("2:"+k);
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 }

@@ -60,11 +60,6 @@ public class Viterbi {
                 }
                 delta[i][k]= maxTransitionProbability + log(E[i][observed[k]]);
 
-                /**
-                if(k % 10000 == 0 && i ==0){    //TODO debugging/progress tracker, delete at some point.
-                    System.out.println("I'm alive, don't kill me yet!: "+ k);
-                }
-                 */
             }
         }
 
