@@ -1,7 +1,5 @@
 package Main.Algorithms;
 
-import Main.Main;
-
 public class Viterbi {
     private double[][] P;
     private double[][] E;
@@ -49,11 +47,15 @@ public class Viterbi {
 
                 double maxTransitionProbability = Double.NEGATIVE_INFINITY;
                 for (int j = 0; j <states ; j++) {
+
                     double transitionProbability = log(P[i][j])+delta[j][k-1];
+
+
                     if(maxTransitionProbability < transitionProbability){
                         maxTransitionProbability = transitionProbability;
                         psi[i][k] = j;
                     }
+
 
                 }
                 delta[i][k]= maxTransitionProbability + log(E[i][observed[k]]);

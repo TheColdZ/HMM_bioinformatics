@@ -1,8 +1,8 @@
 package Test;
 
-import Main.Conversions.Conversion;
 import Main.Algorithms.ForwardBackward;
-import Main.Conversions.DNAConversion.DNAConversion3States;
+import Main.Conversions.Conversion;
+import Main.Conversions.weather_conversion;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,10 +16,10 @@ public class TestForwardBackward {
         double[] pi = {0.5, 0.5};
         double[][] E = {{0.9, 0.1},         // x = sun|H    x= rain|H
                             {0.3, 0.7}};        // x = sun|L    x= rain|L
-        String obs = "CCCCA";
+        String obs = "RRRRS";
         String[] obs_arr = new String[1];
         obs_arr[0] = obs;
-        Conversion conv = new DNAConversion3States();
+        Conversion conv = new weather_conversion();
         int[] obs_int_arr = conv.observables(obs_arr).get(0);
         FB = new ForwardBackward(obs_int_arr,pi,P,E);
     }
@@ -42,35 +42,25 @@ public class TestForwardBackward {
     public void TestAlpha(){
         double[][] preCalculatedAlpha = PreCalculatedAlpha();
         double[][] alpha = FB.getAlpha();
-        boolean err = false;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 boolean cmp = compareFactor(alpha[i][j],preCalculatedAlpha[i][j],0.001);
-                if(!cmp){
-                    System.out.println("Expected: "+preCalculatedAlpha[i][j]+" but got: "+alpha[i][j]+" at alpha["+i+","+j+"]");
-                    err = true;
-                }
-                //assert(cmp);
+
+                assert(cmp);
             }
         }
-        assert(!err);
     }
 
     @Test
     public void TestBeta(){
         double[][] preCalculatedBeta = PreCalculatedBeta();
         double[][] beta = FB.getBeta();
-        boolean err = false;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 boolean cmp = compareFactor(beta[i][j],preCalculatedBeta[i][j],0.001);
-                if(!cmp){
-                    System.out.println("Expected: "+preCalculatedBeta[i][j]+" but got: "+beta[i][j]+" at alpha["+i+","+j+"]");
-                    err = true;
-                }
+                assert(cmp);
             }
         }
-        assert(!err);
     }
 
     private double[][] PreCalculatedAlpha(){

@@ -68,12 +68,25 @@ public class CountTraining {
         }
         for (int i = 0; i < N; i++) {
             pi[i] = pi[i]/L;
-            for (int j = 0; j < N; j++) {
-                P[i][j] = P[i][j] / state_counts[i];
+            if (state_counts[i] == 0){
+                for (int j = 0; j < N; j++) {
+                    P[i][j] = 0;
+                }
+                P[i][i] = 1;
+            } else {
+                for (int j = 0; j < N; j++) {
+                    P[i][j] = P[i][j] / state_counts[i];
 
+                }
             }
-            for (int a = 0; a < M; a++) {
-                E[i][a] = E[i][a] / emission_counts[i];
+            if (emission_counts[i] == 0){
+                for (int a = 0; a < M; a++) {
+                    E[i][a] = 1.0 / M;
+                }
+            } else {
+                for (int a = 0; a < M; a++) {
+                    E[i][a] = E[i][a] / emission_counts[i];
+                }
             }
         }
     }

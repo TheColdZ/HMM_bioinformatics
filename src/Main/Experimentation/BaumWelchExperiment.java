@@ -9,7 +9,7 @@ import Main.FileInteraction.FileWriter;
 import java.util.ArrayList;
 
 public class BaumWelchExperiment {
-    public BaumWelchExperiment(Conversion converter, double[][] initialP, double[][] initialE, double[] initialPi) {
+    public BaumWelchExperiment(Conversion converter) {
         FileReader fr = new FileReader();
 
         String[] observedGenomes = new String[5];
@@ -18,11 +18,10 @@ public class BaumWelchExperiment {
         observedGenomes[2] = fr.readFile("genome3");
         observedGenomes[3] = fr.readFile("genome4");
         observedGenomes[4] = fr.readFile("genome5");
-
         ArrayList<int[]> observedConverted = converter.observables(observedGenomes);
 
-        BaumWelchTraining baumWelchTraining = new BaumWelchTraining(observedConverted,initialP,initialE,initialPi,0.1);
-        double[] pi = baumWelchTraining.getPi();  //We retrieve the newly found parameters TODO used for debugging, remove when appropiate
+        BaumWelchTraining baumWelchTraining = new BaumWelchTraining(observedConverted,converter.getInitialP(),converter.getInitialE(),converter.getInitialPi(),0.001);
+        double[] pi = baumWelchTraining.getPi();  //We retrieve the newly found parameters
         double[][] E = baumWelchTraining.getE();
         double[][] P = baumWelchTraining.getP();
 
@@ -52,7 +51,7 @@ public class BaumWelchExperiment {
         Viterbi viterbi = new Viterbi(P,E,pi);  //We run viterbi with the new parameters.
 
         ArrayList<int[]> mostlikelyDecoding = new ArrayList<>();
-        for (int i = 0; i <5 ; i++) {
+        for (int i = 0; i <genomesForPrediction.length ; i++) {
             int[] mostLikelySequence = viterbi.calculate(genomesForPredictionConverted.get(i)); //We get the sequence of most likely states to have produced the observed
             mostlikelyDecoding.add(mostLikelySequence);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
         }
@@ -61,6 +60,6 @@ public class BaumWelchExperiment {
         String[] convertedStatesFound = converter.states(mostlikelyDecoding);
 
         FileWriter fw = new FileWriter();
-        fw.writePredictedStatesTofile(convertedStatesFound,converter.getNameOfModel());
+        fw.writePredictedStatesTofile(convertedStatesFound,"BaumWelchTraining"+converter.getNameOfModel());
     }
 }

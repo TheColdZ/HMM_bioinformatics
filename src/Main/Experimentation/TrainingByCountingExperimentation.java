@@ -34,7 +34,7 @@ public class TrainingByCountingExperimentation {
 
 
         CountTraining countTrainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[] pi = countTrainer.getPi();  //We retrieve the newly found parameters TODO used for debugging, remove when appropiate
+        double[] pi = countTrainer.getPi();
         double[][] E = countTrainer.getE();
         double[][] P = countTrainer.getP();
 
@@ -42,7 +42,7 @@ public class TrainingByCountingExperimentation {
 
         //TODO remove ugly prints
         DecimalFormat df = new DecimalFormat("#.#######");
-        //System.out.print("{");
+        //System.out.print("{");    //TODO
         for (int i = 0; i < converter.getNumberOfStates(); i++) {
             System.out.print(pi[i]+",");
         }

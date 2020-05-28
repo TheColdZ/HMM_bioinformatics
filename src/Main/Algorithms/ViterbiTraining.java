@@ -44,7 +44,7 @@ public class ViterbiTraining {
         }
     }
 
-    private void calculateOld(ArrayList<int[]> observables) {
+    private void calculateOld(ArrayList<int[]> observables) {       //TODO Kill maybe?
         ArrayList<int[]> old_states;
         int i = 0;
         do{

@@ -6,7 +6,6 @@ import Main.Conversions.DNAConversion.DNAConversion3States;
 import Main.Conversions.weather_conversion;
 import Main.FileInteraction.FileReader;
 import Main.FileInteraction.FileWriter;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -16,11 +15,6 @@ import java.util.Map;
 
 public class ViterbiTest {
     private Viterbi viterbi;
-
-    @Before
-    public void setup(){
-
-    }
 
     /**
      * Check if n1 in [n2*(1-factor) , n2*(1+factor)], for instance a deviation of 0.01 means within 1%
@@ -65,7 +59,7 @@ public class ViterbiTest {
             put(5,"R");
             put(6,"R");}};
 
-        this.viterbi = new Viterbi(transition,E,start);
+        Viterbi viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
         String observed = fr.readFile("genome1");
         String[] obs = new String[1];
@@ -96,11 +90,11 @@ public class ViterbiTest {
 
 
         Map decodeMap =  new HashMap<Integer, String>(){{
-            put(0,"C");
-            put(1,"C");
+            put(0,"H");
+            put(1,"L");
            }};
 
-        this.viterbi = new Viterbi(transition,E,start);
+        Viterbi viterbi = new Viterbi(transition,E,start);
         FileReader fr = new FileReader();
         String observed = fr.readFile("BachelorRainExample");
         //String observed = "RRRRS";
@@ -109,8 +103,7 @@ public class ViterbiTest {
         Conversion conv = new weather_conversion();
         viterbi.calculate(conv.observables(obs).get(0));
         double[][] delta = viterbi.getDelta();
-        double[][] preCalculatedDelta = preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator();
-        boolean debug = false;
+        double[][] preCalculatedDelta = preCalculatedDelta(); //TODO rename
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 5; j++) {
                 boolean cmp = compareFactor(Math.exp(delta[i][j]),preCalculatedDelta[i][j],0.001);
@@ -132,7 +125,7 @@ public class ViterbiTest {
     }
 
 
-    private double[][] preCalculatedDeltaNewCalculationsTheReturnOfTheJediCalculator(){
+    private double[][] preCalculatedDelta(){
         double[][] preCalculatedDelta = new double[2][5];
         preCalculatedDelta[0][0] = 0.05;
         preCalculatedDelta[1][0] = 0.35;
@@ -147,15 +140,6 @@ public class ViterbiTest {
         return preCalculatedDelta;
     }
 
+
+
 }
-/*
-        TODO map print for debugging, delete at some point
-        Map<Integer,Integer> stateCounter = new HashMap<>();
-        for (int i = 0; i < states; i++) {
-            stateCounter.put(i,0);
-        }
-        for (int j = 0; j < inputLength; j++) {
-            stateCounter.put(sk[j],stateCounter.get(sk[j])+1);
-        }
-        System.out.println(stateCounter);
- */
