@@ -3,7 +3,8 @@ package Main.Conversions;
 import java.util.ArrayList;
 
 /**
- * This interface handles conversions from data to int arrays
+ * This interface handles conversions from data to int arrays according to the appropiate model. It also holds the name og the model, number of states
+ * and initial parameters for a model. 
  */
 public interface Conversion {
     ArrayList<int[]> observables(String[] observables);

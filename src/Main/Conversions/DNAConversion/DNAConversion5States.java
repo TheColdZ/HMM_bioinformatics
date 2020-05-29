@@ -5,7 +5,7 @@ import Main.Conversions.Conversion;
 import java.util.ArrayList;
 
 public class DNAConversion5States implements Conversion {
-    private int emission_conversion_char_to_int(Character c){
+    private int emissionConversionCharToInt(Character c){
         int res;
         switch(c){
             case 'A': res = 0;
@@ -31,9 +31,7 @@ public class DNAConversion5States implements Conversion {
                     break;
                 case 'C': states[i] = codingStates(trueAnnotation,observed,states,i);
                     break;
-                default: states[i] = 0 ;   //TODO maybe change this, but this model does not model R
-                    //default: throw new RuntimeException("Main.Conversion error");
-
+                default: states[i] = 0 ;   //This model does not model any reverse coding.
             }
         }
         return states;
@@ -46,14 +44,14 @@ public class DNAConversion5States implements Conversion {
         else if(states[n-1] == 2)return 3;
         else if (states[n-1] == 3 || states[n-1] == 4) return 4;
         else return 0;
-
     }
-    private ArrayList<int[]> convert_str_to_int(String[] trueAnnotation,String[] observed,boolean observables){
+
+    private ArrayList<int[]> convertStrToInt(String[] trueAnnotation, String[] observed, boolean observables){
         int L = trueAnnotation.length;
-        ArrayList<int[]> strings_int = new ArrayList<>();
-        if(observables) {       //TODO not the prettiest
+        ArrayList<int[]> stringsInt = new ArrayList<>();
+        if(observables) {
             for (int i = 0; i < L; i++) {
-                strings_int.add(new int[trueAnnotation[i].length()]);
+                stringsInt.add(new int[trueAnnotation[i].length()]);
             }
         }
         for (int l = 0; l < L; l++) {
@@ -61,40 +59,39 @@ public class DNAConversion5States implements Conversion {
             String obs = observed[l];
             if(observables) {
                 for (int k = 0; k < annotation.length(); k++) {
-                    strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
+                    stringsInt.get(l)[k] = emissionConversionCharToInt(obs.charAt(k));
                 }
             } else {
-                strings_int.add(convertAnnotationToState(annotation,obs));
+                stringsInt.add(convertAnnotationToState(annotation,obs));
             }
 
         }
-        return strings_int;
+        return stringsInt;
     }
 
 
     @Override
     public ArrayList<int[]> observables(String[] observables) {
-        return convert_str_to_int(observables,observables,true);    //TODO this is not pretty... but it should work
+        return convertStrToInt(observables,observables,true);    //TODO this is not pretty... but it should work
     }
 
 
     @Override
     public ArrayList<int[]> states(String[] trueAnnotation, String[] observed) {
-        return convert_str_to_int(trueAnnotation,observed,false);
+        return convertStrToInt(trueAnnotation,observed,false);
     }
 
-    private String[] convert_int_to_str(ArrayList<int[]> ints, boolean observables){
+    private String[] convertIntToString(ArrayList<int[]> ints, boolean observables){
         int L = ints.size();
-        int K = ints.get(0).length;
         String[] strings = new String[L];
         for (int l = 0; l < L; l++) {
-            int[] int_row = ints.get(l);
+            int[] intRow = ints.get(l);
             StringBuilder sb = new StringBuilder();
-            for (int k = 0; k < int_row.length; k++) {
+            for (int k = 0; k < intRow.length; k++) {
                 if(observables) {
-                    sb.append(emission_conversion_int_to_str(int_row[k]));
+                    sb.append(emissionConversionIntToString(intRow[k]));
                 } else {
-                    sb.append(state_conversion_int_to_str(int_row[k]));
+                    sb.append(stateConversionIntToString(intRow[k]));
                 }
             }
             strings[l] = sb.toString();
@@ -102,7 +99,7 @@ public class DNAConversion5States implements Conversion {
         return strings;
     }
 
-    private String emission_conversion_int_to_str(int i) {
+    private String emissionConversionIntToString(int i) {
         String res;
         switch(i){
             case 0: res = "A";
@@ -118,21 +115,21 @@ public class DNAConversion5States implements Conversion {
         return res;
     }
 
-    private String state_conversion_int_to_str(int i) {
+    private String stateConversionIntToString(int i) {
         if(i == 0) return "N";
         else if (i <5) return "C";
-        else return "N"; //TODO right now we do not look at R's, as this model does not represent it.
+        else return "N"; //This model does not model reverse coding.
 
     }
 
     @Override
     public String[] observables(ArrayList<int[]> observables) {
-        return convert_int_to_str(observables,true);
+        return convertIntToString(observables,true);
     }
 
     @Override
     public String[] states(ArrayList<int[]> states) {
-        return convert_int_to_str(states,false);
+        return convertIntToString(states,false);
     }
 
     @Override

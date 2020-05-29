@@ -5,25 +5,19 @@ import Main.Conversions.Conversion;
 import java.util.ArrayList;
 
 public class DNAConversion7States implements Conversion {
-    private int emission_conversion_char_to_int(Character c){
-        int res;
+    private int emissionConversionCharToInt(Character c){
         switch(c){
-            case 'A': res = 0;
-                break;
-            case 'C': res = 1;
-                break;
-            case 'G': res = 2;
-                break;
-            case 'T': res = 3;
-                break;
+            case 'A': return 0;
+            case 'C': return 1;
+            case 'G': return 2;
+            case 'T': return 3;
             default: throw new RuntimeException("conversion error, observable char to int");
         }
-        return res;
     }
 
     /**
-     * This method converts a true annotated state from non-coding, coding and reverse-coding parts, to what states it would have been in.
-     * It does this for 7 states and returns an int TODO
+     * This method converts a true annotated state from non-coding, coding and reverse-coding parts, to what states it would have been in, when doing TBC
+     * It does this for 7 states and returns an int
      * @param previousState The state just before the state we are converting now
      * @param trueAnnotationToConvert   The char that we would like to convert
      * @return  the state that it corresponds to
@@ -43,24 +37,16 @@ public class DNAConversion7States implements Conversion {
 
     /**
      * Method that aids in finding the correct annotation of a true annotated genom, for the 7 states. It emulates a cycle
-     * @param state    The previous state
+     * @param previousState    The previous state
      * @return  The next state
      */
-    private int reverseCodingState7States(int state) {
-        int foundState = -1;
-        switch(state){
-            case 3 : foundState = 4;
-                return foundState;
-            case 4 : foundState = 5;
-                return foundState;
-            case 5 : foundState = 6;
-                return foundState;
-            case 6 : foundState = 4;
-                return foundState;
-            default:
-                System.out.println("Previous state reversecoding was:"+state); //TODO delete print
-                return 4;       //We have a C -> R transition
-            //default: throw new RuntimeException("CodingState error, previous state not correct. Reverse coding");
+    private int reverseCodingState7States(int previousState) {
+        switch(previousState){
+            case 3 : return 4;
+            case 4 : return 5;
+            case 5 : return 6;
+            case 6 : return 4;
+            default: return 4;       //We have a C -> R transition, this is modelled by beginning in the 'first' reverse coding state.
         }
     }
     /**
@@ -69,71 +55,61 @@ public class DNAConversion7States implements Conversion {
      * @return  The next state
      */
     private int codingState7States(int state) {
-        int foundState = -1;
         switch(state){
-            case 3 : foundState = 2;
-                return foundState;
-            case 2 : foundState = 1;
-                return foundState;
-            case 1 : foundState = 0;
-                return foundState;
-            case 0 : foundState = 2;
-                return foundState;
-            default:
-                System.out.println("Previous state, coding was:"+state); //TODO delete print
-                return 2; //We have a R -> C transition
-            //default: throw new RuntimeException("CodingState error, previous state not correct., state:"+state);
+            case 3 : return 2;
+            case 2 : return 1;
+            case 1 : return 0;
+            case 0 : return 2;
+            default: return 2; //We have a R -> C transition, this is modelled by beginning in the 'first' coding state.
         }
     }
-    private ArrayList<int[]> convert_str_to_int(String[] strings, boolean observables){
+    private ArrayList<int[]> convertStringToInt(String[] strings, boolean observables){
         int L = strings.length;
-        int K = strings[0].length();
-        ArrayList<int[]> strings_int = new ArrayList<>();
+        ArrayList<int[]> stringsInt = new ArrayList<>();
         for (int i = 0; i < L; i++) {
-            strings_int.add(new int[strings[i].length()]);
+            stringsInt.add(new int[strings[i].length()]);
         }
         for (int l = 0; l < L; l++) {
             String obs = strings[l];
             for (int k = 0; k < obs.length(); k++) {
                 if(observables) {
-                    strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
+                    stringsInt.get(l)[k] = emissionConversionCharToInt(obs.charAt(k));
                 } else {
                     if(k == 0) {
-                        strings_int.get(l)[k] = convertAnnotationToState7States(strings_int.get(l)[k], obs.charAt(k));
+                        stringsInt.get(l)[k] = convertAnnotationToState7States(stringsInt.get(l)[k], obs.charAt(k));
                     }
                     else{
-                        strings_int.get(l)[k] = convertAnnotationToState7States(strings_int.get(l)[k-1], obs.charAt(k));
+                        stringsInt.get(l)[k] = convertAnnotationToState7States(stringsInt.get(l)[k-1], obs.charAt(k));
 
                     }
                 }
             }
         }
-        return strings_int;
+        return stringsInt;
     }
 
 
     @Override
     public ArrayList<int[]> observables(String[] observables) {
-        return convert_str_to_int(observables,true);
+        return convertStringToInt(observables,true);
     }
 
     @Override
     public ArrayList<int[]> states(String[] states,String[] observed) {
-        return convert_str_to_int(states,false);
+        return convertStringToInt(states,false);
     }
 
-    private String[] convert_int_to_str(ArrayList<int[]> ints, boolean observables){
+    private String[] convertIntToString(ArrayList<int[]> ints, boolean observables){
         int L = ints.size();
-        int K = ints.get(0).length;
         String[] strings = new String[L];
         for (int l = 0; l < L; l++) {
-            int[] int_row = ints.get(l);
+            int[] intRow = ints.get(l);
             StringBuilder sb = new StringBuilder();
-            for (int k = 0; k < int_row.length; k++) {
+            for (int k = 0; k < intRow.length; k++) {
                 if(observables) {
-                    sb.append(emission_conversion_int_to_str(int_row[k]));
+                    sb.append(emissionConversionIntToString(intRow[k]));
                 } else {
-                    sb.append(state_conversion_int_to_str(int_row[k]));
+                    sb.append(stateConversionIntToString(intRow[k]));
                 }
             }
             strings[l] = sb.toString();
@@ -141,52 +117,45 @@ public class DNAConversion7States implements Conversion {
         return strings;
     }
 
-    private String emission_conversion_int_to_str(int i) {
-        String res;
+    private String emissionConversionIntToString(int i) {
         switch(i){
-            case 0: res = "A";
-                break;
-            case 1: res = "C";
-                break;
-            case 2: res = "G";
-                break;
-            case 3: res = "T";
-                break;
+            case 0: return "A";
+            case 1: return "C";
+            case 2: return "G";
+            case 3: return "T";
             default: throw new RuntimeException("conversion error, observable int to str");
         }
-        return res;
     }
 
-    private String state_conversion_int_to_str(int i) {
-        String res;
+    private String stateConversionIntToString(int i) {
         switch(i){
-            case 0: res = "C";
-                break;
-            case 1: res = "C";
-                break;
-            case 2: res = "C";
-                break;
-            case 3: res = "N";
-                break;
-            case 4: res = "R";
-                break;
-            case 5: res = "R";
-                break;
-            case 6: res = "R";
-                break;
+            case 0: return "C";
+
+            case 1: return "C";
+
+            case 2: return "C";
+
+            case 3: return "N";
+
+            case 4: return "R";
+
+            case 5: return "R";
+
+            case 6: return "R";
+
             default: throw new RuntimeException("conversion error, state int to str");
         }
-        return res;
+
     }
 
     @Override
     public String[] observables(ArrayList<int[]> observables) {
-        return convert_int_to_str(observables,true);
+        return convertIntToString(observables,true);
     }
 
     @Override
     public String[] states(ArrayList<int[]> states) {
-        return convert_int_to_str(states,false);
+        return convertIntToString(states,false);
     }
 
     @Override
