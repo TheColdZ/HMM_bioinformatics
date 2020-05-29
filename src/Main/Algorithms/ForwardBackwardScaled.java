@@ -2,7 +2,7 @@ package Main.Algorithms;
 
 /**
  * Implements a scaled version of the Forward and Backward algorithms, due to Bishop.
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class ForwardBackwardScaled {
     private double[][] alpha;
@@ -16,6 +16,13 @@ public class ForwardBackwardScaled {
     private int K; //nr of observations
     private boolean betaRan;
 
+    /**
+     * Sets up the parameters to be used when calculating the forward and backward algorithm.
+     * @param observed The observables to perform forward or backward on.
+     * @param pi Initial state distribution vector
+     * @param P Initial transition matrix
+     * @param E Initial Emission matrix
+     */
     public ForwardBackwardScaled(int[] observed, double[] pi, double[][] P, double[][] E){
         this.N = P.length; //nr of states
         this.K = observed.length;
@@ -30,14 +37,26 @@ public class ForwardBackwardScaled {
         this.betaRan = false;
     }
 
+    /**
+     * Returns the forward/alpha algorithm. If it has not been run yet, it will first run then return the result.
+     * @return  A N x K matrix with alpha values.
+     */
     public double[][] getAlpha() {
         return alpha;
     }
 
+    /**
+     * Returns scaling factors used.
+     * @return vector of scaling factors.
+     */
     public double[] getScalingFactors() {
         return c;
     }
 
+    /**
+     * Returns the backward/beta algorithm. If it has not been run yet, it will first run then return the result.
+     * @return  A N x K matrix with alpha values.
+     */
     public double[][] getBeta() {
         if (!betaRan){
             calculateBetaBishop();
@@ -46,8 +65,7 @@ public class ForwardBackwardScaled {
     }
 
     /**
-     * Forward algorithm, that returns the alpha values as a N x K matrix
-     * Rabiner
+     * Forward algorithm, that returns the alpha values as a N x K matrix, implemented according to Rabiner
      */
     private void calculateAlphaRabiner(){
         int firstObserved = observed[0];
@@ -83,8 +101,7 @@ public class ForwardBackwardScaled {
     }
 
     /**
-     * Backward algorithm, that returns the beta values as a N x K matrix
-     * Rabiner
+     * Backward algorithm, sets the beta values as a N x K matrix, according to Rabiner
      */
     private void calculateBetaRabiner(){
         //initialize the last column
@@ -126,6 +143,10 @@ public class ForwardBackwardScaled {
         }
     }
 
+    /**
+     * Calculates the scaling factors according to Bishop
+     * @param k Which scaling factor to calculate
+     */
     private void scaleAlphaBishop(int k){
         //calculate c[k] = \sum_j c[k] * \hat{\alpha}[j][k]
         for (int i = 0; i < N; i++) {
@@ -137,6 +158,9 @@ public class ForwardBackwardScaled {
         }
     }
 
+    /**
+     * Calculates the backward/Beta algorithm according to Bishop.
+     */
     private void calculateBetaBishop(){
         //initialize the last column
         for (int i = 0; i < N; i++) {

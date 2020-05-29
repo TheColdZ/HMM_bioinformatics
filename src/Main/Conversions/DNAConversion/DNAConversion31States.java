@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class DNAConversion31States implements Conversion {
     private DNAConversion16States DNAConversion16StatesConverter;

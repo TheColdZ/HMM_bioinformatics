@@ -2,7 +2,7 @@ package Main.Algorithms;
 
 /**
  * Class to handle the alpha and beta algorithms of the forward backward procedure.
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class ForwardBackward {
     private double[][] alpha;
@@ -16,6 +16,13 @@ public class ForwardBackward {
     private boolean alphaRan;
     private boolean betaRan;
 
+    /**
+     * Sets up the parameters to be used when calculating the forward and backward algorithm.
+     * @param observed The observables to perform forward or backward on.
+     * @param pi Initial state distribution vector
+     * @param P Initial transition matrix
+     * @param E Initial Emission matrix
+     */
     public ForwardBackward(int[] observed, double[] pi, double[][] P, double[][] E){
         this.N = P.length; //nr of states
         this.K = observed.length;
@@ -29,6 +36,10 @@ public class ForwardBackward {
         this.betaRan = false;
     }
 
+    /**
+     * Returns the forward/alpha algorithm. If it has not been run yet, it will first run then return the result.
+     * @return  A N x K matrix with alpha values.
+     */
     public double[][] getAlpha() {
         if (!alphaRan){
             calculateAlpha();
@@ -36,6 +47,10 @@ public class ForwardBackward {
         return alpha;
     }
 
+    /**
+     * Returns the backward/beta algorithm. If it has not been run yet, it will first run then return the result.
+     * @return  A N x K matrix with beta values.
+     */
     public double[][] getBeta() {
         if (!betaRan){
             calculateBeta();
@@ -88,7 +103,7 @@ public class ForwardBackward {
 
     /**
      * Calculates P(X = x) based on the forward or backward algorithm
-     * if none of them have run yet, runs forward
+     * if none of them have run yet, it runs the forward/alpha algorithm.
      *
      * @return P(X=x)
      */

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class BaumWelchTrainingTest {
     private BaumWelchTraining training;

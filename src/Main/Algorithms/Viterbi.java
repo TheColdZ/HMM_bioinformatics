@@ -1,8 +1,8 @@
 package Main.Algorithms;
 
 /**
- *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ *  This class handles the Viterbi Algorithm.
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class Viterbi {
     private double[][] P;

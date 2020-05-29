@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class DNAConversion7StatesTest {
     private DNAConversion7States converter;

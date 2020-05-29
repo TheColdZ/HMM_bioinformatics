@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class DNAConversion14States implements Conversion {
     private int emission_conversion_char_to_int(Character c){
@@ -44,7 +44,14 @@ public class DNAConversion14States implements Conversion {
         return states;
     }
 
-
+    /**
+     * prerequisite end of trueannotation must contain at least----N's to not get index out of bound
+     * @param trueAnnotation
+     * @param observed
+     * @param states
+     * @param n
+     * @return
+     */
     private int codingStates(String trueAnnotation,String observed, int[] states,int n) {
         boolean correctStartCodon = observed.charAt(n) == 'A' && observed.charAt(n+1) == 'T' && observed.charAt(n+2) == 'G' && trueAnnotation.charAt(n-1)== 'N';
         if( correctStartCodon){

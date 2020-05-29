@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class to handle the training by counting algorithm
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class CountTraining {
     private double[][] E;
@@ -12,7 +12,7 @@ public class CountTraining {
     private double[] pi;
     private int N; //nr of states
     private int L; //nr of sequences
-    private int M;
+    private int M; //Size of observable alphabet
 
     /**
      * This method calculates the training by counting

@@ -3,6 +3,10 @@ package Main.FileInteraction;
 import java.io.BufferedReader;
 import java.io.File;
 
+/**
+ *
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
+ */
 public class FileReader {
 
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class CountTrainingTest {
     private CountTraining example2training;

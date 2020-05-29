@@ -7,23 +7,21 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class DNAConversion5States implements Conversion {
     private int emissionConversionCharToInt(Character c){
-        int res;
         switch(c){
-            case 'A': res = 0;
-                break;
-            case 'C': res = 1;
-                break;
-            case 'G': res = 2;
-                break;
-            case 'T': res = 3;
-                break;
+            case 'A': return 0;
+
+            case 'C': return 1;
+
+            case 'G': return 2;
+
+            case 'T': return 3;
+
             default: throw new RuntimeException("conversion error, observable char to int");
         }
-        return res;
     }
 
 
@@ -69,7 +67,6 @@ public class DNAConversion5States implements Conversion {
             } else {
                 stringsInt.add(convertAnnotationToState(annotation,obs));
             }
-
         }
         return stringsInt;
     }
@@ -105,19 +102,17 @@ public class DNAConversion5States implements Conversion {
     }
 
     private String emissionConversionIntToString(int i) {
-        String res;
         switch(i){
-            case 0: res = "A";
-                break;
-            case 1: res = "C";
-                break;
-            case 2: res = "G";
-                break;
-            case 3: res = "T";
-                break;
+            case 0: return "A";
+
+            case 1: return "C";
+
+            case 2: return "G";
+
+            case 3: return "T";
+
             default: throw new RuntimeException("conversion error, observable int to str");
         }
-        return res;
     }
 
     private String stateConversionIntToString(int i) {

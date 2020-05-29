@@ -2,6 +2,10 @@ package Main;
 
 import Main.Experimentation.Comparison;
 
+/**
+ *
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
+ */
 public class Main {
     public static void main(String[] args) {
 

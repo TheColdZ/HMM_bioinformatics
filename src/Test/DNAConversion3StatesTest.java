@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class DNAConversion3StatesTest {
     private Conversion conversion;

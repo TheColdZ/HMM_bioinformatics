@@ -4,8 +4,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
+ *  This class handles Baum-Welch training
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class BaumWelchTraining {
     private ArrayList<int[]> states;
@@ -16,6 +17,15 @@ public class BaumWelchTraining {
     private int L; //nr of sequences
     private int M;  //Size of observable alphabet in observations
 
+    /**
+     * This constructor sets up and performs Baum-Welch on the provided observables with the provided initial parameters.
+     * It will iterate until all entries in the new parameters have no greater change than the compareFactor
+     * @param observables   Observables given as ints in int array in an ArrayList
+     * @param initial_P Initial transition matrix.
+     * @param initial_E Initial Emission matrix
+     * @param initial_pi Initial state distribution vector.
+     * @param compareFactor Comparison factor used to compare the newly generated parameters
+     */
     public BaumWelchTraining(ArrayList<int[]> observables, double[][] initial_P, double[][] initial_E, double[] initial_pi, double compareFactor) {
         this.L = observables.size();
         this.N = initial_P.length;
@@ -29,11 +39,14 @@ public class BaumWelchTraining {
             disposeable[0] = -1;
             states.add(disposeable);
         }
-        //calculate(observables);
-        //iterate(observables,500);
         converge(observables,compareFactor);
     }
 
+    /**
+     * This method handles the iterations until the parameters converge within the CompareFactor
+     * @param observables   The observables
+     * @param compareFactor compareFactor used to compare the initial parameters and the generated parameters.
+     */
     private void converge(ArrayList<int[]> observables, double compareFactor){
         double[][] oldP;
         double[][] oldE;
@@ -49,6 +62,13 @@ public class BaumWelchTraining {
         System.out.println(iterations);
     }
 
+    /**
+     * This method compares every entry in two vectors. It returns true if the difference is less than the compareFactor and false if not.
+     * @param A First vector
+     * @param B Second vector
+     * @param compareFactor ComparisonVector that every entry is compared to.
+     * @return  Boolean value, if every corresponding value in the two vectors are within the comparison factor.
+     */
     private boolean compareVector(double[] A, double[] B, double compareFactor){
         for (int j = 0; j < A.length; j++) {
             if(Math.abs(A[j]-B[j])>compareFactor){
@@ -58,6 +78,13 @@ public class BaumWelchTraining {
         return true;
     }
 
+    /**
+     * This method compares every entry in two matrix. It returns true if the difference is less than the compareFactor and false if not.
+     * @param A First matrix
+     * @param B Second matrix
+     * @param compareFactor ComparisonVector that every entry is compared to.
+     * @return Boolean value, if every corresponding value in the two matrix are within the comparison factor.
+     */
     private boolean compareMatrix(double[][] A, double[][] B, double compareFactor){
         for (int i = 0; i < A.length; i++) {
             if(!compareVector(A[i],B[i],compareFactor)){
@@ -68,7 +95,7 @@ public class BaumWelchTraining {
     }
 
     /**
-     * Check if n1 in [n2*(1-factor) , n2*(1+factor)], for instance a deviation of 0.01 means within 1%
+     * Check if n1 in [n2*(1-factor) , n2*(1+factor)], for instance a deviation of 0.01 means within 1% TODO kill?
      * @param n1 first number
      * @param n2 second number
      * @param factor allowed deviation in %
@@ -79,11 +106,7 @@ public class BaumWelchTraining {
         return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;
     }
 
-    private void iterate(ArrayList<int[]> observables, int n){
-        for (int i = 0; i < n; i++) {
-            reestimateBishop(observables);
-        }
-    }
+
 
     private double reestimateRabiner(ArrayList<int[]> observables) {
         double[] newPi = new double[N];
@@ -157,6 +180,10 @@ public class BaumWelchTraining {
         return likelihood;
     }
 
+    /**
+     * This method handles the actual reestimating of parameters according to Bishop.
+     * @param observables The observables to reestimate parameters on.
+     */
     private void reestimateBishop(ArrayList<int[]> observables) {
         double[] newPi = new double[N];
         double[][] newP = new double[N][N];

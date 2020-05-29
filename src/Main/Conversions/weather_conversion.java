@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class weather_conversion implements Conversion {
     private int emission_conversion_char_to_int(Character c){

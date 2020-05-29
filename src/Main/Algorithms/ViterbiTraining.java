@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class to handle Viterbi training
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class ViterbiTraining {
     private ArrayList<int[]> states;

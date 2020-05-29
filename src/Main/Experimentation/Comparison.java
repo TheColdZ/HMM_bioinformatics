@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 /**
  * This class will handle comparison of two strings. Using techniques descrribed
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class Comparison {
     private double AC;

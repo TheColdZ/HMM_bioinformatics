@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  *
- * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class ViterbiTest {
     private Viterbi viterbi;
