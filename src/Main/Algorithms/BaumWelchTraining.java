@@ -108,7 +108,7 @@ public class BaumWelchTraining {
 
 
 
-    private double reestimateRabiner(ArrayList<int[]> observables) {
+    private double reestimateRabiner(ArrayList<int[]> observables) {    //TODO kill?
         double[] newPi = new double[N];
         double[][] newP = new double[N][N];
         double[] pDenominators = new double[N];

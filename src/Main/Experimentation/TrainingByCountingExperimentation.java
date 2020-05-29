@@ -6,18 +6,24 @@ import Main.Conversions.Conversion;
 import Main.FileInteraction.FileReader;
 import Main.FileInteraction.FileWriter;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- *  This class handles Training By Counting experimentation. It will read 5 files named genome1, genome2 etc. as the observables and 5 files named
- *  true-ann1, true-ann2 etc. as the corresponding true annotations of the genomes. It will then perform Training by counting.
- *  With the newly found parameters it will predict the most likely states for 5 files named genome6, genome7 etc.
- *  using the Viterbi algorithm and write this prediction to a file called "TrainingByCounting"+ the name of the used converter.
+ *  This class handles Training By Counting experimentation.
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class TrainingByCountingExperimentation {
 
+    /**
+     * This method will perform Training By Counting.
+     * As a prerequisite, one should have the correct filepath in ones filereader, with 5 files named genome1,
+     * genome2 etc. as the observables and 5 files named: true-ann1, true-ann2 etc. as the corresponding
+     * true annotations of the genomes. It will then perform Training by counting.
+     *  With the newly found parameters it will predict the most likely states for 5 files
+     *  named genome6, genome7 etc. using the Viterbi algorithm and write this prediction to a file
+     *  called "TrainingByCounting"+ the name of the used converter.
+     * @param converter Converter to convert true-annotation to corresponding state.
+     */
     public void trainingByCounting(Conversion converter){
         FileReader fr = new FileReader();
 
@@ -35,7 +41,6 @@ public class TrainingByCountingExperimentation {
         trueAnnotationOfGenomes[3] = fr.readFile("true-ann4");
         trueAnnotationOfGenomes[4] = fr.readFile("true-ann5");
 
-
         ArrayList<int[]> observedConverted = converter.observables(observedGenomes);
         ArrayList<int[]> statesConverted =  converter.states(trueAnnotationOfGenomes,observedGenomes);   //This conversion should give us which states produced the true annotation
 
@@ -44,36 +49,6 @@ public class TrainingByCountingExperimentation {
         double[] pi = countTrainer.getPi();
         double[][] E = countTrainer.getE();
         double[][] P = countTrainer.getP();
-
-
-
-        //TODO remove ugly prints
-        DecimalFormat df = new DecimalFormat("#.#######");
-        //System.out.print("{");    //TODO
-        for (int i = 0; i < converter.getNumberOfStates(); i++) {
-            System.out.print(pi[i]+",");
-        }
-        //System.out.println("}");
-
-        for (int i = 0; i < converter.getNumberOfStates(); i++) {
-            //System.out.print("{");
-            for (int j = 0; j < converter.getNumberOfStates(); j++) {
-                System.out.print(P[i][j]+",");
-                //System.out.print(df.format(P[i][j]));       //TODO
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-        for (int i = 0; i < converter.getNumberOfStates(); i++) {
-            //System.out.print("{");
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]+",");
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
 
         String[] genomesForPrediction = new String[5];
         genomesForPrediction[0] = fr.readFile("genome6");
@@ -91,12 +66,10 @@ public class TrainingByCountingExperimentation {
             mostlikelyDecoding.add(mostLikelySequence);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
         }
 
-
         String[] convertedStatesFound = converter.states(mostlikelyDecoding);
 
         FileWriter fw = new FileWriter();
         fw.writePredictedStatesTofile(convertedStatesFound,"TrainingByCounting"+converter.getNameOfModel());
-        System.out.println("Done"); //Todo
 
     }
 }

@@ -16,7 +16,7 @@ public class DNAConversion16StatesTest {
 
     @Before
     public void setUp() {
-        DNAConversion16States converter = new DNAConversion16States();
+        this.converter = new DNAConversion16States();
     }
 
     @Test

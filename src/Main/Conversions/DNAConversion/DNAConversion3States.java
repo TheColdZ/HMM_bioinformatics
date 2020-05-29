@@ -112,7 +112,7 @@ public class DNAConversion3States implements Conversion {
                 if(observables) {
                     sb.append(emissionConversionIntToStr(intRow[k]));
                 } else {
-                    sb.append(stateConversionIntToStr(intRow[k]));
+                    sb.append(stateConversionIntToString(intRow[k]));
                 }
             }
             strings[l] = sb.toString();
@@ -144,7 +144,7 @@ public class DNAConversion3States implements Conversion {
      * @param i int to be converted
      * @return  converted int
      */
-    private String stateConversionIntToStr(int i) {
+    private String stateConversionIntToString(int i) {
 
         switch(i){
             case 0: return "C";
@@ -224,7 +224,7 @@ public class DNAConversion3States implements Conversion {
 
     /**
      * When doing Viterbi training og Baum-Welch, the methods require initial parameters. The below are there for just that purpose.
-     * @return the initial state distribution vector
+     * @return The initial state distribution vector
      */
     @Override
     public double[] getInitialPi(){

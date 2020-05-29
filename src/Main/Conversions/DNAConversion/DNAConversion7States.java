@@ -5,11 +5,20 @@ import Main.Conversions.Conversion;
 import java.util.ArrayList;
 
 
+
 /**
- *
+ *  This class handles conversions from observable data given as a String an int array and vice versa from an int array to a String.
+ *  It does so for the 7-state model.
+ *  It also holds initial parameters for the 7-state model.
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class DNAConversion7States implements Conversion {
+
+    /**
+     * Converts an emission char to an Int
+     * @param c The char to convert
+     * @return  Converted char as int.
+     */
     private int emissionConversionCharToInt(Character c){
         switch(c){
             case 'A': return 0;
@@ -55,7 +64,7 @@ public class DNAConversion7States implements Conversion {
         }
     }
     /**
-     * Method that aids in finding the correct annotation of a true annotated genom, for the 7 states. It emulates a cycle
+     * Method that aids in finding the correct annotation of a true annotated gene, for the 7 states. It emulates a cycle
      * @param state    The previous state
      * @return  The next state
      */
@@ -68,6 +77,12 @@ public class DNAConversion7States implements Conversion {
             default: return 2; //We have a R -> C transition, this is modelled by beginning in the 'first' coding state.
         }
     }
+    /**
+     * Method used for both states and observables conversion from String to int
+     * @param strings String to be converted
+     * @param observables   If converting the observables or not
+     * @return  converted string
+     */
     private ArrayList<int[]> convertStringToInt(String[] strings, boolean observables){
         int L = strings.length;
         ArrayList<int[]> stringsInt = new ArrayList<>();
@@ -94,16 +109,33 @@ public class DNAConversion7States implements Conversion {
     }
 
 
+    /**
+     * Overloaded method that converts Strings of observables to int
+     * @param observables Array of strings to convert
+     * @return  Converted strings
+     */
     @Override
     public ArrayList<int[]> observables(String[] observables) {
         return convertStringToInt(observables,true);
     }
 
+    /**
+     * Overloaded method that converts Strings of states to int
+     * @param states    String of states
+     * @param observed  String of the corresponding observables, in this class not used.
+     * @return  converted strings.
+     */
     @Override
     public ArrayList<int[]> states(String[] states,String[] observed) {
         return convertStringToInt(states,false);
     }
 
+    /**
+     * Method used for both states and observables conversion from int to String
+     * @param ints  Arrays of int to convert
+     * @param observables   if the string to convert is the observable or not.
+     * @return  converted ints.
+     */
     private String[] convertIntToString(ArrayList<int[]> ints, boolean observables){
         int L = ints.size();
         String[] strings = new String[L];
@@ -122,6 +154,11 @@ public class DNAConversion7States implements Conversion {
         return strings;
     }
 
+    /**
+     * Converts an emission int to the corresponding char in the model.
+     * @param i int to be converted
+     * @return  converted int
+     */
     private String emissionConversionIntToString(int i) {
         switch(i){
             case 0: return "A";
@@ -132,6 +169,11 @@ public class DNAConversion7States implements Conversion {
         }
     }
 
+    /**
+     * Converts a state int ti the corresponding char in the model.
+     * @param i int to be converted
+     * @return  converted int
+     */
     private String stateConversionIntToString(int i) {
         switch(i){
             case 0: return "C";
@@ -153,11 +195,21 @@ public class DNAConversion7States implements Conversion {
 
     }
 
+    /**
+     * Overloaded method that converts ints of observables to strings.
+     * @param observables   The observables given as ints
+     * @return  observables as string
+     */
     @Override
     public String[] observables(ArrayList<int[]> observables) {
         return convertIntToString(observables,true);
     }
 
+    /**
+     * Overloaded method that converts ints of states to strings
+     * @param states The states given as ints
+     * @return  states as string
+     */
     @Override
     public String[] states(ArrayList<int[]> states) {
         return convertIntToString(states,false);
@@ -168,10 +220,18 @@ public class DNAConversion7States implements Conversion {
         return "DNAConversion7States";
     }
 
+
     @Override
     public int getNumberOfStates() {
         return 7;
     }
+
+    /**
+     * When doing Viterbi training og Baum-Welch, the methods require initial parameters. The below are there for just that purpose.
+     * Notice however that this allows transitions between state 0 and 2, as these initial parameters come from Training By Counting and this was observed,
+     * however the transition are extremely unlikely.
+     * @return the transition matrix
+     */
     @Override
     public double[][] getInitialP(){
         double[][] P = {{0.0, 0.0, 0.9965734014614962, 0.0034244352818507094, 2.1632566530958366E-6, 0.0, 0 },
@@ -183,6 +243,11 @@ public class DNAConversion7States implements Conversion {
                 {0.0, 0.0, 7.324740923913521E-7, 0.0033430117576741312, 0.9966562557682335, 0.0, 0.0 }};
         return P;
     }
+
+    /**
+     * When doing Viterbi training og Baum-Welch, the methods require initial parameters. The below are there for just that purpose.
+     * @return the emission matrix
+     */
     @Override
     public double[][] getInitialE(){
         double[][] E = {{0.3392152281731009, 0.12997639165905922, 0.13122386966234448, 0.39958451050549537 },
@@ -194,6 +259,11 @@ public class DNAConversion7States implements Conversion {
                 {0.19904836965916514, 0.3182585281958577, 0.1605063153916246, 0.32218678675335255}};        // x = sun|L   x = rain|L
         return E;
     }
+
+    /**
+     * When doing Viterbi training og Baum-Welch, the methods require initial parameters. The below are there for just that purpose.
+     * @return The initial state distribution vector
+     */
     @Override
     public double[] getInitialPi(){
         double[] pi = {0.0,0.0,0.0,1.0,0.0,0.0,0.0};
