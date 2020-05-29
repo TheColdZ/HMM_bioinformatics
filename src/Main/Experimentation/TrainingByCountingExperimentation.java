@@ -10,7 +10,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- *
+ *  This class handles Training By Counting experimentation. It will read 5 files named genome1, genome2 etc. as the observables and 5 files named
+ *  true-ann1, true-ann2 etc. as the corresponding true annotations of the genomes. It will then perform Training by counting.
+ *  With the newly found parameters it will predict the most likely states for 5 files named genome6, genome7 etc.
+ *  using the Viterbi algorithm and write this prediction to a file called "TrainingByCounting"+ the name of the used converter.
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class TrainingByCountingExperimentation {

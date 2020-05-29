@@ -6,71 +6,66 @@ import java.util.ArrayList;
  *
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
-public class weather_conversion implements Conversion {
-    private int emission_conversion_char_to_int(Character c){
-        int res;
+public class weatherConversion implements Conversion {
+    private int emissionConversionCharToInt(Character c){
         switch(c){
-            case 'S': res = 0;
-                break;
-            case 'R': res = 1;
-                break;
+            case 'S': return 0;
+
+            case 'R': return 1;
+
             default: throw new RuntimeException("conversion error, observable char to int");
         }
-        return res;
     }
-    private int state_conversion_char_to_int(Character c){
-        int res;
+    private int stateConversionCharToInt(Character c){
         switch(c){
-            case 'H': res = 0;
-                break;
-            case 'L': res = 1;
-                break;
+            case 'H': return 0;
+
+            case 'L': return 1;
+
             default: throw new RuntimeException("conversion error, state char to int");
         }
-        return res;
     }
-    private ArrayList<int[]> convert_str_to_int(String[] strings, boolean observables){
+    private ArrayList<int[]> convertStringToInt(String[] strings, boolean observables){
         int L = strings.length;
-        int K = strings[0].length();
-        ArrayList<int[]> strings_int = new ArrayList<>();
+        ArrayList<int[]> stringsInt = new ArrayList<>();
         for (int i = 0; i < L; i++) {
-            strings_int.add(new int[strings[i].length()]);
+            stringsInt.add(new int[strings[i].length()]);
         }
         for (int l = 0; l < L; l++) {
             String obs = strings[l];
             for (int k = 0; k < obs.length(); k++) {
                 if(observables) {
-                    strings_int.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
+                    stringsInt.get(l)[k] = emissionConversionCharToInt(obs.charAt(k));
                 } else {
-                    strings_int.get(l)[k] = state_conversion_char_to_int(obs.charAt(k));
+                    stringsInt.get(l)[k] = stateConversionCharToInt(obs.charAt(k));
                 }
             }
         }
-        return strings_int;
+        return stringsInt;
     }
 
 
     @Override
     public ArrayList<int[]> observables(String[] observables) {
-        return convert_str_to_int(observables,true);
+        return convertStringToInt(observables,true);
     }
 
     @Override
     public ArrayList<int[]> states(String[] states, String[] observed) {
-        return convert_str_to_int(states,false);
+        return convertStringToInt(states,false);
     }
 
-    private String[] convert_int_to_str(ArrayList<int[]> ints, boolean observables){
+    private String[] convertIntToString(ArrayList<int[]> ints, boolean observables){
         int L = ints.size();
         String[] strings = new String[L];
         for (int l = 0; l < L; l++) {
-            int[] int_row = ints.get(l);
+            int[] intRow = ints.get(l);
             StringBuilder sb = new StringBuilder();
-            for (int k = 0; k < int_row.length; k++) {
+            for (int k = 0; k < intRow.length; k++) {
                 if(observables) {
-                    sb.append(emission_conversion_int_to_str(int_row[k]));
+                    sb.append(emissionConversionIntToString(intRow[k]));
                 } else {
-                    sb.append(state_conversion_int_to_str(int_row[k]));
+                    sb.append(stateConversionIntToString(intRow[k]));
                 }
             }
             strings[l] = sb.toString();
@@ -78,38 +73,34 @@ public class weather_conversion implements Conversion {
         return strings;
     }
 
-    private String emission_conversion_int_to_str(int i) {
-        String res;
+    private String emissionConversionIntToString(int i) {
         switch(i){
-            case 0: res = "S";
-                break;
-            case 1: res = "R";
-                break;
+            case 0: return "S";
+
+            case 1: return "R";
+
             default: throw new RuntimeException("conversion error, observable int to str");
         }
-        return res;
     }
 
-    private String state_conversion_int_to_str(int i) {
-        String res;
+    private String stateConversionIntToString(int i) {
         switch(i){
-            case 0: res = "H";
-                break;
-            case 1: res = "L";
-                break;
+            case 0: return "H";
+
+            case 1: return "L";
+
             default: throw new RuntimeException("conversion error, state int to str");
         }
-        return res;
     }
 
     @Override
     public String[] observables(ArrayList<int[]> observables) {
-        return convert_int_to_str(observables,true);
+        return convertIntToString(observables,true);
     }
 
     @Override
     public String[] states(ArrayList<int[]> states) {
-        return convert_int_to_str(states,false);
+        return convertIntToString(states,false);
     }
 
     @Override

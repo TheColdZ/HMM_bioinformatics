@@ -3,7 +3,8 @@ package Main.Experimentation;
 import java.text.DecimalFormat;
 
 /**
- * This class will handle comparison of two strings. Using techniques descrribed
+ * This class handles comparison of two strings and calculations of Sensitivity, Specificity and Approximate Correlation, given TruePositive, FalsePositive,
+ * TrueNegative & FalseNegative
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class Comparison {
@@ -24,49 +25,16 @@ public class Comparison {
         this.AC = 0;
     }
 
-    /**
-     * This method compares two strings, with only two kinds of encoding: Non-coding and coding/comparisonChar  TODO This could technically be killed and just call other with _
-     * @param trueAnnotation    The true annotation
-     * @param predictionAnnotation The predicted annotation
-     * @param nonCodingChar         The char denoting non-coding
-     * @param comparisonChar        The char denoting coding
-     */
-    public void compareSingle(String trueAnnotation, String predictionAnnotation, char nonCodingChar, char comparisonChar){
-        double truePositive,falsePositive,trueNegative,falseNegative;
-        truePositive = 0;
-        falsePositive = 0;
-        trueNegative = 0;
-        falseNegative = 0;
-        for (int i = 0; i < predictionAnnotation.length(); i++) {
-            if( predictionAnnotation.charAt(i) == comparisonChar){      //Char can be compared like this, it is fast TODO
-                if(trueAnnotation.charAt(i) == comparisonChar){
-                    truePositive++;
-                }
-                else{
-                    falsePositive++;
-                }
-            }
-            else if(predictionAnnotation.charAt(i) == nonCodingChar){
-                if(trueAnnotation.charAt(i)== nonCodingChar){
-                    trueNegative++;
-                }
-                else{
-                    falseNegative++;
-                }
-            }
-        }
-        printPositiveAndNegatives(' ',comparisonChar,truePositive,falsePositive,trueNegative,falseNegative);
-        calculate(truePositive,falsePositive,trueNegative,falseNegative);
-
-    }
 
     /**
      * This method compares a true annotation and a predicted annotation, having three kinds of encoding: non-coding and two other forms of encoding
+     * If wanting to only compare with only on form of coding, set either comparisonChar1 or comparisonChar2 to a char such as '_' that is not found
+     * in the string to do so.
      * @param trueAnnotation        The true annotation
      * @param predictionAnnotation  The predicted annotation
      * @param nonCodingChar         The char denoting non-coding
      * @param comparisonChar1       The first comparison char denoting a form of coding
-     * @param comparisonChar2       The second comparison char denoting a form of coding
+     * @param comparisonChar2       The second comparison char denoting a form of coding, if only comparing with
      */
     public void compare(String trueAnnotation, String predictionAnnotation,char nonCodingChar, char comparisonChar1, char comparisonChar2){
         double truePositive,falsePositive,trueNegative,falseNegative;
@@ -132,6 +100,14 @@ public class Comparison {
         printStatistical(sensitivity,specificity,AC,ACP,correlationCoefficient);
     }
 
+    /**
+     * Printing function. Useful in the event that a specific form of formatted print is wanted, e.g. when inserting into a report.
+     * @param sensitivity The sensitivity to print
+     * @param specificity   The specificity to print
+     * @param AC    The approximate correlation to print
+     * @param ACP   Average Conditional Probability to print
+     * @param correlationCoefficient The correlationCoefficient to print
+     */
     private void printStatistical(double sensitivity,double specificity, double AC, double ACP, double correlationCoefficient){
         DecimalFormat df = new DecimalFormat("#.#####");
         //System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);

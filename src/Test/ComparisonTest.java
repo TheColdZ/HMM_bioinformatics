@@ -25,7 +25,7 @@ public class ComparisonTest {
     }
     @Test
     public void testSingleCharC() {
-        comparison.compareSingle(trueAnnotation, predictionAnnotation, 'N', 'C');
+        comparison.compare(trueAnnotation, predictionAnnotation, 'N','_', 'C');
         assert (compareFactor(0.149, comparison.getCorrelationCoefficient(), 0.001));
         assert (compareFactor(0.575, comparison.getACP(), 0.001));
         assert (compareFactor(0.150, comparison.getAC(), 0.001));
@@ -34,7 +34,7 @@ public class ComparisonTest {
     }
     @Test
     public void testSinglecharR(){
-        comparison.compareSingle(trueAnnotation, predictionAnnotation, 'N', 'R');
+        comparison.compare(trueAnnotation, predictionAnnotation, 'N', 'R','_');
         assert (compareFactor(0.149, comparison.getCorrelationCoefficient(), 0.001));
         assert (compareFactor(0.575, comparison.getACP(), 0.001));
         assert (compareFactor(0.150, comparison.getAC(), 0.001));

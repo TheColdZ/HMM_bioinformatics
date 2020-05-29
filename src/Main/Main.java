@@ -1,30 +1,16 @@
 package Main;
 
-import Main.Experimentation.Comparison;
+import Main.Conversions.DNAConversion.DNAConversion31States;
+import Main.Experimentation.BaumWelchExperiment;
+import Main.Experimentation.ViterbiTrainingExperimentation;
 
 /**
- *
+ * Main, from here we run some experiments.
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class Main {
     public static void main(String[] args) {
 
-        //need paramaters for initial ...
-        double[][] P = {{0,0,0.9 ,0.1,0   ,0,0},
-                {1,0,0   ,0  ,0   ,0,0},
-                {0,1,0   ,0  ,0   ,0,0},
-                {0,0,0.05,0.9,0.05,0,0},
-                {0,0,0   ,0  ,0   ,1,0},
-                {0,0,0   ,0  ,0   ,0,1},
-                {0,0,0   ,0.1,0.9 ,0,0} };
-        double[][] E ={{0.3 ,0.25,0.25,0.2},
-                {0.2 ,0.35,0.15,0.3},
-                {0.4 ,0.15,0.2 ,0.25},
-                {0.25,0.25,0.25,0.25},
-                {0.2 ,0.4 ,0.3 ,0.1},
-                {0.3 ,0.2 ,0.3 ,0.20},
-                {0.15,0.3 ,0.2 ,0.35}};
-        double[] pi =  {0,0,0,1,0,0,0};
 
         /**
         BaumWelchExperiment BWE3 = new BaumWelchExperiment(new DNAConversion3States());
@@ -32,28 +18,12 @@ public class Main {
         BaumWelchExperiment BWE7 = new BaumWelchExperiment(new DNAConversion7States());
         BaumWelchExperiment BWE14 = new BaumWelchExperiment(new DNAConversion14States());
         BaumWelchExperiment BWE16 = new BaumWelchExperiment(new DNAConversion16States());
-         BaumWelchExperiment BWE31 = new BaumWelchExperiment(new DNAConversion31States());
          */
 
+         BaumWelchExperiment BWE31 = new BaumWelchExperiment(new DNAConversion31States());
 
-        Comparison comprarer = new Comparison();
-        System.out.println("BW training all 10 genes, 3 states");
-        comprarer.calculate(766491+869324+739957+954331+473599,458590+528995+949615+1295990+277494,224216+377772+125382+62031+167860,67854+966440+231161+76083+651532);
 
-        System.out.println("BW training all 10 genes, 5 states");
-        comprarer.calculate(267380+80708+620569+876495+274465,220603+70781+868218+1276130+165766,1082833+1682635+374128+177556+665447,557023+908407+183200+58254+464807);
 
-        System.out.println("BW training all 10 genes, 7 states");
-        comprarer.calculate(1361804+1533066+1303001+1511025+1034603,363232+402558+467518+668195+285843,203889+440100+167680+136063+136095,198914+366807+107916+73152+113944);
-
-        System.out.println("BW training all 10 genes, 14 states");
-        comprarer.calculate(312289+118942+628111+873323+322223,268787+97289+853666+1250324+179843,1034649+1656127+388680+203362+651370,512114+870173+175658+61426+417049);
-
-        System.out.println("BW training all 10 genes, 16 states");
-        comprarer.calculate(636862+785911+639681+756539+602868,227262+246323+414416+714597+133997,1076174+1507093+827930+739089+697216,187541+203204+164088+178210+136404);
-
-        System.out.println("BW training all 10 genes, 31 states");
-        comprarer.calculate(1237060+1421454+1208125+1383649+928898,339601+384472+444700+696112+270639,227482+450290+198682+152979+155623,323696+486315+194608+155695+215325);
 
         /**
         Comparison comparer = new Comparison();
@@ -76,7 +46,7 @@ public class Main {
         comparer.calculate(1229376+1422435+1204068+1368522+924489,332735+382357+434003+692975+265967,231564+451902+206243+160203+159168,334164+485837+201801+166735+220861);
         */
 
-        //ViterbiTrainingExperimentation viterbiTrainingExperimentation = new ViterbiTrainingExperimentation();
+        ViterbiTrainingExperimentation viterbiTrainingExperimentation = new ViterbiTrainingExperimentation();
 
         //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion5States());
 
@@ -84,7 +54,7 @@ public class Main {
         //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion7States());
         //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion14States());
         //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion16States());
-        //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion31States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion31States());
 
         /**
         Comparison comparer = new Comparison();
@@ -107,15 +77,15 @@ public class Main {
         comparer.calculate(1156721+1328218+1164177+1371703+868751,286092+321906+357515+606058+225291,258314+492920+254023+189611+190519,426712+599487+270400+221063+285924);
         */
 
-        /**
-        TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
-        experiment.trainingByCounting(new DNAConversion3States());
-        experiment.trainingByCounting(new DNAConversion5States());
-        experiment.trainingByCounting(new DNAConversion7States());
-        experiment.trainingByCounting(new DNAConversion14States());
-        experiment.trainingByCounting(new DNAConversion16States());
-        experiment.trainingByCounting(new DNAConversion31States());
-         */
+
+        //TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
+        //experiment.trainingByCounting(new DNAConversion3States());
+        //experiment.trainingByCounting(new DNAConversion5States());
+        //experiment.trainingByCounting(new DNAConversion7States());
+        //experiment.trainingByCounting(new DNAConversion14States());
+        //experiment.trainingByCounting(new DNAConversion16States());
+        //experiment.trainingByCounting(new DNAConversion31States());
+
 
         /**
         Comparison comparer = new Comparison();
@@ -137,105 +107,10 @@ public class Main {
         comparer.calculate(1112427+1366535+1082194+1229623+830874,226823+312758+256825+426709+192374,305756+499830+326060+295438+215246,482833+563408+381036+436665+331991);
         */
 
-         /*  TODO delete when appropiate i.e. when experimentation with train by count is satisfacotry
-        Main.FileInteraction.FileReader fr = new Main.FileInteraction.FileReader();
-        String[] genome1 = new String[5];
-        genome1[0] = fr.readFile("genome1");
-        //genome1[0] = getStringObserved();
-        genome1[1] = fr.readFile("genome2");
-        genome1[2] = fr.readFile("genome3");
-        genome1[3] = fr.readFile("genome4");
-        genome1[4] = fr.readFile("genome5");
-        String[] trueAnnotation1 = new String[5];
-        //trueAnnotation1[0] = getTrueString();
-        trueAnnotation1[0] = fr.readFile("true-ann1");       //This is a file containing N's, C's and R's
-        trueAnnotation1[1] = fr.readFile("true-ann2");
-        trueAnnotation1[2] = fr.readFile("true-ann3");
-        trueAnnotation1[3] = fr.readFile("true-ann4");
-        trueAnnotation1[4] = fr.readFile("true-ann5");
-        Main.Conversion converter = new Main.Conversions.DNAConversion.DNAConversion31States();      //TODO here we choose model as well.
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = ((Main.Conversions.DNAConversion.DNAConversion31States) converter).statesFromTrueAnnotationAndObserved(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-        //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
-        Main.FileInteraction.FileWriter fw = new Main.FileInteraction.FileWriter();
-        fw.writeStatesToFile("Please", Arrays.toString(statesConverted.get(0)));
-        Main.Algorithms.CountTraining trainer = new Main.Algorithms.CountTraining(observedConverted,statesConverted,31,4); //TODO We train and choose model
-        double[] pi = trainer.getPi();  //We retrieve the newly found parameters
-        double[][] E = trainer.getE();
-        double[][] P = trainer.comparePExample2();
-        for (int i = 0; i < 31; i++) {
-            for (int j = 0; j < 31; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 31; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
-        String[] genome6prediction = new String[1];
-        genome6prediction[0] = fr.readFile("genome6");
-        ArrayList<int[]> observedConvertedPredictionGenome6 = converter.observables(genome6prediction);
-
-        Main.Algorithms.Viterbi viterbi = new Main.Algorithms.Viterbi(P,E,pi);  //We run viterbi with the new parameters.
-        int[] mostLikelySequence = viterbi.calculate(observedConvertedPredictionGenome6.get(0)); //We get the sequence of most likely states to have produced the observed
-        fw.writeStatesToFile("MainMethodgenom6", Arrays.toString(mostLikelySequence));
-
-        ArrayList<int[]> mostlikely = new ArrayList<>();
-        mostlikely.add(mostLikelySequence);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
-        String[] convertedStatesFound = converter.states(mostlikely);
-        fw.writeStatesToFile("convertedGenome6",convertedStatesFound[0]);
-
-        Main.Experimentation.Comparison comparer = new Main.Experimentation.Comparison();                     //We compare the true annotation, with the found annotation. This is kinda cheating...
-        //comparer.compare(trueAnnotation1[0],convertedStatesFound[0],'N','C','R');
-
-        double[][] transition = {{0,0,0.9 ,0.1,0   ,0,0},
-                {1,0,0   ,0  ,0   ,0,0},
-                {0,1,0   ,0  ,0   ,0,0},
-                {0,0,0.05,0.9,0.05,0,0},
-                {0,0,0   ,0  ,0   ,1,0},
-                {0,0,0   ,0  ,0   ,0,1},
-                {0,0,0   ,0.1,0.9 ,0,0} };
-
-        double[][] emission ={{0.3 ,0.25,0.25,0.2},
-                {0.2 ,0.35,0.15,0.3},
-                {0.4 ,0.15,0.2 ,0.25},
-                {0.25,0.25,0.25,0.25},
-                {0.2 ,0.4 ,0.3 ,0.1},
-                {0.3 ,0.2 ,0.3 ,0.20},
-                {0.15,0.3 ,0.2 ,0.35}};
-
-
-        double[] start =  {0,0,0,1,0,0,0};
-
-        Main.Algorithms.Viterbi viterbi2 = new Main.Algorithms.Viterbi(transition,emission,start);  //We run viterbi with the old paramters
-        //int[] likelySequenceNoTraining = viterbi2.calculate(observedConverted.get(0)); //We get the sequence of most likely states to have produced the observed
-        int[] likelySequenceNoTraining = viterbi2.calculate(observedConvertedPredictionGenome6.get(0)); //We get the sequence of most likely states to have produced the observed
-
-        ArrayList<int[]> noTrainingLikely = new ArrayList<>();
-        noTrainingLikely.add(likelySequenceNoTraining);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
-        Main.Conversion converter7StateModel = new Main.Conversions.DNAConversion.DNAConversion7States();
-        String[] convertedStates = converter7StateModel.states(noTrainingLikely);
-        fw.writeStatesToFile("convertedGenome6_7model",convertedStates[0]);
-        //comparer.compare(trueAnnotation1[0],convertedStates[0],'N','C','R');
-        */
-
 
     }
 
-    public static String getStringObserved(){
-        //TODO delete when appropiate i.e. when experimentation with train by count is satisfacotry
-        return "TATGACTGAAAATGAACAAATTTTTTGGAACAGGGTCTTGGAATTAGCTCAGAGTCAATTAAAACAGGCAACTTATGAATTTTTTGTTCATGATGCCCGTCTATTAAAGGTCGATAAGCATATTGCAACTATTTACTTAGATCAAATGAAAGAGCTCTTTTGGGAAAAAAATCTTAAAGATGTTATTCTTACTGCTGGTTTTGAAGTTTATAACGCTCAAATTTCTGTTGACTATGTTTTCGAAGAAGACCTAATGATTGAGCAAAATCAGACCAAAATCAACCAAAAACCTAAGCAGCAAGCCTTAAATTCTTTGCCTACTGTTACTTCAGATTTAAACTCGAAATATAGTTTTGAAAACTTTATTCAAGGAGATGAAAATCGTTGGGCTGTTGCTGCTTCAATAGCAGTAGCTAATACTCCTGGAACTACCTATAATCCTTTGTTTATTTGGGGTGGCCCTGGGCTTGGAAAAACCCATTTATTAAATGCTATTGGTAATTCTGTACTATTAGAAAATCCAAATGCTCGAATTAAATATATCACAGCTGAAAACTTTATTAATGAGTTTGTTATCCATATTCGCCTTGATACCATGGATGAATTGAAAGAAAAATTTCGTAATTTAGATTTACTCCTTATTGATGATATCCAATCTTTAGCTAAAAAAACGCTCTCTGGAACACAAGAAGAGTTCTTTAATACTTTTAATGCACTTCATAATAATAACAAACAAATTGTCCTAACAAGCGACCGTACACCAGATCATCTCAATGATTTAGAAGATCGATTAGTTACTCGTTTTAAATGGGGATTAACAGTCAATATCACACCTCCTGATTTTGAAACACGAGTGGCTATTTTGACAAATAAAATTCAAGAATATAACTTTATTTTTCCTCAAGATACCATTGAGTATTTGGCTGGTCAATTTGATTCTAATGTCAGAGATTTAGAAGGTGCCTTAAAAGATATTAGTCTGGTTGCTAATTTCAAACAAATTGACACGATTACTGTTGACATTGCTGCCGAAGCTATTCGCGCCAGAAAGCAAGATGGACCTAAAATGACAGTTATTCCCATCGAAGAAATTCAAGCGCAAGTTGGAAAATTTTACGGTGTTACCGTCAAAGAAATTAAAGCTACTAAACGAACACAAAATATTGTTTTAGCAAGACAAGTAGCTATGTTTTTAGCACGTGAAATGACAGATAACAGTCTTCCTAAAATTGGAAAAGAATTTGGTGGCAGAGACCATTCAACAGTACTCCATGCCTATAATAAAATCAAAAACATGATCAGCCAGGACGAAAGCCTTAGGATCGAAATTGAAACCATAAAAAACAAAATTAAATAAC";
-    }
-    public static String getTrueString(){
-        //TODO delete when appropiate i.e. when experimentation with train by count is satisfacotry
-        return "NCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCN";
-    }
+
 }
 
 

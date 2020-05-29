@@ -39,7 +39,8 @@ public class ViterbiTraining {
     }
 
     /**
-     * This method handles the actual Viterbi training, by using the viterbi algorithm. When it is done, the new parameters are set.
+     * This method handles the actual Viterbi training, by using the viterbi algorithm. It will do the Viterbi Training 10 times.
+     * When it is done, the new parameters are set.
      * @param observables  Observables given as ints in int array in an ArrayList
      */
     private void calculate(ArrayList<int[]> observables){

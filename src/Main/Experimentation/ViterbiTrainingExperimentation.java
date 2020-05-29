@@ -9,7 +9,9 @@ import Main.FileInteraction.FileWriter;
 import java.util.ArrayList;
 
 /**
- *
+ *  This class handles Viterbi training experimentation. It will read 5 files named genome1, genome2 etc. as the observables. It will then perform
+ *  Viterbi training on these observables. With the newly found parameters it will predict the most likely states for 5 files named genome6, genome7 etc.
+ *  using the Viterbi algorithm and write this prediction to a file called "ViterbiTraining"+ the name of the used converter.
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class ViterbiTrainingExperimentation {
@@ -22,9 +24,6 @@ public class ViterbiTrainingExperimentation {
         observedGenomes[2] = fr.readFile("genome3");
         observedGenomes[3] = fr.readFile("genome4");
         observedGenomes[4] = fr.readFile("genome5");
-
-
-
 
         ArrayList<int[]> observedConverted = converter.observables(observedGenomes);
         System.out.println("Have read");

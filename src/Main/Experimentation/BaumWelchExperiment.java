@@ -9,7 +9,9 @@ import Main.FileInteraction.FileWriter;
 import java.util.ArrayList;
 
 /**
- *
+ *  This class handles Baum-Welch experimentation. It will read 5 files named genome1, genome2 etc. as the observables. It will then perform Baum-Welch training
+ *  on these observables. With the newly found parameters it will predict the most likely states for 5 files named genome6, genome7 etc.
+ *  using the Viterbi algorithm and write this prediction to a file called "BaumWelchTraining"+ the name of the used converter.
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
 public class BaumWelchExperiment {
@@ -29,7 +31,7 @@ public class BaumWelchExperiment {
         double[][] E = baumWelchTraining.getE();
         double[][] P = baumWelchTraining.getP();
 
-        for (int i = 0; i < converter.getNumberOfStates(); i++) {
+        for (int i = 0; i < converter.getNumberOfStates(); i++) {       //TODO kill
             for (int j = 0; j < converter.getNumberOfStates(); j++) {
                 System.out.print(P[i][j]);
                 System.out.print(" ");
@@ -59,10 +61,7 @@ public class BaumWelchExperiment {
             int[] mostLikelySequence = viterbi.calculate(genomesForPredictionConverted.get(i)); //We get the sequence of most likely states to have produced the observed
             mostlikelyDecoding.add(mostLikelySequence);             //We convert to an ArrayList<int[]> to get the states translated into what they code, I.e. N,C & R
         }
-
-
         String[] convertedStatesFound = converter.states(mostlikelyDecoding);
-
         FileWriter fw = new FileWriter();
         fw.writePredictedStatesTofile(convertedStatesFound,"BaumWelchTraining"+converter.getNameOfModel());
     }

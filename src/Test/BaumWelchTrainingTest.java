@@ -2,7 +2,7 @@ package Test;
 
 import Main.Algorithms.BaumWelchTraining;
 import Main.Conversions.Conversion;
-import Main.Conversions.weather_conversion;
+import Main.Conversions.weatherConversion;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class BaumWelchTrainingTest {
         observed[1] = "RSRRSRSRSRSRSRSRRR";
         observed[2] = "RRSSRRRRRRRRSSSSRSRSRS";
         observed[3] = "RRRRRSSSSSRRRRRRSSSSSR";
-        Conversion converter = new weather_conversion();
+        Conversion converter = new weatherConversion();
         training = new BaumWelchTraining(converter.observables(observed),P,E,pi,0.00000000001);
     }
 
@@ -41,7 +41,7 @@ public class BaumWelchTrainingTest {
                 {0.3, 0.7}};        // x = sun|L   x = rain|L
         String[] observed = new String[1];
         observed[0] = "RRRRRSSRSRSRSRSR";
-        Conversion converter = new weather_conversion();
+        Conversion converter = new weatherConversion();
         training = new BaumWelchTraining(converter.observables(observed),P,E,pi,0.01);
     }
 
