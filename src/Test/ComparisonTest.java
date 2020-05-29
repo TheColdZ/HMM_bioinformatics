@@ -3,6 +3,10 @@ import Main.Experimentation.Comparison;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class ComparisonTest {
     private Comparison comparison;
     private String trueAnnotation;

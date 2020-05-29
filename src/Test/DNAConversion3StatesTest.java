@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class DNAConversion3StatesTest {
     private Conversion conversion;
     private String[] observed_str;

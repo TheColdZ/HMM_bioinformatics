@@ -4,6 +4,10 @@ import Main.Conversions.Conversion;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class DNAConversion3States implements Conversion {
 
 

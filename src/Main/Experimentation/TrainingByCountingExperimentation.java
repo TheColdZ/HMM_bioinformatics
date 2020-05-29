@@ -9,6 +9,10 @@ import Main.FileInteraction.FileWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class TrainingByCountingExperimentation {
 
     public void trainingByCounting(Conversion converter){

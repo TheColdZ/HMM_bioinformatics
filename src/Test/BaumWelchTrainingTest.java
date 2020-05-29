@@ -6,6 +6,10 @@ import Main.Conversions.weather_conversion;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class BaumWelchTrainingTest {
     private BaumWelchTraining training;
 

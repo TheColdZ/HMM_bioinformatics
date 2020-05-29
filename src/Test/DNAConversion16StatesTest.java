@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class DNAConversion16StatesTest {
     private DNAConversion16States converter;
 

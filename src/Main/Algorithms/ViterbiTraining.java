@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class to handle Viterbi training
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
  */
 public class ViterbiTraining {
     private ArrayList<int[]> states;
@@ -12,15 +13,22 @@ public class ViterbiTraining {
     private double[] pi;
     private int N; //nr of states
     private int L; //nr of sequences
-    private int M;
+    private int M;  //Size of observable alphabet
 
-    public ViterbiTraining(ArrayList<int[]> observables, double[][] initial_P, double[][] initial_E, double[] initial_pi){
+    /**
+     * This sets up the Viterbi Training, by providing the observables and initial parameters.
+     * @param observables   Observables given as ints in int array in an ArrayList
+     * @param initialP  Initial transition matrix
+     * @param initialE  Initial Emission matrix
+     * @param initialPi Initial state distribution vector
+     */
+    public ViterbiTraining(ArrayList<int[]> observables, double[][] initialP, double[][] initialE, double[] initialPi){
         this.L = observables.size();
-        this.N = initial_P.length;
-        this.M = initial_E[0].length;
-        this.P = initial_P;
-        this.E = initial_E;
-        this.pi = initial_pi;
+        this.N = initialP.length;
+        this.M = initialE[0].length;
+        this.P = initialP;
+        this.E = initialE;
+        this.pi = initialPi;
         this.states = new ArrayList<>();
         for (int i = 0; i < L; i++) {
             int[] disposeable = new int[1];
@@ -30,12 +38,16 @@ public class ViterbiTraining {
         calculate(observables);
     }
 
+    /**
+     * This method handles the actual Viterbi training, by using the viterbi algorithm. When it is done, the new parameters are set.
+     * @param observables  Observables given as ints in int array in an ArrayList
+     */
     private void calculate(ArrayList<int[]> observables){
         for (int i = 0; i < 10 ; i++) {
             Viterbi vit = new Viterbi(P,E,pi);
             for (int l = 0; l < L; l++) {
-                int[] state_as_int = vit.calculate(observables.get(l));
-                this.states.set(l,state_as_int);
+                int[] stateAsInt = vit.calculate(observables.get(l));
+                this.states.set(l,stateAsInt);
             }
             CountTraining ct = new CountTraining(observables,states,N,M);
             P = ct.getP();

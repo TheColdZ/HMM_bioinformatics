@@ -1,5 +1,9 @@
 package Main.Algorithms;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class Viterbi {
     private double[][] P;
     private double[][] E;
@@ -9,9 +13,9 @@ public class Viterbi {
     private int[] sk;
 
     /**
-     * Sets up the model for a run of the Main.Algorithms.Viterbi algorithm
+     * Sets up the model for a run of the Viterbi algorithm
      *
-     * @param transition a quadratic P matrix
+     *  @param transition a quadratic P matrix
      *  @param emission an E probability matrix, |states| x |E alphabet|
      *  @param start vector of starting probabilities.
      */
@@ -23,7 +27,7 @@ public class Viterbi {
 
     /**
      * Calculates the delta matrix and psi matrix.
-     * @param observed obervations as string.
+     * @param observed obervations as int array.
      * @return an array of the most likely states to have produced the observed
      */
     public int[] calculate(int[] observed){
@@ -49,7 +53,6 @@ public class Viterbi {
                 for (int j = 0; j <states ; j++) {
 
                     double transitionProbability = log(P[i][j])+delta[j][k-1];
-
 
                     if(maxTransitionProbability < transitionProbability){
                         maxTransitionProbability = transitionProbability;

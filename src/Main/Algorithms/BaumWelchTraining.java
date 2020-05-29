@@ -2,8 +2,11 @@ package Main.Algorithms;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.function.Function;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class BaumWelchTraining {
     private ArrayList<int[]> states;
     private double[][] E;
@@ -11,7 +14,7 @@ public class BaumWelchTraining {
     private double[] pi;
     private int N; //nr of states
     private int L; //nr of sequences
-    private int M;
+    private int M;  //Size of observable alphabet in observations
 
     public BaumWelchTraining(ArrayList<int[]> observables, double[][] initial_P, double[][] initial_E, double[] initial_pi, double compareFactor) {
         this.L = observables.size();
@@ -42,12 +45,6 @@ public class BaumWelchTraining {
             oldE = E;
             oldPi = pi;
             reestimateBishop(observables);
-            /*
-            System.out.println("Comparing");
-            print_double(oldE);
-            System.out.println("-----");
-            print_double(E);
-            */
         } while(!(compareMatrix(oldP,P,compareFactor) && compareMatrix(oldE,E,compareFactor) && compareVector(oldPi,pi,compareFactor)));
         System.out.println(iterations);
     }
@@ -157,12 +154,6 @@ public class BaumWelchTraining {
         this.E = newE;
         this.pi = newPi;
 
-        //proof that pi is the problem
-        /*
-        for (int i = 0; i < N; i++) {
-            pi[i] = 1.0/N;
-        }
-        */
         return likelihood;
     }
 

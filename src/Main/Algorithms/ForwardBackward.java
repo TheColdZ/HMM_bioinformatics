@@ -2,6 +2,7 @@ package Main.Algorithms;
 
 /**
  * Class to handle the alpha and beta algorithms of the forward backward procedure.
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
  */
 public class ForwardBackward {
     private double[][] alpha;
@@ -43,8 +44,8 @@ public class ForwardBackward {
     }
 
     /**
-     * Forward algorithm, that returns the alpha values as a N x K matrix
-     * @return alpha
+     * Forward algorithm, that sets the alpha values as a N x K matrix
+     *
      */
     private void calculateAlpha(){
         int firstObserved = observed[0];
@@ -66,8 +67,8 @@ public class ForwardBackward {
     }
 
     /**
-     * Backward algorithm, that returns the beta values as a N x K matrix
-     * @return beta
+     * Backward algorithm, that sets the beta values as a N x K matrix
+     *
      */
     private void calculateBeta(){
         //initialize the last column

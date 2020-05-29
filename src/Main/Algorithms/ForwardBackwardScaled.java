@@ -2,6 +2,7 @@ package Main.Algorithms;
 
 /**
  * Implements a scaled version of the Forward and Backward algorithms, due to Bishop.
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
  */
 public class ForwardBackwardScaled {
     private double[][] alpha;

@@ -8,6 +8,10 @@ import Main.FileInteraction.FileWriter;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class ViterbiTrainingExperimentation {
     public void viterbiTrainingCounting(Conversion converter){
         FileReader fr = new FileReader();

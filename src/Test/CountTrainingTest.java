@@ -7,6 +7,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class CountTrainingTest {
     private CountTraining example2training;
     private CountTraining example1training;

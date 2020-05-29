@@ -4,6 +4,11 @@ import Main.Conversions.Conversion;
 
 import java.util.ArrayList;
 
+
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class DNAConversion31States implements Conversion {
     private DNAConversion16States DNAConversion16StatesConverter;
     public  DNAConversion31States(){

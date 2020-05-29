@@ -2,6 +2,10 @@ package Main.FileInteraction;
 
 import java.util.Map;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class FileWriter {
 
     public void writePredictedStatesTofile(String[] predictedStates,String nameOfModel){

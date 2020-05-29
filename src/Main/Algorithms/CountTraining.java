@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class to handle the training by counting algorithm
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
  */
 public class CountTraining {
     private double[][] E;
@@ -42,50 +43,50 @@ public class CountTraining {
     /**
      * Calculates the training by counting steps.
      *
-     * @param observables
-     * @param states
+     * @param observables List of observables
+     * @param states    List of states
      */
     private void calculate(ArrayList<int[]> observables,ArrayList<int[]> states){
-        int[] state_counts = new int[N]; //denominator (2.39)
-        int[] emission_counts = new int[N]; //denominator (2.40)
+        int[] stateCounts = new int[N]; //denominator (2.39)
+        int[] emissionCounts = new int[N]; //denominator (2.40)
         for (int l = 0; l < L; l++) {
             int[] observable = observables.get(l);
             int[] state = states.get(l);
             pi[state[0]] +=1;
             for (int k = 0; k < observable.length; k++) {
-                int start_state = state[k];
+                int startState = state[k];
 
                 if(k+1 < observable.length) {
-                    int end_state = state[k+1];
-                    P[start_state][end_state] += 1;
-                    state_counts[start_state] += 1;
+                    int endState = state[k+1];
+                    P[startState][endState] += 1;
+                    stateCounts[startState] += 1;
                 }
 
                 int emitted = observable[k];
-                E[start_state][emitted] += 1;
-                emission_counts[start_state] += 1;
+                E[startState][emitted] += 1;
+                emissionCounts[startState] += 1;
             }
         }
         for (int i = 0; i < N; i++) {
             pi[i] = pi[i]/L;
-            if (state_counts[i] == 0){
+            if (stateCounts[i] == 0){
                 for (int j = 0; j < N; j++) {
                     P[i][j] = 0;
                 }
                 P[i][i] = 1;
             } else {
                 for (int j = 0; j < N; j++) {
-                    P[i][j] = P[i][j] / state_counts[i];
+                    P[i][j] = P[i][j] / stateCounts[i];
 
                 }
             }
-            if (emission_counts[i] == 0){
+            if (emissionCounts[i] == 0){
                 for (int a = 0; a < M; a++) {
                     E[i][a] = 1.0 / M;
                 }
             } else {
                 for (int a = 0; a < M; a++) {
-                    E[i][a] = E[i][a] / emission_counts[i];
+                    E[i][a] = E[i][a] / emissionCounts[i];
                 }
             }
         }

@@ -7,6 +7,10 @@ import Main.Conversions.DNAConversion.DNAConversion3States;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class TestForwardBackwardScaled {
     private ForwardBackward FB;
     private ForwardBackwardScaled FBs;

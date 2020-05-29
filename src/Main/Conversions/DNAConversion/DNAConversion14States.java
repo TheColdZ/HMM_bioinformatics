@@ -4,6 +4,11 @@ import Main.Conversions.Conversion;
 
 import java.util.ArrayList;
 
+
+/**
+ *
+ * @author Jens Kristian Jensen & Thomas Damgaard Vinther
+ */
 public class DNAConversion14States implements Conversion {
     private int emission_conversion_char_to_int(Character c){
 
