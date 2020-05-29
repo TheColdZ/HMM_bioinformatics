@@ -15,7 +15,7 @@ public class DNAConversion7StatesTest {
 
     @Before
     public void setUp() {
-        converter = new DNAConversion7States();
+        this.converter = new DNAConversion7States();
     }
 
     @Test
@@ -25,8 +25,6 @@ public class DNAConversion7StatesTest {
 
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringCCCN();//This is a file containing N's, C's and R's
-
-        converter = new DNAConversion7States();      //TODO here we choose model as well.
 
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
 
@@ -53,11 +51,10 @@ public class DNAConversion7StatesTest {
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringCCCN();//This is a file containing N's, C's and R's
 
-        converter = new DNAConversion7States();
         ArrayList<int[]> observedConverted = converter.observables(genome1);
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-        //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,7,4); //TODO We train and choose model
+
+        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
         double[][] E = trainer.getE();
         double[][] P = trainer.getP();
@@ -86,8 +83,6 @@ public class DNAConversion7StatesTest {
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringNRRR();//This is a file containing N's, C's and R's
 
-        converter = new DNAConversion7States();      //TODO here we choose model as well.
-
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
 
         assert(statesConverted.get(0).length == trueAnnotation1[0].length());
@@ -113,11 +108,10 @@ public class DNAConversion7StatesTest {
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringNRRR();//This is a file containing N's, C's and R's
 
-        converter = new DNAConversion7States();
         ArrayList<int[]> observedConverted = converter.observables(genome1);
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-        //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,7,4); //TODO We train and choose model
+
+        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
         double[][] E = trainer.getE();
         double[][] P = trainer.getP();
@@ -145,13 +139,11 @@ public class DNAConversion7StatesTest {
 
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringMixedRC();//This is a file containing N's, C's and R's
-
-        converter = new DNAConversion7States();
-
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
 
         assert(statesConverted.get(0).length == trueAnnotation1[0].length());
         int length = statesConverted.get(0).length;
+        assert(length == getStringMixedRC().length());
         assert(statesConverted.get(0)[0]==3);
         assert(statesConverted.get(0)[1]==4);
         assert(statesConverted.get(0)[2]==5);
@@ -171,15 +163,11 @@ public class DNAConversion7StatesTest {
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringMixedCR();//This is a file containing N's, C's and R's
 
-        converter = new DNAConversion7States();
-
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
 
         assert(statesConverted.get(0).length == trueAnnotation1[0].length());
         int length = statesConverted.get(0).length;
-        for (int i = 0; i <length ; i++) {
-            System.out.println(statesConverted.get(0)[i]);
-        }
+        assert(length == getStringMixedCR().length());
         assert(statesConverted.get(0)[0]==3);
         assert(statesConverted.get(0)[1]==2);
         assert(statesConverted.get(0)[2]==1);
@@ -199,11 +187,11 @@ public class DNAConversion7StatesTest {
 
         String[] trueAnnotation1 = new String[1];
         trueAnnotation1[0] = getTrueStringCCCN()+getTrueStringNRRR();
-        converter = new DNAConversion7States();
+
         ArrayList<int[]> observedConverted = converter.observables(genome1);
         ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-        //ArrayList<int[]> statesConverted = converter.states(trueAnnotation1);   //This conversion should give us which states produced the true annotation
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,7,4); //TODO We train and choose model
+
+        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
         double[] pi = trainer.getPi();  //We retrieve the newly found parameters
         double[][] E = trainer.getE();
         double[][] P = trainer.getP();
