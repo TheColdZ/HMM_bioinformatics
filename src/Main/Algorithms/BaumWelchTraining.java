@@ -184,7 +184,7 @@ public class BaumWelchTraining {
      * This method handles the actual reestimating of parameters according to Bishop.
      * @param observables The observables to reestimate parameters on.
      */
-    private void reestimateBishop(ArrayList<int[]> observables) {
+    public void reestimateBishop(ArrayList<int[]> observables) {
         double[] newPi = new double[N];
         double[][] newP = new double[N][N];
         double[] denominators = new double[N];
