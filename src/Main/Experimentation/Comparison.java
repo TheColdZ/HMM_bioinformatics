@@ -1,5 +1,7 @@
 package Main.Experimentation;
 
+import java.text.DecimalFormat;
+
 /**
  * This class handles comparison of two strings and calculations of Sensitivity, Specificity and Approximate Correlation, given TruePositive, FalsePositive,
  * TrueNegative & FalseNegative
@@ -73,8 +75,8 @@ public class Comparison {
      * @param fn                The number of false negative findings
      */
     private void printPositiveAndNegatives(char comparisonChar1, char comparisonChar2, double tp, double fp, double tn, double fn){
-        System.out.print(comparisonChar1+""+comparisonChar2+"s: tp="+tp+", fp="+fp+", tn="+tn+",fn="+fn);
-
+        //System.out.print(comparisonChar1+""+comparisonChar2+"s: tp="+tp+", fp="+fp+", tn="+tn+",fn="+fn);
+        System.out.print(tp+" & "+fp+" & "+tn+" & "+fn+" & ");
     }
 
     /**
@@ -107,8 +109,11 @@ public class Comparison {
      * @param correlationCoefficient The correlationCoefficient to print
      */
     private void printStatistical(double sensitivity,double specificity, double AC, double ACP, double correlationCoefficient){
-        System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);
-
+        //System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);
+           // & \textbf{Tp} & \textbf{Fp} & \textbf{Tn} & \textbf{Fn} & \textbf{Sn} & \textbf{Sp} & \textbf{AC}
+        DecimalFormat df = new DecimalFormat("0.#####");
+        String result = df.format(34.4959);
+        System.out.println(df.format(sensitivity)+" & "+ df.format(specificity)+" & "+df.format(AC));
     }
 
 

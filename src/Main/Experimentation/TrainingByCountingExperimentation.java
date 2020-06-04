@@ -50,6 +50,7 @@ public class TrainingByCountingExperimentation {
         double[][] E = countTrainer.getE();
         double[][] P = countTrainer.getP();
 
+
         String[] genomesForPrediction = new String[5];
         genomesForPrediction[0] = fr.readFile("genome6");
         genomesForPrediction[1] = fr.readFile("genome7");
@@ -59,6 +60,7 @@ public class TrainingByCountingExperimentation {
         ArrayList<int[]> genomesForPredictionConverted = converter.observables(genomesForPrediction);
 
         Viterbi viterbi = new Viterbi(P,E,pi);  //We run viterbi with the new parameters.
+
 
         ArrayList<int[]> mostlikelyDecoding = new ArrayList<>();
         for (int i = 0; i <5 ; i++) {

@@ -1,8 +1,6 @@
 package Main;
 
-import Main.Conversions.DNAConversion.DNAConversion31States;
-import Main.Experimentation.BaumWelchExperiment;
-import Main.Experimentation.ViterbiTrainingExperimentation;
+import Main.Experimentation.Comparison;
 
 /**
  * Main, from here we run some experiments.
@@ -12,20 +10,19 @@ public class Main {
     public static void main(String[] args) {
 
 
-        /**
+        /*
         BaumWelchExperiment BWE3 = new BaumWelchExperiment(new DNAConversion3States());
         BaumWelchExperiment BWE5 = new BaumWelchExperiment(new DNAConversion5States());
         BaumWelchExperiment BWE7 = new BaumWelchExperiment(new DNAConversion7States());
         BaumWelchExperiment BWE14 = new BaumWelchExperiment(new DNAConversion14States());
         BaumWelchExperiment BWE16 = new BaumWelchExperiment(new DNAConversion16States());
-         */
-
-         BaumWelchExperiment BWE31 = new BaumWelchExperiment(new DNAConversion31States());
-
+        BaumWelchExperiment BWE31 = new BaumWelchExperiment(new DNAConversion31States());
+        */
 
 
 
-        /**
+
+        /*
         Comparison comparer = new Comparison();
         System.out.println("BW training 3 states");
         comparer.calculate(902216+922202+790866+962542+613617,576459+549021+1033937+1352522+328303,179516+370243+78765+30434+138025,469648+901065+142547+42937+490540);
@@ -37,26 +34,28 @@ public class Main {
         comparer.calculate(1364702+1548576+1310899+1514850+1036560,359881+407070+460967+664451+282821,204497+433095+167496+135200+137469,198759+353790+106753+73934+113635);
 
         System.out.println("BW training 14 states");
-        comparer.calculate(710207+848000+699558+851427+691142,422568+431849+541038+730369+228376,880868+1321567+701308+723317+602837,114196+141115+104211+83322+48130);
+        comparer.calculate(635809+775916+641943+823465+665969,295406+351851+383239+522213+184656,1008030+1401565+859107+931473+646557,188594+213199+161826+111284+73303);
 
         System.out.println("BW training 16 states");
-        comparer.calculate(626782+656014+679696+855946+576222,553632+377261+837700+1176850+264869,749804+1376155+404646+276836+566344,197621+333101+124073+78803+163050);
+        comparer.calculate(745512+887200+678386+708156+638462,237546+354950+154981+175245+126982,1065890+1398466+1087365+1278441+704231,78891+101915+125383+226593+100810);
 
         System.out.println("Bw training 31 states");
-        comparer.calculate(1229376+1422435+1204068+1368522+924489,332735+382357+434003+692975+265967,231564+451902+206243+160203+159168,334164+485837+201801+166735+220861);
         */
 
+
+        /*
         ViterbiTrainingExperimentation viterbiTrainingExperimentation = new ViterbiTrainingExperimentation();
 
-        //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion5States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion5States());
 
-        //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion3States());
-        //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion7States());
-        //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion14States());
-        //viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion16States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion3States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion7States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion14States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion16States());
         viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion31States());
+        */
 
-        /**
+        /*
         Comparison comparer = new Comparison();
         System.out.println("5 states viterbi training");
         comparer.calculate(703182+852285+680960+834256+693844,399262+477652+431070+519917+234939,904174+1275764+811276+933769+596274,121221+136830+122809+100493+45428);
@@ -78,34 +77,44 @@ public class Main {
         */
 
 
-        //TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
-        //experiment.trainingByCounting(new DNAConversion3States());
-        //experiment.trainingByCounting(new DNAConversion5States());
-        //experiment.trainingByCounting(new DNAConversion7States());
-        //experiment.trainingByCounting(new DNAConversion14States());
-        //experiment.trainingByCounting(new DNAConversion16States());
-        //experiment.trainingByCounting(new DNAConversion31States());
-
-
-        /**
-        Comparison comparer = new Comparison();
-        System.out.println("3 state model");
-        comparer.calculate(1328750+1424616+1236111+1541919+1017682,653601+721448+742101+831652+415843,50486+214631+27405+4784+52684,95002+381836+40498+10080+84276);
-        System.out.println("5 state model:");
-        comparer.calculate(634360+763890+640297+812437+656494,301910+371670+366838+490715+189071,1001526+1381746+875508+962971+642142,190043+225225+163472+122312+82778);
-        System.out.println("7 state model:");
-        comparer.calculate(1216120+1428980+1197588+1410260+908129,239549+308058+287505+466818+196146,289970+498111+293357+251796+207235,382200+507382+267665+259561+258975);
-
-
-        System.out.println("14 state model:");
-        comparer.calculate(632580+775249+644812+825762+661417,291637+359890+377490+516739+186274,1011799+1393526+864856+936947+644939,191823+213866+158957+108987+77855);
-
-        System.out.println("16 state model:");
-        comparer.calculate(590637+727159+585422+644119+541618,131122+182042+179880+354568+95536,1172314+1571374+1062466+1099118+735677,233766+261956+218347+290630+197654);
-
-        System.out.println("31 state model:");
-        comparer.calculate(1112427+1366535+1082194+1229623+830874,226823+312758+256825+426709+192374,305756+499830+326060+295438+215246,482833+563408+381036+436665+331991);
+        /*
+        TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
+        experiment.trainingByCounting(new DNAConversion3States());
+        experiment.trainingByCounting(new DNAConversion5States());
+        experiment.trainingByCounting(new DNAConversion7States());
+        experiment.trainingByCounting(new DNAConversion14States());
+        experiment.trainingByCounting(new DNAConversion16States());
+        experiment.trainingByCounting(new DNAConversion31States());
         */
+
+
+        Comparison comparer = new Comparison();
+
+
+
+
+        System.out.println("5 state model TBC:");
+        comparer.calculate(635406+761716+635802+812551+658368,296651+365916+363773+489062+188421,1006785+1387500+878573+964624+642792,188997+227399+167967+122198+80904);
+
+
+
+
+        System.out.println("14 state model TBC:");
+        comparer.calculate(635809+775916+641943+823465+665969,295406+351851+383239+522213+184656,1008030+1401565+859107+931473+646557,188594+213199+161826+111284+73303);
+
+        System.out.println("16 state model TBC:");
+        comparer.calculate(745512+887200+678386+708156+638462,237546+354950+154981+175245+126982,1065890+1398466+1087365+1278441+704231,78891+101915+125383+226593+100810);
+
+        System.out.println("7 state model TBC:");
+        comparer.calculate(1424651+1613995+1273732+1491174+950810,302584+475845+306830+422964+257125,234292+418498+267179+232583+184356,166312+234193+198374+241714+178194);
+
+
+        System.out.println("3 state model TBC:");
+        comparer.calculate(1328750+1424616+1236111+1541919+1017682,653601+721448+742101+831652+415843,50486+214631+27405+4784+52684,95002+381836+40498+10080+84276);
+
+        System.out.println("31 state model TBC:");
+        comparer.calculate(1452537+1666431+1268360+1440955+952246,261462+436698+263611+324026+219830,271880+455692+309051+301955+219700,141960+183710+205093+321499+178709);
+
 
 
     }

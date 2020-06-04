@@ -38,9 +38,6 @@ public class ViterbiTest {
         obs[0] = observed;
         Conversion conv = new WeatherConversion();
         viterbi.calculate(conv.observables(obs).get(0));
-        for(int i : viterbi.getSk()){
-            System.out.print(i);
-        }
         double[][] delta = viterbi.getDelta();
         double[][] preCalculatedDelta = preCalculatedDelta();
         for (int i = 0; i < 2; i++) {
@@ -57,13 +54,13 @@ public class ViterbiTest {
         double[][] preCalculatedDelta = new double[2][5];
         preCalculatedDelta[0][0] = 0.05;
         preCalculatedDelta[1][0] = 0.35;
-        preCalculatedDelta[0][1] = 0.0045;
+        preCalculatedDelta[0][1] = 0.007;
         preCalculatedDelta[1][1] = 0.196;
-        preCalculatedDelta[0][2] = 0.00196;
+        preCalculatedDelta[0][2] = 0.00392;
         preCalculatedDelta[1][2] = 0.10976;
-        preCalculatedDelta[0][3] = 0.0010976;
+        preCalculatedDelta[0][3] = 0.0021952;
         preCalculatedDelta[1][3] = 0.0614656;
-        preCalculatedDelta[0][4] = 0.005531904;
+        preCalculatedDelta[0][4] = 0.011063808;
         preCalculatedDelta[1][4] = 0.014751744;
         return preCalculatedDelta;
     }

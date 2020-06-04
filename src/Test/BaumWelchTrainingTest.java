@@ -66,31 +66,32 @@ public class BaumWelchTrainingTest {
         assert (cmpPi2);
 
 
-        double numeratorP = (0.05 * 0.9 * 0.1 * 0.02709 + 0.0115 * 0.9 * 0.1 * 0.105 + 0.005025 * 0.9 * 0.1 * 0.84 + 0.00270275 * 0.9 * 0.9 * 1.0);
-        double denominatorP = (0.05 * 0.0124635 + 0.0115 * 0.02709 + 0.005025 * 0.105 + 0.00270275 * 0.84);
-
-
-        boolean cmpP11 = compareFactor(P[0][0], numeratorP / denominatorP, 0.001);
+        double numeratorP11 = (0.05 * 0.9 * 0.1 * 0.02709 + 0.0115 * 0.9 * 0.1 * 0.105 + 0.005025 * 0.9 * 0.1 * 0.84 + 0.00270275 * 0.9 * 0.9 * 1.0);
+        double denominatorP11 = (0.05 * 0.0124635 + 0.0115 * 0.02709 + 0.005025 * 0.105 + 0.00270275 * 0.84);
+        boolean cmpP11 = compareFactor(P[0][0], numeratorP11 / denominatorP11, 0.001);
         assert (cmpP11);
-        assert (compareFactor(P[0][1], 0.24994, 0.001));
-        assert (compareFactor(P[1][0], 0.12436, 0.001));
-        assert (compareFactor(P[1][1], 0.87563, 0.001));
+        double P12 = 1- (numeratorP11 / denominatorP11);
+
+        double numeratorP21 = 0.35*0.2*0.1*0.02709+0.1995*0.2*0.1*0.105+0.112525*0.2*0.1*0.84+0.0633658*0.2*0.9*1;
+        double denominatorP21 = 0.35*0.080745+0.1995*0.14322+0.112525*0.252+0.0633658*0.42;
+        double P21 = numeratorP21/denominatorP21;
+        assert (compareFactor(P[0][1], P12, 0.001));
+        assert (compareFactor(P[1][0], P21, 0.01));
+        double P22 = 1- P21;
+        assert (compareFactor(P[1][1], P22 , 0.001));
 
 
+        double numeratorE22 = 0.35 * 0.080745 * 1 + 0.1995 * 0.14322 * 1 + 0.112525 * 0.252 * 1 + 0.0633658 * 0.42 * 1+0.015288745 * 1 * 0;
+        double numeratorE21 = 0.35 * 0.080745 * 0 + 0.1995 * 0.14322 * 0 + 0.112525 * 0.252 * 0 + 0.0633658 * 0.42 * 0+0.015288745 * 1 * 1;
+        double denominatorE2 = 0.35 * 0.080745 + 0.1995 * 0.14322 + 0.112525 * 0.252 + 0.0633658 * 0.42 + 0.0152888625;
+        assert(compareFactor(E[1][1], numeratorE22 / denominatorE2, 0.01));
+        assert(compareFactor(E[1][0], numeratorE21 / denominatorE2, 0.01));
+        double numeratorE11 = 0.05 * 0.0124635 * 0 + 0.0115 * 0.02709 * 0 + 0.005025 * 0.105 * 0 + 0.00270275 * 0.84 * 0 + 0.0135950715 * 1 * 1;
+        double numeratorE12 = 0.05 * 0.0124635 * 1 + 0.0115 * 0.02709 * 1 + 0.005025 * 0.105 * 1 + 0.00270275 * 0.84 * 1 + 0.0135950715 * 1 * 0;
+        double denominatorE1 = 0.05 * 0.0124635 + 0.0115 * 0.02709 + 0.005025 * 0.105 + 0.00270275 * 0.84 + 0.0135950715 * 1;
 
-
-
-        double numeratorE = 0.35 * 0.080745 * 1 + 0.1995 * 0.14322 * 1 + 0.112525 * 0.252 * 1 + 0.0633658 * 0.42 * 1;
-        double denominatorE = 0.35 * 0.080745 + 0.1995 * 0.14322 + 0.112525 * 0.252 + 0.0633658 * 0.42 + 0.0152888625;
-        double fraction = numeratorE/denominatorE;
-        boolean cmpE22 = compareFactor(E[1][1], numeratorE / denominatorE, 0.01);
-        System.out.println("Brøk"+fraction);
-        double E21= 0.0152888625 /denominatorE;
-        System.out.println("E21:"+E21);
-        assert (cmpE22);
-        //assert (compareFactor(E[0][0], 0, 0.001));        TODO fix so they actually work.
-        //assert (compareFactor(E[0][1], 1, 0.001));
-        //assert (compareFactor(E[1][0], 0, 0.001));
+        assert (compareFactor(E[0][0], numeratorE11/denominatorE1, 0.001));
+        assert (compareFactor(E[0][1],numeratorE12/denominatorE1 , 0.001));
     }
 
     @Test
@@ -105,7 +106,7 @@ public class BaumWelchTrainingTest {
         observed[1] = "SRRSR";
         Conversion converter = new WeatherConversion();
 
-        BaumWelchTraining training = new BaumWelchTraining(converter.observables(observed), P, E, pi, 1.0); //we make sure it only runs one time with comparefator= 1;
+        BaumWelchTraining training = new BaumWelchTraining(converter.observables(observed), P, E, pi, 1.0); //We make sure it only runs one time with comparefator= 1;
 
         ForwardBackward fwb = new ForwardBackward(converter.observables(observed).get(1),pi,P,E);
 
@@ -135,15 +136,15 @@ public class BaumWelchTrainingTest {
             System.out.println(pi[i]);
         }
 
-        double newNumerator = (0.45 * 0.9 * 0.1 * 0.02499 + 0.0435 * 0.9 * 0.1 * 0.147 + 0.006225 * 0.9 * 0.9 * 0.16 + 0.0172375 * 0.9 * 0.1 * 1) / 0.012292874999999998;
-        double oldNumerator = (0.05 * 0.9 * 0.1 * 0.02709 + 0.0115 * 0.9 * 0.1 * 0.105 + 0.005025 * 0.9 * 0.1 * 0.84 + 0.00270275 * 0.9 * 0.9 * 1.0) * (1 / 0.0288838165);
-        double numerator = oldNumerator + newNumerator;
+        double L2NumeratorP11 = (0.45 * 0.9 * 0.1 * 0.02499 + 0.0435 * 0.9 * 0.1 * 0.147 + 0.006225 * 0.9 * 0.9 * 0.16 + 0.0172375 * 0.9 * 0.1 * 1) / 0.012292874999999998;
+        double L1NumeratorP11 = (0.05 * 0.9 * 0.1 * 0.02709 + 0.0115 * 0.9 * 0.1 * 0.105 + 0.005025 * 0.9 * 0.1 * 0.84 + 0.00270275 * 0.9 * 0.9 * 1.0) * (1 / 0.0288838165);
+        double numeratorP11 = L1NumeratorP11 + L2NumeratorP11;
 
-        double newDenominator = (0.45 * 0.0090405 + 0.0435 * 0.02499 + 0.006225 * 0.147 + 0.01723275 * 0.16) * (1 / 0.012292874999999998);
-        double oldDenominator = (0.05 * 0.0124635 + 0.0115 * 0.02709 + 0.005025 * 0.105 + 0.00270275 * 0.84) * (1 / 0.028883925);
-        double denominator = newDenominator + oldDenominator;
+        double L2DenominatorP11 = (0.45 * 0.0090405 + 0.0435 * 0.02499 + 0.006225 * 0.147 + 0.01723275 * 0.16) * (1 / 0.012292874999999998);
+        double L1DenominatorP11 = (0.05 * 0.0124635 + 0.0115 * 0.02709 + 0.005025 * 0.105 + 0.00270275 * 0.84) * (1 / 0.028883925);
+        double denominatorP11 = L2DenominatorP11 + L1DenominatorP11;
 
-        boolean cmpP11 = compareFactor(P[0][0], numerator / denominator, 0.001);
+        boolean cmpP11 = compareFactor(P[0][0], numeratorP11 / denominatorP11, 0.001);
         assert (cmpP11);
         assert (compareFactor(P[0][1], 0.50684, 0.001));
         assert (compareFactor(P[1][0], 0.09795, 0.001));
@@ -151,34 +152,45 @@ public class BaumWelchTrainingTest {
 
 
 
-
-
-
-
-
-
         double L2NumeratorE22 = (0.15 * 0.054831 * 0 + 0.1155 * 0.09702 * 1 + 0.067725 * 0.168 * 1 + 0.01644075 * 0.58 * 0 + 0.0104131125 * 1 * 1) / 0.012292874999999998;
         double L2NumeratorE21 = (0.15 * 0.054831 * 1 + 0.1155 * 0.09702 * 0 + 0.067725 * 0.168 * 0 + 0.01644075 * 0.58 * 1 + 0.0104131125 * 1 * 0) / 0.012292874999999998;
+
         double L2DenominatorE2 = (0.15 * 0.054831 + 0.1155 * 0.09702 + 0.067725 * 0.168 + 0.01644075 * 0.58 + 0.0104131125 * 1) / 0.012292874999999998;
 
         double L1NumeratorE22 = (0.35 * 0.080745 * 1 + 0.1995 * 0.14322 * 1 + 0.112525 * 0.252 * 1 + 0.0633658 * 0.42 * 1 + 0.0152888625 * 1 * 0) / 0.028883925;
         double L1NumeratorE21 = (0.35 * 0.080745 * 0 + 0.1995 * 0.14322 * 0 + 0.112525 * 0.252 * 0 + 0.0633658 * 0.42 * 0 + 0.0152888625 * 1 * 1) / 0.028883925;
-        double L1DenominatorE = (0.35 * 0.080745 + 0.1995 * 0.14322 + 0.112525 * 0.252 + 0.0633658 * 0.42 + 0.0152888625) / 0.028883925;
-        double numeratorE22 = L2NumeratorE22 + L1NumeratorE22;
-        double denominatorE = L2DenominatorE2 + L1DenominatorE;
 
+        double L1DenominatorE2 = (0.35 * 0.080745 + 0.1995 * 0.14322 + 0.112525 * 0.252 + 0.0633658 * 0.42 + 0.0152888625) / 0.028883925;
+
+        double numeratorE22 = L2NumeratorE22 + L1NumeratorE22;
         double numeratorE21 = L2NumeratorE21 + L1NumeratorE21;
 
+        double denominatorE2 = L2DenominatorE2 + L1DenominatorE2;
 
-        double E22 = numeratorE22 / denominatorE;
-        System.out.println("newE11 "+E22);
+        double E22 = numeratorE22 / denominatorE2;
+        double E21 = numeratorE21 / denominatorE2;
 
-
-        double E21 = numeratorE21/denominatorE;
         assert (compareFactor(E[1][1], E22, 0.00001));
-        //assert (compareFactor(E[0][0], 0.65527, 0.001));
-        //assert (compareFactor(E[0][1], 0.344726, 0.001));
         assert (compareFactor(E[1][0], E21, 0.001));
+
+        double L2NumeratorE11 = (0.45 * 0.0090405 * 1 + 0.0435 * 0.02499 * 0 + 0.006225 * 0.147 * 0 + 0.01723275 *  0.16 * 1 + 0.0018797625 * 1 * 0) / 0.012292874999999998;
+        double L2NumeratorE12 = (0.45 * 0.0090405 * 0 + 0.0435 * 0.02499 * 1 + 0.006225 * 0.147 * 1 + 0.01723275 *  0.16 * 0 + 0.0018797625 * 1 * 1) / 0.012292874999999998;
+        double L2DenominaotrE1 = (0.45 * 0.0090405 + 0.0435 * 0.02499+ 0.006225 * 0.147+ 0.01723275 *  0.16 + 0.0018797625 * 1) / 0.012292874999999998;
+
+
+
+        double L1NumeratorE11 = (0.05 * 0.0124635 * 0 + 0.0115 * 0.02709 * 0 + 0.005025 * 0.105 * 0 + 0.00270275 * 0.84 * 0 + 0.0135950715 * 1 * 1) / 0.028883925;
+        double L1NumeratorE12 = (0.05 * 0.0124635 * 1 + 0.0115 * 0.02709 * 1 + 0.005025 * 0.105 * 1 + 0.00270275 * 0.84 * 1 + 0.0135950715 * 1 * 0) / 0.028883925;
+        double L1denominatorE1 = (0.05 * 0.0124635 + 0.0115 * 0.02709 + 0.005025 * 0.105 + 0.00270275 * 0.84 + 0.0135950715 * 1) / 0.028883925;
+
+        double numeratorE11 = L2NumeratorE11 + L1NumeratorE11;
+        double numeratorE12 = L2NumeratorE12 + L1NumeratorE12;
+        double denominatorE1 = L2DenominaotrE1 + L1denominatorE1;
+
+        double E11 = numeratorE11 / denominatorE1;
+        double E12 = numeratorE12 / denominatorE1;
+        assert (compareFactor(E[0][0], E11, 0.001));
+        assert (compareFactor(E[0][1], E12, 0.001));
 
 
         double oldPi1 = (0.05 * 0.0124635) / 0.028838165;
