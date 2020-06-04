@@ -187,7 +187,7 @@ public class WeatherConversion implements Conversion {
     @Override
     public double[][] getInitialP(){
         double[][] P = {{0.9, 0.1},     // H -> H   H -> L
-                {0.2, 0.8}};             // L -> H   L -> L
+                        {0.2, 0.8}};             // L -> H   L -> L
         return P;
     }
 
@@ -198,7 +198,7 @@ public class WeatherConversion implements Conversion {
     @Override
     public double[][] getInitialE(){
         double[][] E = {{0.9, 0.1},         // x = sun|H   x = rain|H
-                {0.3, 0.7}};        // x = sun|L   x = rain|L
+                        {0.3, 0.7}};        // x = sun|L   x = rain|L
         return E;
     }
 

@@ -20,7 +20,7 @@ public class ComparisonTest {
     };
 
     private boolean compareFactor(double n1, double n2, double factor){
-        double standardDeviation = factor;
+        double standardDeviation = factor*n2;
         return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;
     }
     @Test
@@ -45,7 +45,7 @@ public class ComparisonTest {
     @Test
     public void testTwoChar(){
         comparison.compare(trueAnnotation,predictionAnnotation,'N','C','R');
-        assert(compareFactor(0.166,comparison.getCorrelationCoefficient(),0.001));
+        assert(compareFactor(0.166,comparison.getCorrelationCoefficient(),0.01));
         assert(compareFactor(0.583,comparison.getACP(),0.001));
         assert(compareFactor(0.166667,comparison.getAC(),0.001));
         assert(compareFactor(0.5,comparison.getSensitivity(),0.001));

@@ -108,77 +108,6 @@ public class BaumWelchTraining {
 
 
 
-    private double reestimateRabiner(ArrayList<int[]> observables) {    //TODO kill?
-        double[] newPi = new double[N];
-        double[][] newP = new double[N][N];
-        double[] pDenominators = new double[N];
-        double[][] newE = new double[N][M];
-        double[] eDenominators = new double[N];
-
-        double likelihood = 1;
-
-        for (int l = 0; l < L; l++) {
-            int[] obsl = observables.get(l);
-            ForwardBackwardScaled fwdBck = new ForwardBackwardScaled(obsl, this.pi, this.P, this.E);
-            double[][] alphal = fwdBck.getAlpha();
-            double[][] betal = fwdBck.getBeta();
-            int Kl = obsl.length;
-            double Pl = 0;
-            for (int i = 0; i < N; i++) {
-                Pl += alphal[i][Kl - 1]; //this is just 1 :(
-            }
-            for (int k = 0; k < Kl - 2; k++) {
-                int xlk = obsl[k];
-                int xlkPlusPlus = obsl[k + 1];
-                for (int i = 0; i < N; i++) {
-                    for (int j = 0; j < N; j++) {
-                        newP[i][j] += alphal[i][k] * this.P[i][j] * this.E[j][xlkPlusPlus] * betal[j][k + 1];
-                    }
-                    double sum = 0;
-                    for (int j = 0; j < N; j++) {
-                        sum += P[i][j] * E[j][xlkPlusPlus] * betal[j][k+1];
-                    }
-                    pDenominators[i] += alphal[i][k] * sum;
-                    for (int a = 0; a < M; a++) {
-
-                        if (xlk == a) {
-                            newE[i][a] += alphal[i][k] * betal[i][k];
-                        }
-                    }
-                    eDenominators[i] += alphal[i][k] * betal[i][k];
-                }
-            }
-            for (int i = 0; i < N; i++) {
-                double sum = 0;
-                int x2 = obsl[1];
-                for (int j = 0; j < N; j++) {
-                    sum += P[i][j] * E[j][x2] * betal[j][1];
-                }
-                newPi[i] = alphal[i][0] * sum / Pl;
-                //System.out.println(alphal[i][0] * betal[i][0] / Pl);
-                //newPi[i] += alphal[i][0] * betal[i][0] / Pl;
-                //newPi[i] += alphal[i][0] * betal[i][0] * fwdBck.calculateAlphaSum(0) / Pl;
-                //                                               c1
-            }
-            likelihood *= Pl;
-        }
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                newP[i][j] = newP[i][j] / pDenominators[i];
-            }
-            for (int j = 0; j < M; j++) {
-                newE[i][j] = newE[i][j] / eDenominators[i];
-            }
-            newPi[i] = newPi[i]; //strong line
-        }
-
-        this.P = newP;
-        this.E = newE;
-        this.pi = newPi;
-
-        return likelihood;
-    }
 
     /**
      * This method handles the actual reestimating of parameters according to Bishop.
@@ -198,11 +127,7 @@ public class BaumWelchTraining {
             double[][] betal = fwdBck.getBeta();
 
             double[] cl = fwdBck.getScalingFactors();
-            for(double d : cl){
-                if(d<0.000000001){
-                    System.out.println("nooooooooooooo");
-                }
-            }
+
             int Kl = obsl.length;
             //pi[i] = 1/L sum_l alpha_l[i,1] * beta_l[i,1]
             for (int i = 0; i < N; i++) {
@@ -236,10 +161,21 @@ public class BaumWelchTraining {
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-               newP[i][j] /= denominatorsP[i];
+                if(denominatorsP[i] == 0 ){
+                    newP[i][j] = 0;
+                    if(i == j){
+                        newP[i][j] = 1;
+                    }
+                } else {
+                    newP[i][j] /= denominatorsP[i];
+                }
             }
             for (int a = 0; a < M; a++) {
-                newE[i][a] /= denominatorsE[i];
+                if(denominatorsE[i] == 0 ){
+                    newE[i][a] = 1.0/M;
+                } else {
+                    newE[i][a] /= denominatorsE[i];
+                }
             }
             newPi[i] /= L;
         }

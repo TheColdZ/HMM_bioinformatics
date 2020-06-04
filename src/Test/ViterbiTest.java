@@ -19,22 +19,20 @@ public class ViterbiTest {
      * @return true if they are close
      */
     private boolean compareFactor(double n1, double n2, double factor){
-        double standardDeviation = factor;
+        double standardDeviation = factor*n2;
         return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;
     }
 
     @Test
     public void rainExample(){
-        double[][] transition = {{0.9, 0.1},     // H -> H   H ->L
-                                 {0.2, 0.8}};    // L-> H    L -> L
-        double[] start = {0.5, 0.5};
+        double[][] P = {{0.9, 0.1},     // H -> H   H ->L
+                        {0.2, 0.8}};    // L-> H    L -> L
+        double[] pi = {0.5, 0.5};
         double[][] E = {{0.9, 0.1},         // x = sun|H    x= rain|H
                         {0.3, 0.7}};        // x = sun|L   x= rain|L
 
 
-        Viterbi viterbi = new Viterbi(transition,E,start);
-        //FileReader fr = new FileReader();     //One could choose
-        //String observed = fr.readFile("BachelorRainExample");
+        Viterbi viterbi = new Viterbi(P,E,pi);
         String observed = "RRRRS";
         String[] obs = new String[1];
         obs[0] = observed;
@@ -52,6 +50,7 @@ public class ViterbiTest {
             }
         }
     }
+
 
 
     private double[][] preCalculatedDelta(){

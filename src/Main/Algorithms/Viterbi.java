@@ -32,27 +32,27 @@ public class Viterbi {
      */
     public int[] calculate(int[] observed){
 
-        int states = P.length;
-        int inputLength = observed.length; //length of input
+        int N = P.length;
+        int K = observed.length; //length of input
 
-        delta = new double[states][inputLength];
-        psi = new int[states][inputLength];
+        delta = new double[N][K];
+        psi = new int[N][K];
 
         //Initialization step
         int firstObserved = observed[0];
-        for (int i = 0; i < states ; i++) {
+        for (int i = 0; i < N ; i++) {
             delta[i][0] = log(pi[i]) + log(E[i][firstObserved]);
             psi[i][0] = 0;
         }
         //Recursion
-        for (int k = 1; k < inputLength ; k++) {
-            for (int i = 0; i < states ; i++) {    //1<=i<=N
-                psi[i][k]=-1;
+        for (int k = 1; k < K ; k++) {
+            for (int i = 0; i < N ; i++) {    //1<=i<=N
+                psi[i][k] = -1;
 
                 double maxTransitionProbability = Double.NEGATIVE_INFINITY;
-                for (int j = 0; j <states ; j++) {
+                for (int j = 0; j <N ; j++) {
 
-                    double transitionProbability = log(P[i][j])+delta[j][k-1];
+                    double transitionProbability = log(P[j][i])+delta[j][k-1];
 
                     if(maxTransitionProbability < transitionProbability){
                         maxTransitionProbability = transitionProbability;
@@ -68,19 +68,19 @@ public class Viterbi {
 
 
         //Termination
-        int [] sk = new int[inputLength];
+        int [] sk = new int[K];
 
-        double m = delta[0][inputLength-1];
+        double m = delta[0][K-1];
 
-        for (int j = 0; j <states ; j++) {
-            if(m <= delta[j][inputLength-1]){
-                m = delta[j][inputLength-1];    //Max
-                sk[inputLength-1] = j;          //ArgMax
+        for (int j = 0; j <N ; j++) {
+            if(m <= delta[j][K-1]){
+                m = delta[j][K-1];    //Max
+                sk[K-1] = j;          //ArgMax
             }
         }
 
         //Backtracking
-        for (int k = inputLength-2; k >-1 ; k--) {       //Backtracking through the most likely path. Remember to visit 0...
+        for (int k = K-2; k >-1 ; k--) {       //Backtracking through the most likely path. Remember to visit 0...
             sk[k] = psi[sk[k+1]][k+1];
         }
 

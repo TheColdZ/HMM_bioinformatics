@@ -67,12 +67,12 @@ public class ViterbiTrainingTest {
         assert(compareFactor(E[0][0],1.,0.001));
         assert(compareFactor(E[0][1],0,0.001));
         assert(compareFactor(E[1][0],0.281,0.001));
-        assert(compareFactor(E[1][1],0.718,0.001));
+        assert(compareFactor(E[1][1],0.718,0.01));
 
 
         double[][] P = vt.getP();
         assert(compareFactor(P[0][0],0.785,0.001));
-        assert(compareFactor(P[0][1],0.214,0.001));
+        assert(compareFactor(P[0][1],0.214,0.01));
         assert(compareFactor(P[1][0],0.05,0.001));
         assert(compareFactor(P[1][1],0.95,0.001));
 
@@ -97,7 +97,7 @@ public class ViterbiTrainingTest {
      * @return true if they are close
      */
     private boolean compareFactor(double n1, double n2, double factor){
-        double standardDeviation = factor;
+        double standardDeviation = factor*n2;
         return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;
     }
 

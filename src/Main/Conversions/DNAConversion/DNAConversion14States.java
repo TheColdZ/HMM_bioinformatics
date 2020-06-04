@@ -19,7 +19,7 @@ public class DNAConversion14States implements Conversion {
      * @param c The char to convert
      * @return  Converted char as int.
      */
-    private int emission_conversion_char_to_int(Character c){
+    private int emissionConversionCharToInt(Character c){
         switch(c){
             case 'A': return 0;
 
@@ -127,7 +127,7 @@ public class DNAConversion14States implements Conversion {
             String obs = observed[l];
             if(observables) {
                 for (int k = 0; k < annotation.length(); k++) {
-                    stringsInt.get(l)[k] = emission_conversion_char_to_int(obs.charAt(k));
+                    stringsInt.get(l)[k] = emissionConversionCharToInt(obs.charAt(k));
                 }
             } else {
                 stringsInt.add(convertAnnotationToState(annotation,obs));

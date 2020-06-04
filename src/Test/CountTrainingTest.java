@@ -106,7 +106,7 @@ public class CountTrainingTest {
      * @return true if they are close
      */
     private boolean compareFactor(double n1, double n2, double factor){
-        double standardDeviation = factor;
+        double standardDeviation = factor*n2;
         return n2-standardDeviation <= n1 && n1 <= n2+standardDeviation;
     }
 
