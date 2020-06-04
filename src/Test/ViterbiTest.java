@@ -2,7 +2,7 @@ package Test;
 
 import Main.Algorithms.Viterbi;
 import Main.Conversions.Conversion;
-import Main.Conversions.weatherConversion;
+import Main.Conversions.WeatherConversion;
 import org.junit.Test;
 
 /**
@@ -38,8 +38,11 @@ public class ViterbiTest {
         String observed = "RRRRS";
         String[] obs = new String[1];
         obs[0] = observed;
-        Conversion conv = new weatherConversion();
+        Conversion conv = new WeatherConversion();
         viterbi.calculate(conv.observables(obs).get(0));
+        for(int i : viterbi.getSk()){
+            System.out.print(i);
+        }
         double[][] delta = viterbi.getDelta();
         double[][] preCalculatedDelta = preCalculatedDelta();
         for (int i = 0; i < 2; i++) {

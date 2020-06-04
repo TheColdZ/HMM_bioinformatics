@@ -2,7 +2,7 @@ package Test;
 
 import Main.Algorithms.ViterbiTraining;
 import Main.Conversions.Conversion;
-import Main.Conversions.weatherConversion;
+import Main.Conversions.WeatherConversion;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class ViterbiTrainingTest {
                 {0.3, 0.7}};        // x = sun|L   x = rain|L
         String[] observed = new String[1];
         observed[0] = "RRRRS";
-        Conversion converter = new weatherConversion();
+        Conversion converter = new WeatherConversion();
         ViterbiTraining vt = new ViterbiTraining(converter.observables(observed), P, E, pi);
 
 
@@ -56,7 +56,7 @@ public class ViterbiTrainingTest {
         observed[1] = "RSRRSRSRSRSRSRSRRR";
         observed[2] = "RRSSRRRRRRRRSSSSRSRSRS";
         observed[3] = "RRRRRSSSSSRRRRRRSSSSSR";
-        Conversion converter = new weatherConversion();
+        Conversion converter = new WeatherConversion();
         ViterbiTraining vt = new ViterbiTraining(converter.observables(observed), converter.getInitialP(), converter.getInitialE(), converter.getInitialPi());
 
         double[] pi = vt.getPi();

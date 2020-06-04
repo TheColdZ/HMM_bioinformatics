@@ -2,7 +2,7 @@ package Test;
 
 import Main.Algorithms.ForwardBackward;
 import Main.Conversions.Conversion;
-import Main.Conversions.weatherConversion;
+import Main.Conversions.WeatherConversion;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ public class TestForwardBackward {
         String obs = "RRRRS";
         String[] obs_arr = new String[1];
         obs_arr[0] = obs;
-        Conversion conv = new weatherConversion();
+        Conversion conv = new WeatherConversion();
         int[] obs_int_arr = conv.observables(obs_arr).get(0);
         FB = new ForwardBackward(obs_int_arr,pi,P,E);
     }

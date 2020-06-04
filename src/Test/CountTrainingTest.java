@@ -1,7 +1,7 @@
 package Test;
 import Main.Algorithms.CountTraining;
 import Main.Conversions.Conversion;
-import Main.Conversions.weatherConversion;
+import Main.Conversions.WeatherConversion;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +26,7 @@ public class CountTrainingTest {
         String[] states = new String[1];
         observed[0] = "RRRRS";
         states[0]   = "LLLHH";
-        Conversion converter = new weatherConversion();
+        Conversion converter = new WeatherConversion();
         example1training = new CountTraining(converter.observables(observed),converter.states(states,observed),2,2);
     }
     private void example2Setup(){
@@ -36,7 +36,7 @@ public class CountTrainingTest {
         String[] states = new String[2];
         states[0] = "LLLHH";
         states[1] = "HHLLH";
-        Conversion conversion = new weatherConversion();
+        Conversion conversion = new WeatherConversion();
         ArrayList<int[]> observed_converted = conversion.observables(observed);
         ArrayList<int[]> states_converted = conversion.states(states,observed);
         example2training = new CountTraining(observed_converted,states_converted,2,2);

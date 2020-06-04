@@ -184,17 +184,25 @@ public class BaumWelchTraining {
      * This method handles the actual reestimating of parameters according to Bishop.
      * @param observables The observables to reestimate parameters on.
      */
-    public void reestimateBishop(ArrayList<int[]> observables) {
+    private void reestimateBishop(ArrayList<int[]> observables) {
         double[] newPi = new double[N];
         double[][] newP = new double[N][N];
-        double[] denominators = new double[N];
+        double[] denominatorsP = new double[N];
+        double[] denominatorsE = new double[N];
         double[][] newE = new double[N][M];
         for (int l = 0; l < L; l++) {
             int[] obsl = observables.get(l);
             ForwardBackwardScaled fwdBck = new ForwardBackwardScaled(obsl, this.pi, this.P, this.E);
             double[][] alphal = fwdBck.getAlpha();
+
             double[][] betal = fwdBck.getBeta();
+
             double[] cl = fwdBck.getScalingFactors();
+            for(double d : cl){
+                if(d<0.000000001){
+                    System.out.println("nooooooooooooo");
+                }
+            }
             int Kl = obsl.length;
             //pi[i] = 1/L sum_l alpha_l[i,1] * beta_l[i,1]
             for (int i = 0; i < N; i++) {
@@ -202,15 +210,18 @@ public class BaumWelchTraining {
             }
             for (int k = 0; k < Kl-1; k++) {
                 int xlk = obsl[k];
-                int xlkplus = obsl[k+1];
+                int xlkplus = obsl[k + 1];
                 for (int i = 0; i < N; i++) {
                     for (int j = 0; j < N; j++) {
                         newP[i][j] += alphal[i][k] * P[i][j] * E[j][xlkplus] *
-                                betal[j][k+1] / cl[k+1];
+                                betal[j][k + 1] / cl[k + 1];
                     }
                     //sum_l sum_k alphal[i,k] * betal[i,k]
-                    denominators[i] += alphal[i][k] * betal[i][k];
+                    denominatorsP[i] += alphal[i][k] * betal[i][k];
                 }
+            }
+            for (int k = 0; k < Kl; k++) {
+                int xlk = obsl[k];
                 for (int i = 0; i < N; i++) {
                     for (int a = 0; a < M; a++) {
                         if (xlk == a) {
@@ -218,16 +229,17 @@ public class BaumWelchTraining {
                             break; //we know that xlk hits exactly one a, so when it is found stop looking.
                         }
                     }
+                    denominatorsE[i] += alphal[i][k] * betal[i][k];
                 }
             }
         }
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                newP[i][j] /= denominators[i];
+               newP[i][j] /= denominatorsP[i];
             }
             for (int a = 0; a < M; a++) {
-                newE[i][a] /= denominators[i];
+                newE[i][a] /= denominatorsE[i];
             }
             newPi[i] /= L;
         }
@@ -235,7 +247,6 @@ public class BaumWelchTraining {
         this.E = newE;
         this.pi = newPi;
     }
-
     public double[] getPi() {
         return pi;
     }

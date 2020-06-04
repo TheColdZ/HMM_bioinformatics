@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *  It does so for a simple 2-state weather model.
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
-public class weatherConversion implements Conversion {
+public class WeatherConversion implements Conversion {
 
     /**
      * Converts an emission char to an Int

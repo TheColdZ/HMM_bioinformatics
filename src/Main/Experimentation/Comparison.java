@@ -1,7 +1,5 @@
 package Main.Experimentation;
 
-import java.text.DecimalFormat;
-
 /**
  * This class handles comparison of two strings and calculations of Sensitivity, Specificity and Approximate Correlation, given TruePositive, FalsePositive,
  * TrueNegative & FalseNegative
@@ -69,14 +67,14 @@ public class Comparison {
      * This method is used to printing the calculated findings of the comparison. This is easier to modify.
      * @param comparisonChar1   The first char that was used to compare
      * @param comparisonChar2   The second char that was used to compare
-     * @param tp                The number of truepositive findings
-     * @param fp                The number of falseositive findings
-     * @param tn                The number of truenegative findings
-     * @param fn                The number of falsenegative findings
+     * @param tp                The number of true positive findings
+     * @param fp                The number of false positive findings
+     * @param tn                The number of true negative findings
+     * @param fn                The number of false negative findings
      */
     private void printPositiveAndNegatives(char comparisonChar1, char comparisonChar2, double tp, double fp, double tn, double fn){
-        //System.out.print(comparisonChar1+""+comparisonChar2+"s: tp="+tp+", fp="+fp+", tn="+tn+",fn="+fn);
-        System.out.print((int)tp+" & "+(int)fp+" & "+(int)tn+" & "+(int)fn+" & ");      //TODO revert to above print
+        System.out.print(comparisonChar1+""+comparisonChar2+"s: tp="+tp+", fp="+fp+", tn="+tn+",fn="+fn);
+
     }
 
     /**
@@ -109,9 +107,8 @@ public class Comparison {
      * @param correlationCoefficient The correlationCoefficient to print
      */
     private void printStatistical(double sensitivity,double specificity, double AC, double ACP, double correlationCoefficient){
-        DecimalFormat df = new DecimalFormat("#.#####");
-        //System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);
-        System.out.println(df.format(sensitivity)+" & "+df.format(specificity)+" & "+df.format(AC)); //TODO revert to above print
+        System.out.println(" Sensitivity ="+sensitivity+", specificity ="+specificity+", AC="+AC+", ACP:"+ACP+", cc:"+ correlationCoefficient);
+
     }
 
 

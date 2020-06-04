@@ -31,20 +31,6 @@ public class BaumWelchExperiment {
         double[][] E = baumWelchTraining.getE();
         double[][] P = baumWelchTraining.getP();
 
-        for (int i = 0; i < converter.getNumberOfStates(); i++) {       //TODO kill
-            for (int j = 0; j < converter.getNumberOfStates(); j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < converter.getNumberOfStates(); i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
 
         String[] genomesForPrediction = new String[5];
         genomesForPrediction[0] = fr.readFile("genome6");
