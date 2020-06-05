@@ -1,7 +1,6 @@
 package Test;
 
 import Main.Algorithms.BaumWelchTraining;
-import Main.Algorithms.ForwardBackward;
 import Main.Conversions.Conversion;
 import Main.Conversions.DNAConversion.DNAConversion7States;
 import Main.Conversions.WeatherConversion;
@@ -83,7 +82,7 @@ public class BaumWelchTrainingTest {
 
         double numeratorE22 = 0.35 * 0.080745 * 1 + 0.1995 * 0.14322 * 1 + 0.112525 * 0.252 * 1 + 0.0633658 * 0.42 * 1+0.015288745 * 1 * 0;
         double numeratorE21 = 0.35 * 0.080745 * 0 + 0.1995 * 0.14322 * 0 + 0.112525 * 0.252 * 0 + 0.0633658 * 0.42 * 0+0.015288745 * 1 * 1;
-        double denominatorE2 = 0.35 * 0.080745 + 0.1995 * 0.14322 + 0.112525 * 0.252 + 0.0633658 * 0.42 + 0.0152888625;
+        double denominatorE2 = 0.35 * 0.080745 + 0.1995 * 0.14322 + 0.112525 * 0.252 + 0.0633658 * 0.42 + 0.0152888625 * 1;
         assert(compareFactor(E[1][1], numeratorE22 / denominatorE2, 0.01));
         assert(compareFactor(E[1][0], numeratorE21 / denominatorE2, 0.01));
         double numeratorE11 = 0.05 * 0.0124635 * 0 + 0.0115 * 0.02709 * 0 + 0.005025 * 0.105 * 0 + 0.00270275 * 0.84 * 0 + 0.0135950715 * 1 * 1;
@@ -108,10 +107,7 @@ public class BaumWelchTrainingTest {
 
         BaumWelchTraining training = new BaumWelchTraining(converter.observables(observed), P, E, pi, 1.0); //We make sure it only runs one time with comparefator= 1;
 
-        ForwardBackward fwb = new ForwardBackward(converter.observables(observed).get(1),pi,P,E);
 
-        print_double(fwb.getAlpha());
-        print_double(fwb.getBeta());
         P = training.getP();
         pi = training.getPi();
         E = training.getE();
@@ -175,7 +171,7 @@ public class BaumWelchTrainingTest {
 
         double L2NumeratorE11 = (0.45 * 0.0090405 * 1 + 0.0435 * 0.02499 * 0 + 0.006225 * 0.147 * 0 + 0.01723275 *  0.16 * 1 + 0.0018797625 * 1 * 0) / 0.012292874999999998;
         double L2NumeratorE12 = (0.45 * 0.0090405 * 0 + 0.0435 * 0.02499 * 1 + 0.006225 * 0.147 * 1 + 0.01723275 *  0.16 * 0 + 0.0018797625 * 1 * 1) / 0.012292874999999998;
-        double L2DenominaotrE1 = (0.45 * 0.0090405 + 0.0435 * 0.02499+ 0.006225 * 0.147+ 0.01723275 *  0.16 + 0.0018797625 * 1) / 0.012292874999999998;
+        double L2DenominatorE1 = (0.45 * 0.0090405 + 0.0435 * 0.02499+ 0.006225 * 0.147+ 0.01723275 *  0.16 + 0.0018797625 * 1) / 0.012292874999999998;
 
 
 
@@ -185,7 +181,7 @@ public class BaumWelchTrainingTest {
 
         double numeratorE11 = L2NumeratorE11 + L1NumeratorE11;
         double numeratorE12 = L2NumeratorE12 + L1NumeratorE12;
-        double denominatorE1 = L2DenominaotrE1 + L1denominatorE1;
+        double denominatorE1 = L2DenominatorE1 + L1denominatorE1;
 
         double E11 = numeratorE11 / denominatorE1;
         double E12 = numeratorE12 / denominatorE1;
