@@ -82,16 +82,7 @@ public class DNAConversion3StatesTest {
         }
     }
 
-    private void print_matr(ArrayList<int[]> input, String name){
-        System.out.println(name);
-        for (int[] ints : input) {
-            for (int k = 0; k < ints.length; k++) {
-                System.out.print(ints[k]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
+
 
 
 

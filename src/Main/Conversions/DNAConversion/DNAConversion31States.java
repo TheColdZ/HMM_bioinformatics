@@ -85,6 +85,7 @@ public class DNAConversion31States implements Conversion {
             while(trueAnnotation.charAt(endOfCoding) == 'R'){
                 endOfCoding++;
             }
+            if((endOfCoding-n)%3 != 0) return 0; //Check multiple of 3
             boolean correctEndCodon = observed.charAt(endOfCoding-3) == 'C' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'T' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'C');
 
             if(correctEndCodon){

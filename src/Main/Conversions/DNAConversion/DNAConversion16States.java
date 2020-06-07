@@ -72,6 +72,7 @@ public class DNAConversion16States implements Conversion {
             while(trueAnnotation.charAt(endOfCoding) == 'C'){
                 endOfCoding++;
             }
+            if((endOfCoding-n)%3 != 0) return 0;        //Check multiplum of 3
             boolean TAA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
             boolean TAG = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'A' && observed.charAt(endOfCoding-1) == 'G' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
             boolean TGA = observed.charAt(endOfCoding-3) == 'T' && observed.charAt(endOfCoding-2) == 'G' && observed.charAt(endOfCoding-1) == 'A' && (trueAnnotation.charAt(endOfCoding)== 'N' || trueAnnotation.charAt(endOfCoding)== 'R');
@@ -99,7 +100,7 @@ public class DNAConversion16States implements Conversion {
         else if(states[n-1] == 13 ) return 14;
         else if(states[n-1] == 14 ) return 15;
         else if( n+4 < observed.length()) {
-            if (observed.charAt(n + 4) != 'N' && (states[n-1] == 3 || states[n-1] == 6) ) return 4; //We loop if we are not done in 4 steps. 4->5->6->4..
+            if ((observed.charAt(n + 4) != 'N' || observed.charAt(n + 4) != 'R') && (states[n-1] == 3 || states[n-1] == 6) ) return 4; //We loop if we are not done in 4 steps. 4->5->6->4..
         }
         else return 0;
         return 0;

@@ -1,5 +1,5 @@
 package Test;
-import Main.Algorithms.CountTraining;
+import Main.Algorithms.TrainingByCounting;
 import Main.Conversions.Conversion;
 import Main.Conversions.WeatherConversion;
 import org.junit.Before;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
  *
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
-public class CountTrainingTest {
-    private CountTraining example2training;
-    private CountTraining example1training;
+public class TrainingByCountingTest {
+    private TrainingByCounting example2training;
+    private TrainingByCounting example1training;
 
     @Before
     public void setUp() {
@@ -27,7 +27,7 @@ public class CountTrainingTest {
         observed[0] = "RRRRS";
         states[0]   = "LLLHH";
         Conversion converter = new WeatherConversion();
-        example1training = new CountTraining(converter.observables(observed),converter.states(states,observed),2,2);
+        example1training = new TrainingByCounting(converter.observables(observed),converter.states(states,observed),2,2);
     }
     private void example2Setup(){
         String[] observed = new String[2];
@@ -39,7 +39,7 @@ public class CountTrainingTest {
         Conversion conversion = new WeatherConversion();
         ArrayList<int[]> observed_converted = conversion.observables(observed);
         ArrayList<int[]> states_converted = conversion.states(states,observed);
-        example2training = new CountTraining(observed_converted,states_converted,2,2);
+        example2training = new TrainingByCounting(observed_converted,states_converted,2,2);
     }
 
 

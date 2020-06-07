@@ -50,7 +50,7 @@ public class ViterbiTraining {
                 int[] stateAsInt = vit.calculate(observables.get(l));
                 this.states.set(l,stateAsInt);
             }
-            CountTraining ct = new CountTraining(observables,states,N,M);
+            TrainingByCounting ct = new TrainingByCounting(observables,states,N,M);
             P = ct.getP();
             E = ct.getE();
             pi = ct.getPi();

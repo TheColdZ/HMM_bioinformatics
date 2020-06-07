@@ -1,6 +1,10 @@
 package Main;
 
+import Main.Conversions.DNAConversion.*;
+import Main.Experimentation.BaumWelchExperiment;
 import Main.Experimentation.Comparison;
+import Main.Experimentation.TrainingByCountingExperimentation;
+import Main.Experimentation.ViterbiTrainingExperimentation;
 
 /**
  * Main, from here we run some experiments.
@@ -8,50 +12,18 @@ import Main.Experimentation.Comparison;
  */
 public class Main {
     public static void main(String[] args) {
+        trainingByCountingExperimentsAllModels();
+        viterbiTrainingExperimentsAllModels();
+        baumWelchExperimentsAllModels();
+        printResults();
+    }
 
-
-        /*
-        BaumWelchExperiment BWE3 = new BaumWelchExperiment(new DNAConversion3States());
-        BaumWelchExperiment BWE5 = new BaumWelchExperiment(new DNAConversion5States());
-        BaumWelchExperiment BWE7 = new BaumWelchExperiment(new DNAConversion7States());
-        BaumWelchExperiment BWE14 = new BaumWelchExperiment(new DNAConversion14States());
-        BaumWelchExperiment BWE16 = new BaumWelchExperiment(new DNAConversion16States());
-        BaumWelchExperiment BWE31 = new BaumWelchExperiment(new DNAConversion31States());
-        */
-
-
-
-
-
-        Comparison comparer = new Comparison();
-
-
-
-
-
-
-
-
-        /*
-        ViterbiTrainingExperimentation viterbiTrainingExperimentation = new ViterbiTrainingExperimentation();
-
-        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion5States());
-
-        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion3States());
-        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion7States());
-        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion14States());
-        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion16States());
-        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion31States());
-        */
-
-
-
-
-
-
-
-
-        /*
+    /**
+     * This method performs trainingByCounting with all models from 3 states to 31 states.
+     * It will read 5 genes from file, perform training by counting and run the Viterbi algorithm, with new parameters on 5 new genes and write the results to file.
+     * A prerequisite being that the correct files exist.
+     */
+    public static void trainingByCountingExperimentsAllModels() {
         TrainingByCountingExperimentation experiment = new TrainingByCountingExperimentation();
         experiment.trainingByCounting(new DNAConversion3States());
         experiment.trainingByCounting(new DNAConversion5States());
@@ -59,14 +31,42 @@ public class Main {
         experiment.trainingByCounting(new DNAConversion14States());
         experiment.trainingByCounting(new DNAConversion16States());
         experiment.trainingByCounting(new DNAConversion31States());
-        */
+    }
 
+    /**
+     * This method performs Viterbi training with all models from 3 states to 31 states.
+     * It will read 5 genes from file, perform Viterbi training and run the Viterbi algorithm, with new parameters on 5 new genes and write the results to file.
+     * A prerequisite being that the correct files exist.
+     */
+    public static void viterbiTrainingExperimentsAllModels(){
+        ViterbiTrainingExperimentation viterbiTrainingExperimentation = new ViterbiTrainingExperimentation();
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion5States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion3States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion7States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion14States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion16States());
+        viterbiTrainingExperimentation.viterbiTrainingCounting(new DNAConversion31States());
+    }
 
+    /**
+     * This method performs Baum-Welch with all models from 3 states to 31 states.
+     * It will read 5 genes from file, performBaum-Welch and run the Viterbi algorithm, with new parameters on 5 new genes and write the results to file.
+     * A prerequisite being that the correct files exist.
+     */
+    public static void baumWelchExperimentsAllModels(){
+        BaumWelchExperiment BWE3 = new BaumWelchExperiment(new DNAConversion3States());
+        BaumWelchExperiment BWE5 = new BaumWelchExperiment(new DNAConversion5States());
+        BaumWelchExperiment BWE7 = new BaumWelchExperiment(new DNAConversion7States());
+        BaumWelchExperiment BWE14 = new BaumWelchExperiment(new DNAConversion14States());
+        BaumWelchExperiment BWE16 = new BaumWelchExperiment(new DNAConversion16States());
+        BaumWelchExperiment BWE31 = new BaumWelchExperiment(new DNAConversion31States());
+    }
 
-
-
-
-
+    /**
+     * This method simply prints our results that can also be found in the report, chapter 4.
+     */
+    public static void printResults(){
+        Comparison comparer = new Comparison();
         System.out.println("5 state model TBC:");
         comparer.calculate(635406+761716+635802+812551+658368,296651+365916+363773+489062+188421,1006785+1387500+878573+964624+642792,188997+227399+167967+122198+80904);
 
@@ -95,24 +95,22 @@ public class Main {
         comparer.calculate(769720+894980+746998+887991+671194,868430+976852+886496+1142328+485594,435006+776564+355850+311358+345619,54683+94135+56771+46758+68078);
 
         System.out.println("3 state model TBC:");
-        comparer.calculate(1328750+1424616+1236111+1541919+1017682,653601+721448+742101+831652+415843,50486+214631+27405+4784+52684,95002+381836+40498+10080+84276);
+        comparer.calculate(6549078,3364645,349990,611692);
 
         System.out.println("3 states viterbi training");
-        comparer.calculate(1114940+895593+1106669+1253549+719289,563643+422628+773372+1081560+314822,137451+446906+59902+17897+138013,311805+977404+106172+35429+398361);
+        comparer.calculate(5090040,3156025,800169,1829171);
 
         System.out.println("BW training 3 states");
         comparer.calculate(4187228,3840210,798601,2049366);
-
 
         System.out.println("7 state model TBC:");
         comparer.calculate(1424651+1613995+1273732+1491174+950810,302584+475845+306830+422964+257125,234292+418498+267179+232583+184356,166312+234193+198374+241714+178194);
 
         System.out.println("7 states viterbi training");
-        comparer.calculate(1442042+1583812+1338908+1590503+993009,372538+509841+457657+599107+321564,185759+406431+167718+133069+141950,127500+242447+81832+65756+113962);
+        comparer.calculate(6948274,2260707,1034927,631497);
 
         System.out.println("BW training 7 states");
         comparer.calculate(1432369+1594176+1334908+1580436+1003024,399875+539104+474218+616500+332468,180638+395403+161984+130642+134978,114957+213848+75005+60857+100015);
-
 
         System.out.println("31 state model TBC:");
         comparer.calculate(1452537+1666431+1268360+1440955+952246,261462+436698+263611+324026+219830,271880+455692+309051+301955+219700,141960+183710+205093+321499+178709);
@@ -122,7 +120,6 @@ public class Main {
 
         System.out.println("Bw training 31 states");
         comparer.calculate(1455480+1634315+1334259+1618759+983045,334128+481813+390714+497198+277267,224590+428189+223058+196565+179513,113641+198214+98084+75913+130660);
-
     }
 
 

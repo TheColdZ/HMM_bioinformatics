@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Class to handle the training by counting algorithm
  * @author Jens Kristian Refsgaard Nielsen & Thomas Damgaard Vinther
  */
-public class CountTraining {
+public class TrainingByCounting {
     private double[][] E;
     private double[][] P;
     private double[] pi;
@@ -21,7 +21,7 @@ public class CountTraining {
      * @param N             number of states
      * @param M             size of observable alphabet
      */
-    public CountTraining(ArrayList<int[]> observables, ArrayList<int[]> states, int N, int M){
+    public TrainingByCounting(ArrayList<int[]> observables, ArrayList<int[]> states, int N, int M){
         this.L = observables.size();
         this.N = N; //Could read these from the data
         this.M = M;

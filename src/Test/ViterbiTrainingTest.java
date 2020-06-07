@@ -64,26 +64,28 @@ public class ViterbiTrainingTest {
         assert(compareFactor(pi[1],1,0.001));
 
         double[][] E = vt.getE();
-        assert(compareFactor(E[0][0],1.,0.001));
-        assert(compareFactor(E[0][1],0,0.001));
-        assert(compareFactor(E[1][0],0.281,0.001));
-        assert(compareFactor(E[1][1],0.718,0.01));
 
 
         double[][] P = vt.getP();
-        assert(compareFactor(P[0][0],0.785,0.001));
-        assert(compareFactor(P[0][1],0.214,0.01));
-        assert(compareFactor(P[1][0],0.05,0.001));
-        assert(compareFactor(P[1][1],0.95,0.001));
 
+        assert(compareFactor(E[0][0],0.5,0.001));
+        assert(compareFactor(E[0][1],0.5,0.001));
+        assert(compareFactor(E[1][0],0.41,0.001));
+        assert(compareFactor(E[1][1],0.5897,0.01));
+
+
+        assert(compareFactor(P[0][0],1,0.001));
+        assert(compareFactor(P[0][1],0,0.01));
+        assert(compareFactor(P[1][0],0,0.001));
+        assert(compareFactor(P[1][1],1,0.001));
 
 
         ArrayList<int[]> states = vt.getStates();
         String[] strings = converter.states(states);
         assert(strings[0].equals("LLLLLLLLLLLLLLLL"));
         assert(strings[1].equals("LLLLLLLLLLLLLLLLLL"));
-        assert(strings[2].equals("LLLLLLLLLLLLHHHHLLLLLL"));
-        assert(strings[3].equals("LLLLLHHHHHLLLLLLHHHHHL"));
+        assert(strings[2].equals("LLLLLLLLLLLLLLLLLLLLLL"));
+        assert(strings[3].equals("LLLLLLLLLLLLLLLLLLLLLL"));
     }
 
 

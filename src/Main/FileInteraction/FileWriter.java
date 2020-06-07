@@ -50,7 +50,7 @@ public class FileWriter {
     public void writeDetltaToFile(String filename, double[][] delta){
         try{
             java.io.FileWriter outputFileWriter = new java.io.FileWriter("delta_"+filename+".txt");
-            for (int j = 0; j <delta.length ; j++) {  // looper omvendt med j og i fordi pretty print TODO
+            for (int j = 0; j <delta.length ; j++) {
                 StringBuilder sb1 = new StringBuilder();
                 for (int i = 0; i <delta[0].length  ; i++) {
                     sb1.append(" "+  delta[j][i]);

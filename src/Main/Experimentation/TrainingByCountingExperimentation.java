@@ -1,6 +1,6 @@
 package Main.Experimentation;
 
-import Main.Algorithms.CountTraining;
+import Main.Algorithms.TrainingByCounting;
 import Main.Algorithms.Viterbi;
 import Main.Conversions.Conversion;
 import Main.FileInteraction.FileReader;
@@ -45,7 +45,7 @@ public class TrainingByCountingExperimentation {
         ArrayList<int[]> statesConverted =  converter.states(trueAnnotationOfGenomes,observedGenomes);   //This conversion should give us which states produced the true annotation
 
 
-        CountTraining countTrainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
+        TrainingByCounting countTrainer = new TrainingByCounting(observedConverted,statesConverted,converter.getNumberOfStates(),4);
         double[] pi = countTrainer.getPi();
         double[][] E = countTrainer.getE();
         double[][] P = countTrainer.getP();

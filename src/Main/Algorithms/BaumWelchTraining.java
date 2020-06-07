@@ -1,6 +1,5 @@
 package Main.Algorithms;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -51,15 +50,12 @@ public class BaumWelchTraining {
         double[][] oldP;
         double[][] oldE;
         double[] oldPi;
-        int iterations = 0;
         do {
-            iterations++;
             oldP = P;
             oldE = E;
             oldPi = pi;
             reestimateBishop(observables);
         } while(!(compareMatrix(oldP,P,compareFactor) && compareMatrix(oldE,E,compareFactor) && compareVector(oldPi,pi,compareFactor)));
-        System.out.println(iterations);
     }
 
     /**
@@ -95,7 +91,7 @@ public class BaumWelchTraining {
     }
 
     /**
-     * Check if n1 in [n2*(1-factor) , n2*(1+factor)], for instance a deviation of 0.01 means within 1% TODO kill?
+     * Check if n1 in [n2*(1-factor) , n2*(1+factor)], for instance a deviation of 0.01 means within 1%
      * @param n1 first number
      * @param n2 second number
      * @param factor allowed deviation in %
@@ -195,24 +191,5 @@ public class BaumWelchTraining {
         return P;
     }
 
-    private void print_matr(ArrayList<int[]> input, String name){
-        System.out.println(name);
-        for (int[] ints : input) {
-            for (int anInt : ints) {
-                System.out.print(anInt);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
-    private void print_double(double[][] printee){
-        DecimalFormat df = new DecimalFormat("#.###");
-        for(double[] doubles : printee){
-            for(double d : doubles){
-                System.out.print(d+ " ");
-                //System.out.print(df.format(d) + " ");
-            }
-            System.out.println();
-        }
-    }
+
 }

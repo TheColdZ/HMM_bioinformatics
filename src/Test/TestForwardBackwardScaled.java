@@ -35,14 +35,12 @@ public class TestForwardBackwardScaled {
      * This should fail
      */
     @Test
-    public void testProbability(){
-        double a = FB.calculateProbability();
+    public void testTermination(){
         double b = 0;
         for (int i = 0; i < 2; i++) {
             b += FBs.getAlpha()[i][1];
         }
-        System.out.println("Expected: "+a+" but got: "+b);
-        assert(!compareFactor(a,b,0.01));
+        assert(compareFactor(1,b,0.01));
     }
 
     /**

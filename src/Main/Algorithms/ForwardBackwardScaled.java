@@ -64,60 +64,7 @@ public class ForwardBackwardScaled {
         return beta;
     }
 
-    /**
-     * Forward algorithm, that returns the alpha values as a N x K matrix, implemented according to Rabiner
-     */
-    private void calculateAlphaRabiner(){
-        int firstObserved = observed[0];
-        // alpha_1 =
-        for (int i = 0; i < N; i++) { //initialization
-            alpha[i][0] = pi[i]*E[i][firstObserved];
-        }
-        for (int i = 0; i < N; i++) {
-            c[0] += alpha[i][0];
-        }
-        for (int i = 0; i < N; i++) {
-            alpha[i][0] /= c[0];
-        }
-        // alpha_k =
-        for (int k = 1; k < K; k++) {
-            //calculate alpha hat
-            for (int j = 0; j < N; j++) {
-                double sum = 0;
-                for (int i = 0; i < N; i++) {
-                    sum += alpha[i][k-1] * P[i][j];
-                }
-                alpha[j][k] = sum * E[j][observed[k]];
-            }
-            //calculate scaling factor c_k
-            for (int i = 0; i < N; i++) {
-                c[k] += alpha[i][k];
-            }
-            //calculate alpha tilde, by scaling
-            for (int j = 0; j < N; j++) {
-                alpha[j][k] /= c[k];
-            }
-        }
-    }
 
-    /**
-     * Backward algorithm, sets the beta values as a N x K matrix, according to Rabiner
-     */
-    private void calculateBetaRabiner(){
-        //initialize the last column
-        for (int i = 0; i < N; i++) {
-            beta[i][K-1] = 1.0 / c[K-1];
-        }
-        //beta_k (i) = sum_j^N P[i,j] E[j,x_{k+1}] beta_{k+1} (j)
-        for (int k = K-2; k >= 0; k--) {
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    beta[i][k] += P[i][j] * E[j][observed[k + 1]] * beta[j][k + 1] / c[k];
-                }
-            }
-        }
-        betaRan = true;
-    }
 
     /**
      * Forward algorithm, due to Bishop
@@ -171,7 +118,7 @@ public class ForwardBackwardScaled {
             int xkPlus = observed[k + 1];
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    //System.out.println(P[i][j] +" * "+ E[j][xkPlus] +" * "+ beta[j][k + 1] +" / "+ c[k+1]);
+
                     beta[i][k] += P[i][j] * E[j][xkPlus] * beta[j][k + 1] / c[k+1];
                 }
             }

@@ -1,5 +1,4 @@
 package Test;
-import Main.Algorithms.CountTraining;
 import Main.Conversions.DNAConversion.DNAConversion14States;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,98 +15,6 @@ public class DNAConversion14StatesTest {
     @Before
     public void setUp() {
         this.converter = new DNAConversion14States();
-    }
-
-    @Test
-    public void printAndSeeState5_6_7(){
-        String[] genome1 = new String[1];
-        genome1[0] = getStringEnd7890();
-
-        String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringEndCCCN();//This is a file containing N's, C's and R's
-
-
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[][] E = trainer.getE();
-        double[][] P = trainer.getP();
-        System.out.println("Only state 5,6 & 7 will be trained");
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 14; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
-    }
-    @Test
-    public void printAndSeeState8_9_10(){
-        String[] genome1 = new String[1];
-        genome1[0] = getStringEnd1011120();
-
-        String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringEndCCCN();//This is a file containing N's, C's and R's
-
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[][] E = trainer.getE();
-        double[][] P = trainer.getP();
-        System.out.println("Only state 10, 11 & 12 will be trained from the last outputting states");
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 14; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
-    @Test
-    public void printAndSeeState11_12_13(){
-        String[] genome1 = new String[1];
-        genome1[0] = getStringEnd1314150();
-
-        String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringEndCCCN();//This is a file containing N's, C's and R's
-
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[][] E = trainer.getE();
-        double[][] P = trainer.getP();
-        System.out.println("Only state 13, 14 & 15 will be trained, from the last outputting states");
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 14; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
     }
 
     @Test
@@ -215,37 +122,9 @@ public class DNAConversion14StatesTest {
         }
     }
 
-    @Test
-    public void printAndSeeAllStates(){
-        String[] genome1 = new String[1];
-        genome1[0] = getStringEnd1314150()+getStringEnd7890()+getStringEnd1011120();
 
-        String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringEndCCCN()+getTrueStringEndCCCN()+getTrueStringEndCCCN();//This is a file containing N's, C's and R's
 
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[] pi = trainer.getPi();  //We retrieve the newly found parameters
-        double[][] E = trainer.getE();
-        double[][] P = trainer.getP();
-        System.out.println("All states should be visited");
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 14; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 14; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
 
-    }
 
 
 
@@ -261,6 +140,8 @@ public class DNAConversion14StatesTest {
     private String getTrueStringEndCCCN(){
         return "NCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCN";
     }
+
+
 
 
 }

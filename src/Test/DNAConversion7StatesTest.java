@@ -1,5 +1,4 @@
 package Test;
-import Main.Algorithms.CountTraining;
 import Main.Conversions.DNAConversion.DNAConversion7States;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,39 +40,13 @@ public class DNAConversion7StatesTest {
         assert(statesConverted.get(0)[4]==2);
         assert(statesConverted.get(0)[5]==1);
         assert(statesConverted.get(0)[6]==0);
+        for (int i = 1; i < length-1; i++) {
+            assert(!(statesConverted.get(0)[i]==3));
+
+        }
     }
 
-    @Test
-    public void printAndSeeState0_1_2(){
-        String[] genome1 = new String[1];
-        genome1[0] = getStringObservedCoding();
 
-        String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringCCCN();//This is a file containing N's, C's and R's
-
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[] pi = trainer.getPi();  //We retrieve the newly found parameters
-        double[][] E = trainer.getE();
-        double[][] P = trainer.getP();
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
-    }
 
     @Test
     public void testStates4_5_6(){
@@ -98,38 +71,10 @@ public class DNAConversion7StatesTest {
         assert(statesConverted.get(0)[4]==4);
         assert(statesConverted.get(0)[5]==5);
         assert(statesConverted.get(0)[6]==6);
-    }
+        for (int i = 1; i < length-1; i++) {
+            assert(!(statesConverted.get(0)[i]==3));
 
-    @Test
-    public void printAndSeeState4_5_6(){
-        String[] genome1 = new String[1];
-        genome1[0] = getStringObservedReverseCoding();
-
-        String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringNRRR();//This is a file containing N's, C's and R's
-
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[] pi = trainer.getPi();  //We retrieve the newly found parameters
-        double[][] E = trainer.getE();
-        double[][] P = trainer.getP();
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
         }
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
     }
 
     @Test
@@ -180,39 +125,6 @@ public class DNAConversion7StatesTest {
     }
 
 
-    @Test
-    public void PrintAllPossible(){
-        String[] genome1 = new String[1];
-        genome1[0] = getStringObservedCoding()+getStringObservedReverseCoding();
-
-        String[] trueAnnotation1 = new String[1];
-        trueAnnotation1[0] = getTrueStringCCCN()+getTrueStringNRRR();
-
-        ArrayList<int[]> observedConverted = converter.observables(genome1);
-        ArrayList<int[]> statesConverted = converter.states(trueAnnotation1,genome1);   //This conversion should give us which states produced the true annotation
-
-        CountTraining trainer = new CountTraining(observedConverted,statesConverted,converter.getNumberOfStates(),4);
-        double[] pi = trainer.getPi();  //We retrieve the newly found parameters
-        double[][] E = trainer.getE();
-        double[][] P = trainer.getP();
-        for (int i = 0; i < 7; i++) {
-            System.out.print("state"+i+": ");
-            for (int j = 0; j < 7; j++) {
-                System.out.print(P[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < 7; i++) {
-            System.out.print("state"+i+": ");
-            for (int j = 0; j < 4; j++) {
-                System.out.print(E[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-
-    }
 
 
 
